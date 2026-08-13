@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temporary Driver Booking</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f6f8;
+  color:#222;
+}
+
+.header{
+  background:#111827;
+  color:white;
+  padding:18px;
+  text-align:center;
+}
+
+.header h1{
+  font-size:24px;
+}
+
+.header p{
+  margin-top:5px;
+  color:#d1d5db;
+  font-size:14px;
+}
+
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:15px;
+}
+
+.card{
+  background:white;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h2{
+  font-size:19px;
+  margin-bottom:15px;
+}
+
+label{
+  display:block;
+  margin-top:12px;
+  margin-bottom:6px;
+  font-weight:bold;
+  font-size:14px;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:15px;
+  background:white;
+}
+
+button{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:14px;
+  margin-top:15px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.primary{
+  background:#111827;
+  color:white;
+}
+
+.secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.green{
+  background:#16a34a;
+  color:white;
+}
+
+.booking{
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:14px;
+  margin-top:12px;
+}
+
+.status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#dcfce7;
+  color:#166534;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.price{
+  font-size:24px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.small{
+  font-size:13px;
+  color:#6b7280;
+  margin-top:5px;
+}
+
+.owner-note{
+  background:#fff7ed;
+  color:#9a3412;
+  padding:12px;
+  border-radius:10px;
+  font-size:13px;
+  margin-top:12px;
+}
+
+.hidden{
+  display:none;
+}
+
+.footer{
+  text-align:center;
+  padding:20px;
+  color:#6b7280;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>🚗 Temporary Driver</h1>
+  <p>Driver Booking Service</p>
+</div>
+
+<div class="container">
+
+  <!-- CUSTOMER BOOKING -->
+  <div class="card">
+    <h2>👤 Customer Booking</h2>
+
+    <label>Customer Name</label>
+    <input id="customerName" type="text" placeholder="अपना नाम लिखें">
+
+    <label>Customer Mobile Number</label>
+    <input id="customerPhone" type="tel"
+           maxlength="10"
+           placeholder="10 digit mobile number">
+
+    <label>Pickup Location</label>
+    <input id="pickup" type="text"
+           placeholder="Pickup location">
+
+    <label>Drop / Destination</label>
+    <input id="drop" type="text"
+           placeholder="Destination">
+
+    <label>Driver Duration</label>
+    <select id="duration">
+      <option value="4">4 Hours</option>
+      <option value="8">8 Hours</option>
+      <option value="24">24 Hours</option>
+    </select>
+
+    <label>Driver Type</label>
+    <select id="driverType">
+      <option>Normal Driver</option>
+      <option>Experienced Driver</option>
+      <option>Premium Driver</option>
+    </select>
+
+    <button class="green" onclick="bookDriver()">
+      🚗 Book Temporary Driver
+    </button>
+  </div>
+
+
+  <!-- BOOKING RESULT -->
+  <div class="card hidden" id="bookingCard">
+
+    <h2>📋 Booking Details</h2>
+
+    <div class="booking">
+      <div><b>Booking ID:</b> <span id="bookingId"></span></div>
+
+      <div style="margin-top:8px;">
+        <b>Customer:</b> <span id="showCustomer"></span>
+      </div>
+
+      <div style="margin-top:8px;">
+        <b>Customer Mobile:</b>
+        <a id="customerCall" href="#"></a>
+      </div>
+
+      <div style="margin-top:8px;">
+        <b>Pickup:</b> <span id="showPickup"></span>
+      </div>
+
+      <div style="margin-top:8px;">
+        <b>Destination:</b> <span id="showDrop"></span>
+      </div>
+
+      <div style="margin-top:8px;">
+        <b>Duration:</b> <span id="showDuration"></span>
+      </div>
+
+      <div style="margin-top:8px;">
+        <b>Driver:</b> <span id="showDriver"></span>
+      </div>
+
+      <div class="price">
+        ₹<span id="showPrice"></span>
+      </div>
+
+      <div style="margin-top:12px;">
+        <span class="status">🟢 Booking Received</span>
+      </div>
+
+      <button class="primary" onclick="callCustomer()">
+        📞 Call Customer
+      </button>
+
+      <button class="secondary" onclick="openMaps()">
+        📍 Open Pickup Location
+      </button>
+    </div>
+
+    <div class="owner-note">
+      🔒 Owner का मोबाइल नंबर Customer या Driver को इस ऐप में नहीं दिखाया जाएगा।
+      Owner से Direct Contact का कोई बटन नहीं रखा गया है।
+    </div>
+
+  </div>
+
+
+  <!-- OWNER / AGENT PANEL -->
+  <div class="card">
+    <h2>🧑‍💼 Owner / Agent Panel</h2>
+
+    <p class="small">
+      Owner/Agent यहाँ से Driver और Booking को manage कर सकेगा।
+    </p>
+
+    <button class="primary" onclick="openAgentPanel()">
+      Open Agent Panel
+    </button>
+  </div>
+
+
+  <!-- AGENT PANEL -->
+  <div class="card hidden" id="agentPanel">
+
+    <h2>🚘 Agent Dashboard</h2>
+
+    <label>Driver Name</label>
+    <input id="agentDriver" type="text"
+           placeholder="Driver का नाम">
+
+    <label>Driver Mobile</label>
+    <input id="agentPhone" type="tel"
+           maxlength="10"
+           placeholder="Driver mobile number">
+
+    <label>Driver Status</label>
+    <select id="agentStatus">
+      <option>Available</option>
+      <option>Busy</option>
+      <option>Offline</option>
+    </select>
+
+    <button class="green" onclick="addDriver()">
+      ➕ Add Driver
+    </button>
+
+    <div id="driverList"></div>
+
+    <div class="owner-note">
+      🔐 Owner का personal mobile number यहाँ भी show नहीं किया गया है।
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  Temporary Driver Booking © 2026
+</div>
+
+
+<script>
+
+let currentBooking = null;
+
+let drivers = [
+  {
+    name:"Driver 1",
+    phone:"9999999999",
+    status:"Available"
+  }
+];
+
+function bookDriver(){
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const phone =
+    document.getElementById("customerPhone").value.trim();
+
+  const pickup =
+    document.getElementById("pickup").value.trim();
+
+  const drop =
+    document.getElementById("drop").value.trim();
+
+  const duration =
+    document.getElementById("duration").value;
+
+  const driverType =
+    document.getElementById("driverType").value;
+
+  if(!name){
+    alert("Customer Name डालिए");
+    return;
+  }
+
+  if(!/^[0-9]{10}$/.test(phone)){
+    alert("सही 10 digit Customer Mobile Number डालिए");
+    return;
+  }
+
+  if(!pickup){
+    alert("Pickup Location डालिए");
+    return;
+  }
+
+  if(!drop){
+    alert("Destination डालिए");
+    return;
+  }
+
+  let price = 0;
+
+  if(duration === "4"){
+    price = 600;
+  }
+
+  if(duration === "8"){
+    price = 1000;
+  }
+
+  if(duration === "24"){
+    price = 2200;
+  }
+
+  const bookingId =
+    "TD" + Date.now().toString().slice(-6);
+
+  currentBooking = {
+    id:bookingId,
+    name:name,
+    phone:phone,
+    pickup:pickup,
+    drop:drop,
+    duration:duration,
+    driverType:driverType,
+    price:price
+  };
+
+  document.getElementById("bookingId").textContent =
+    bookingId;
+
+  document.getElementById("showCustomer").textContent =
+    name;
+
+  const call =
+    document.getElementById("customerCall");
+
+  call.textContent = phone;
+  call.href = "tel:" + phone;
+
+  document.getElementById("showPickup").textContent =
+    pickup;
+
+  document.getElementById("showDrop").textContent =
+    drop;
+
+  document.getElementById("showDuration").textContent =
+    duration + " Hours";
+
+  document.getElementById("showDriver").textContent =
+    driverType;
+
+  document.getElementById("showPrice").textContent =
+    price;
+
+  document.getElementById("bookingCard")
+    .classList.remove("hidden");
+
+  document.getElementById("bookingCard")
+    .scrollIntoView({behavior:"smooth"});
+
+}
+
+
+function callCustomer(){
+
+  if(!currentBooking){
+    return;
+  }
+
+  window.location.href =
+    "tel:" + currentBooking.phone;
+}
+
+
+function openMaps(){
+
+  if(!currentBooking){
+    return;
+  }
+
+  const address =
+    encodeURIComponent(currentBooking.pickup);
+
+  window.open(
+    "https://www.google.com/maps/search/?api=1&query=" +
+    address,
+    "_blank"
+  );
+}
+
+
+function openAgentPanel(){
+
+  document.getElementById("agentPanel")
+    .classList.toggle("hidden");
+}
+
+
+function addDriver(){
+
+  const name =
+    document.getElementById("agentDriver").value.trim();
+
+  const phone =
+    document.getElementById("agentPhone").value.trim();
+
+  const status =
+    document.getElementById("agentStatus").value;
+
+  if(!name){
+    alert("Driver Name डालिए");
+    return;
+  }
+
+  if(!/^[0-9]{10}$/.test(phone)){
+    alert("सही 10 digit Driver Mobile Number डालिए");
+    return;
+  }
+
+  drivers.push({
+    name:name,
+    phone:phone,
+    status:status
+  });
+
+  renderDrivers();
+
+  document.getElementById("agentDriver").value="";
+  document.getElementById("agentPhone").value="";
+
+}
+
+
+function renderDrivers(){
+
+  const list =
+    document.getElementById("driverList");
+
+  list.innerHTML = "";
+
+  drivers.forEach(function(driver,index){
+
+    const div =
+      document.createElement("div");
+
+    div.className="booking";
+
+    div.innerHTML =
+      "<b>🚗 " + driver.name + "</b>" +
+      "<div class='small'>Status: " +
+      driver.status +
+      "</div>" +
+      "<div class='small'>Mobile: " +
+      driver.phone +
+      "</div>";
+
+    list.appendChild(div);
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>
