@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Temporary Driver Booking</title>
+
+<title>Prop Set U - Property Marketplace</title>
 
 <style>
 *{
@@ -19,38 +20,38 @@ body{
 }
 
 .header{
-  background:#111827;
+  background:#123c69;
   color:white;
-  padding:18px;
+  padding:22px 15px;
   text-align:center;
 }
 
 .header h1{
-  font-size:24px;
+  font-size:28px;
 }
 
 .header p{
-  margin-top:5px;
-  color:#d1d5db;
+  margin-top:6px;
   font-size:14px;
+  color:#dbeafe;
 }
 
 .container{
-  max-width:600px;
+  max-width:700px;
   margin:auto;
   padding:15px;
 }
 
 .card{
   background:white;
-  border-radius:15px;
+  border-radius:16px;
   padding:18px;
-  margin-bottom:15px;
+  margin-bottom:16px;
   box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
 .card h2{
-  font-size:19px;
+  font-size:20px;
   margin-bottom:15px;
 }
 
@@ -76,14 +77,24 @@ button{
   border:0;
   border-radius:10px;
   padding:14px;
-  margin-top:15px;
+  margin-top:14px;
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
 }
 
 .primary{
-  background:#111827;
+  background:#123c69;
+  color:white;
+}
+
+.green{
+  background:#16a34a;
+  color:white;
+}
+
+.orange{
+  background:#ea580c;
   color:white;
 }
 
@@ -92,41 +103,76 @@ button{
   color:#111827;
 }
 
-.green{
-  background:#16a34a;
-  color:white;
+.categories{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
-.booking{
-  border:1px solid #e5e7eb;
+.category{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  padding:14px 8px;
   border-radius:12px;
-  padding:14px;
-  margin-top:12px;
+  text-align:center;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.status{
+.category:hover{
+  background:#dbeafe;
+}
+
+.property{
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.property-image{
+  height:170px;
+  background:#dbeafe;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px;
+}
+
+.property-body{
+  padding:15px;
+}
+
+.property-title{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.property-price{
+  font-size:22px;
+  font-weight:bold;
+  color:#123c69;
+  margin-top:8px;
+}
+
+.property-location{
+  color:#6b7280;
+  margin-top:6px;
+  font-size:14px;
+}
+
+.badge{
   display:inline-block;
-  padding:6px 10px;
-  border-radius:20px;
   background:#dcfce7;
   color:#166534;
-  font-size:13px;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
   font-weight:bold;
+  margin-top:8px;
 }
 
-.price{
-  font-size:24px;
-  font-weight:bold;
-  margin-top:10px;
-}
-
-.small{
-  font-size:13px;
-  color:#6b7280;
-  margin-top:5px;
-}
-
-.owner-note{
+.note{
   background:#fff7ed;
   color:#9a3412;
   padding:12px;
@@ -141,9 +187,27 @@ button{
 
 .footer{
   text-align:center;
-  padding:20px;
+  padding:25px;
   color:#6b7280;
   font-size:13px;
+}
+
+.contact{
+  background:#ecfdf5;
+  color:#166534;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+  margin-top:15px;
+}
+
+.contact a{
+  display:block;
+  margin-top:8px;
+  font-size:19px;
+  font-weight:bold;
+  color:#166534;
+  text-decoration:none;
 }
 </style>
 </head>
@@ -151,378 +215,384 @@ button{
 <body>
 
 <div class="header">
-  <h1>🚗 Temporary Driver</h1>
-  <p>Driver Booking Service</p>
+  <h1>🏠 Prop Set U</h1>
+  <p>Buy • Rent • Lease • Sell • PG • Commercial Properties</p>
 </div>
 
 <div class="container">
 
-  <!-- CUSTOMER BOOKING -->
+  <!-- SEARCH -->
   <div class="card">
-    <h2>👤 Customer Booking</h2>
 
-    <label>Customer Name</label>
-    <input id="customerName" type="text" placeholder="अपना नाम लिखें">
+    <h2>🔎 Find Your Property</h2>
 
-    <label>Customer Mobile Number</label>
-    <input id="customerPhone" type="tel"
-           maxlength="10"
-           placeholder="10 digit mobile number">
+    <label>Search Area / Location</label>
+    <input
+      id="searchLocation"
+      type="text"
+      placeholder="Area, City या Location लिखें">
 
-    <label>Pickup Location</label>
-    <input id="pickup" type="text"
-           placeholder="Pickup location">
+    <label>Property Type</label>
 
-    <label>Drop / Destination</label>
-    <input id="drop" type="text"
-           placeholder="Destination">
-
-    <label>Driver Duration</label>
-    <select id="duration">
-      <option value="4">4 Hours</option>
-      <option value="8">8 Hours</option>
-      <option value="24">24 Hours</option>
+    <select id="propertyType">
+      <option value="All">All Properties</option>
+      <option value="House">House</option>
+      <option value="Flat">Flat / Apartment</option>
+      <option value="Villa">Villa</option>
+      <option value="Independent">Independent Property</option>
+      <option value="Open Plot">Open Plot</option>
+      <option value="Commercial">Commercial Property</option>
+      <option value="PG">PG</option>
     </select>
 
-    <label>Driver Type</label>
-    <select id="driverType">
-      <option>Normal Driver</option>
-      <option>Experienced Driver</option>
-      <option>Premium Driver</option>
+    <label>Requirement</label>
+
+    <select id="requirement">
+      <option value="All">Buy / Rent / Lease / Sell</option>
+      <option value="Buy">Buy</option>
+      <option value="Rent">Rent</option>
+      <option value="Lease">Lease</option>
+      <option value="Sell">Sell</option>
     </select>
 
-    <button class="green" onclick="bookDriver()">
-      🚗 Book Temporary Driver
+    <button class="primary" onclick="searchProperties()">
+      🔎 Search Property
     </button>
-  </div>
-
-
-  <!-- BOOKING RESULT -->
-  <div class="card hidden" id="bookingCard">
-
-    <h2>📋 Booking Details</h2>
-
-    <div class="booking">
-      <div><b>Booking ID:</b> <span id="bookingId"></span></div>
-
-      <div style="margin-top:8px;">
-        <b>Customer:</b> <span id="showCustomer"></span>
-      </div>
-
-      <div style="margin-top:8px;">
-        <b>Customer Mobile:</b>
-        <a id="customerCall" href="#"></a>
-      </div>
-
-      <div style="margin-top:8px;">
-        <b>Pickup:</b> <span id="showPickup"></span>
-      </div>
-
-      <div style="margin-top:8px;">
-        <b>Destination:</b> <span id="showDrop"></span>
-      </div>
-
-      <div style="margin-top:8px;">
-        <b>Duration:</b> <span id="showDuration"></span>
-      </div>
-
-      <div style="margin-top:8px;">
-        <b>Driver:</b> <span id="showDriver"></span>
-      </div>
-
-      <div class="price">
-        ₹<span id="showPrice"></span>
-      </div>
-
-      <div style="margin-top:12px;">
-        <span class="status">🟢 Booking Received</span>
-      </div>
-
-      <button class="primary" onclick="callCustomer()">
-        📞 Call Customer
-      </button>
-
-      <button class="secondary" onclick="openMaps()">
-        📍 Open Pickup Location
-      </button>
-    </div>
-
-    <div class="owner-note">
-      🔒 Owner का मोबाइल नंबर Customer या Driver को इस ऐप में नहीं दिखाया जाएगा।
-      Owner से Direct Contact का कोई बटन नहीं रखा गया है।
-    </div>
 
   </div>
 
 
-  <!-- OWNER / AGENT PANEL -->
+  <!-- CATEGORIES -->
+
   <div class="card">
-    <h2>🧑‍💼 Owner / Agent Panel</h2>
 
-    <p class="small">
-      Owner/Agent यहाँ से Driver और Booking को manage कर सकेगा।
+    <h2>🏘️ Property Categories</h2>
+
+    <div class="categories">
+
+      <div class="category" onclick="selectCategory('Buy')">
+        🏠<br>Buy
+      </div>
+
+      <div class="category" onclick="selectCategory('Rent')">
+        🔑<br>Rent
+      </div>
+
+      <div class="category" onclick="selectCategory('Lease')">
+        📄<br>Lease
+      </div>
+
+      <div class="category" onclick="selectCategory('Sell')">
+        💰<br>Sell
+      </div>
+
+      <div class="category" onclick="selectCategory('PG')">
+        🛏️<br>PG
+      </div>
+
+      <div class="category" onclick="selectCategory('Commercial')">
+        🏢<br>Commercial
+      </div>
+
+      <div class="category" onclick="selectCategory('Open Plot')">
+        🌳<br>Open Plot
+      </div>
+
+      <div class="category" onclick="selectCategory('Independent')">
+        🏡<br>Independent
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROPERTY LIST -->
+
+  <div class="card">
+
+    <h2>🏡 Available Properties</h2>
+
+    <div id="propertyList"></div>
+
+  </div>
+
+
+  <!-- ADMIN CONTACT -->
+
+  <div class="card">
+
+    <h2>📞 Contact Prop Set U</h2>
+
+    <p>
+      Property की पूरी जानकारी, visit, owner/agent details
+      और booking के लिए Prop Set U Admin से संपर्क करें।
     </p>
 
-    <button class="primary" onclick="openAgentPanel()">
-      Open Agent Panel
-    </button>
+    <div class="contact">
+
+      <b>Prop Set U Admin</b>
+
+      <a href="tel:08062180745">
+        📞 08062180745
+      </a>
+
+      <a href="https://wa.me/918062180745" target="_blank">
+        💬 WhatsApp
+      </a>
+
+    </div>
+
+    <div class="note">
+      🔐 Customer को Owner का personal mobile number
+      सीधे नहीं दिखाया जाएगा। Contact Prop Set U Admin के
+      माध्यम से होगा।
+    </div>
+
   </div>
 
 
-  <!-- AGENT PANEL -->
-  <div class="card hidden" id="agentPanel">
+  <!-- PROPERTY POST -->
 
-    <h2>🚘 Agent Dashboard</h2>
+  <div class="card">
 
-    <label>Driver Name</label>
-    <input id="agentDriver" type="text"
-           placeholder="Driver का नाम">
+    <h2>➕ List Your Property</h2>
 
-    <label>Driver Mobile</label>
-    <input id="agentPhone" type="tel"
-           maxlength="10"
-           placeholder="Driver mobile number">
+    <p style="color:#6b7280;font-size:14px;">
+      Owner या Agent अपनी property Prop Set U पर
+      list करवाने के लिए Admin से संपर्क करें।
+    </p>
 
-    <label>Driver Status</label>
-    <select id="agentStatus">
-      <option>Available</option>
-      <option>Busy</option>
-      <option>Offline</option>
-    </select>
-
-    <button class="green" onclick="addDriver()">
-      ➕ Add Driver
+    <button class="green"
+      onclick="contactAdmin()">
+      📞 Contact Admin
     </button>
-
-    <div id="driverList"></div>
-
-    <div class="owner-note">
-      🔐 Owner का personal mobile number यहाँ भी show नहीं किया गया है।
-    </div>
 
   </div>
 
 </div>
 
+
 <div class="footer">
-  Temporary Driver Booking © 2026
+  Prop Set U © 2026<br>
+  Property Buy • Rent • Lease • Sell
 </div>
 
 
 <script>
 
-let currentBooking = null;
+const properties = [
 
-let drivers = [
   {
-    name:"Driver 1",
-    phone:"9999999999",
-    status:"Available"
+    title:"3 BHK Independent House",
+    type:"Independent",
+    requirement:"Buy",
+    location:"Hyderabad",
+    price:"₹85 Lakh",
+    icon:"🏡"
+  },
+
+  {
+    title:"2 BHK Flat",
+    type:"Flat",
+    requirement:"Rent",
+    location:"Hyderabad",
+    price:"₹18,000 / Month",
+    icon:"🏢"
+  },
+
+  {
+    title:"Commercial Shop",
+    type:"Commercial",
+    requirement:"Lease",
+    location:"Hyderabad",
+    price:"₹35,000 / Month",
+    icon:"🏪"
+  },
+
+  {
+    title:"Residential Open Plot",
+    type:"Open Plot",
+    requirement:"Buy",
+    location:"Hyderabad",
+    price:"₹45 Lakh",
+    icon:"🌳"
+  },
+
+  {
+    title:"PG Accommodation",
+    type:"PG",
+    requirement:"Rent",
+    location:"Hyderabad",
+    price:"₹7,000 / Month",
+    icon:"🛏️"
   }
+
 ];
 
-function bookDriver(){
 
-  const name =
-    document.getElementById("customerName").value.trim();
+function renderProperties(list){
 
-  const phone =
-    document.getElementById("customerPhone").value.trim();
+  const container =
+    document.getElementById("propertyList");
 
-  const pickup =
-    document.getElementById("pickup").value.trim();
+  container.innerHTML="";
 
-  const drop =
-    document.getElementById("drop").value.trim();
+  if(list.length===0){
 
-  const duration =
-    document.getElementById("duration").value;
+    container.innerHTML =
+      "<p style='color:#6b7280;padding:10px;'>" +
+      "❌ इस search में कोई property नहीं मिली।" +
+      "</p>";
 
-  const driverType =
-    document.getElementById("driverType").value;
-
-  if(!name){
-    alert("Customer Name डालिए");
     return;
   }
 
-  if(!/^[0-9]{10}$/.test(phone)){
-    alert("सही 10 digit Customer Mobile Number डालिए");
-    return;
-  }
 
-  if(!pickup){
-    alert("Pickup Location डालिए");
-    return;
-  }
-
-  if(!drop){
-    alert("Destination डालिए");
-    return;
-  }
-
-  let price = 0;
-
-  if(duration === "4"){
-    price = 600;
-  }
-
-  if(duration === "8"){
-    price = 1000;
-  }
-
-  if(duration === "24"){
-    price = 2200;
-  }
-
-  const bookingId =
-    "TD" + Date.now().toString().slice(-6);
-
-  currentBooking = {
-    id:bookingId,
-    name:name,
-    phone:phone,
-    pickup:pickup,
-    drop:drop,
-    duration:duration,
-    driverType:driverType,
-    price:price
-  };
-
-  document.getElementById("bookingId").textContent =
-    bookingId;
-
-  document.getElementById("showCustomer").textContent =
-    name;
-
-  const call =
-    document.getElementById("customerCall");
-
-  call.textContent = phone;
-  call.href = "tel:" + phone;
-
-  document.getElementById("showPickup").textContent =
-    pickup;
-
-  document.getElementById("showDrop").textContent =
-    drop;
-
-  document.getElementById("showDuration").textContent =
-    duration + " Hours";
-
-  document.getElementById("showDriver").textContent =
-    driverType;
-
-  document.getElementById("showPrice").textContent =
-    price;
-
-  document.getElementById("bookingCard")
-    .classList.remove("hidden");
-
-  document.getElementById("bookingCard")
-    .scrollIntoView({behavior:"smooth"});
-
-}
-
-
-function callCustomer(){
-
-  if(!currentBooking){
-    return;
-  }
-
-  window.location.href =
-    "tel:" + currentBooking.phone;
-}
-
-
-function openMaps(){
-
-  if(!currentBooking){
-    return;
-  }
-
-  const address =
-    encodeURIComponent(currentBooking.pickup);
-
-  window.open(
-    "https://www.google.com/maps/search/?api=1&query=" +
-    address,
-    "_blank"
-  );
-}
-
-
-function openAgentPanel(){
-
-  document.getElementById("agentPanel")
-    .classList.toggle("hidden");
-}
-
-
-function addDriver(){
-
-  const name =
-    document.getElementById("agentDriver").value.trim();
-
-  const phone =
-    document.getElementById("agentPhone").value.trim();
-
-  const status =
-    document.getElementById("agentStatus").value;
-
-  if(!name){
-    alert("Driver Name डालिए");
-    return;
-  }
-
-  if(!/^[0-9]{10}$/.test(phone)){
-    alert("सही 10 digit Driver Mobile Number डालिए");
-    return;
-  }
-
-  drivers.push({
-    name:name,
-    phone:phone,
-    status:status
-  });
-
-  renderDrivers();
-
-  document.getElementById("agentDriver").value="";
-  document.getElementById("agentPhone").value="";
-
-}
-
-
-function renderDrivers(){
-
-  const list =
-    document.getElementById("driverList");
-
-  list.innerHTML = "";
-
-  drivers.forEach(function(driver,index){
+  list.forEach(function(property){
 
     const div =
       document.createElement("div");
 
-    div.className="booking";
+    div.className="property";
 
     div.innerHTML =
-      "<b>🚗 " + driver.name + "</b>" +
-      "<div class='small'>Status: " +
-      driver.status +
+
+      "<div class='property-image'>" +
+      property.icon +
       "</div>" +
-      "<div class='small'>Mobile: " +
-      driver.phone +
+
+      "<div class='property-body'>" +
+
+      "<div class='property-title'>" +
+      property.title +
+      "</div>" +
+
+      "<div class='property-price'>" +
+      property.price +
+      "</div>" +
+
+      "<div class='property-location'>" +
+      "📍 " + property.location +
+      "</div>" +
+
+      "<span class='badge'>" +
+      property.requirement +
+      "</span>" +
+
+      "<button class='primary' " +
+      "onclick=\"propertyEnquiry('" +
+      property.title.replace(/'/g,"\\'") +
+      "')\">" +
+      "📞 Enquire Now" +
+      "</button>" +
+
       "</div>";
 
-    list.appendChild(div);
+    container.appendChild(div);
 
   });
 
 }
+
+
+function searchProperties(){
+
+  const location =
+    document.getElementById("searchLocation")
+    .value.trim()
+    .toLowerCase();
+
+  const type =
+    document.getElementById("propertyType").value;
+
+  const requirement =
+    document.getElementById("requirement").value;
+
+
+  const result =
+    properties.filter(function(property){
+
+      const locationMatch =
+        !location ||
+        property.location.toLowerCase()
+        .includes(location);
+
+      const typeMatch =
+        type==="All" ||
+        property.type===type;
+
+      const requirementMatch =
+        requirement==="All" ||
+        property.requirement===requirement;
+
+      return locationMatch &&
+             typeMatch &&
+             requirementMatch;
+
+    });
+
+
+  renderProperties(result);
+
+}
+
+
+function selectCategory(category){
+
+  if(
+    category==="Buy" ||
+    category==="Rent" ||
+    category==="Lease" ||
+    category==="Sell"
+  ){
+
+    document.getElementById("requirement")
+      .value=category;
+
+  }
+  else{
+
+    document.getElementById("propertyType")
+      .value=category;
+
+  }
+
+  searchProperties();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function propertyEnquiry(propertyName){
+
+  const message =
+    "Hello Prop Set U Admin,%0A%0A" +
+    "I am interested in this property:%0A" +
+    propertyName;
+
+  window.open(
+    "https://wa.me/918062180745?text=" +
+    message,
+    "_blank"
+  );
+
+}
+
+
+function contactAdmin(){
+
+  window.location.href =
+    "tel:08062180745";
+
+}
+
+
+renderProperties(properties);
 
 </script>
 
