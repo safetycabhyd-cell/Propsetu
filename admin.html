@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Prop Set U - Admin Panel</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f6f9;
+  color:#222;
+}
+.header{
+  background:#063b66;
+  color:white;
+  padding:18px 15px;
+  text-align:center;
+}
+.header h1{margin:0;font-size:24px}
+.header p{margin:6px 0 0;font-size:13px}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:12px;
+}
+
+.card{
+  background:white;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h2{
+  margin:0 0 14px;
+  font-size:19px;
+  color:#063b66;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  font-size:13px;
+  margin-top:11px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:14px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  border:0;
+  border-radius:8px;
+  padding:12px 16px;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.save{
+  width:100%;
+  margin-top:16px;
+  background:#159447;
+  color:white;
+}
+
+.clear{
+  width:100%;
+  margin-top:8px;
+  background:#777;
+  color:white;
+}
+
+.property{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-top:12px;
+}
+
+.property h3{
+  margin:0 0 7px;
+  color:#063b66;
+}
+
+.property p{
+  margin:5px 0;
+  font-size:13px;
+}
+
+.delete{
+  background:#d62828;
+  color:white;
+  margin-top:8px;
+}
+
+.edit{
+  background:#e9a400;
+  color:white;
+  margin-top:8px;
+  margin-right:5px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  background:#e7f7ec;
+  color:#13843d;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:15px;
+}
+
+.footer{
+  text-align:center;
+  padding:20px;
+  color:#777;
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>🏠 Prop Set U</h1>
+  <p>Admin Property Management Panel</p>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h2>➕ Add New Property</h2>
+
+<label>Property Title</label>
+<input id="title" placeholder="जैसे 3 BHK Independent House">
+
+<label>Property Type</label>
+<select id="type">
+  <option value="Independent">Independent</option>
+  <option value="Flat">Flat</option>
+  <option value="Villa">Villa</option>
+  <option value="Open Plot">Open Plot</option>
+  <option value="Commercial">Commercial</option>
+  <option value="Shop">Shop</option>
+  <option value="Office">Office</option>
+  <option value="PG">PG</option>
+</select>
+
+<label>Requirement</label>
+<select id="requirement">
+  <option value="Buy">Buy</option>
+  <option value="Rent">Rent</option>
+  <option value="Lease">Lease</option>
+  <option value="Sell">Sell</option>
+</select>
+
+<label>Area / Location</label>
+<input id="location" placeholder="जैसे Hyderabad, Hyderabad">
+
+<label>Price</label>
+<input id="price" placeholder="जैसे ₹85 Lakh या ₹18,000 / Month">
+
+<label>Bedrooms</label>
+<input id="bedrooms" type="number" placeholder="जैसे 3">
+
+<label>Property Area</label>
+<input id="area" placeholder="जैसे 1500 Sq Ft">
+
+<label>Owner / Agent Name</label>
+<input id="owner" placeholder="Owner या Agent Name">
+
+<label>Owner / Agent Mobile</label>
+<input id="phone" type="tel" placeholder="10 digit mobile number">
+
+<label>Property Description</label>
+<textarea id="description"
+placeholder="Property की पूरी जानकारी लिखें"></textarea>
+
+<label>Property Image URL</label>
+<input id="image" placeholder="Image URL">
+
+<label>Property Video URL</label>
+<input id="video" placeholder="YouTube / Video URL">
+
+<button class="save" onclick="saveProperty()">
+💾 Save Property
+</button>
+
+<button class="clear" onclick="clearForm()">
+Clear Form
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>🏘️ Property List</h2>
+
+<div id="propertyList"></div>
+
+</div>
+
+</div>
+
+<div class="footer">
+Prop Set U © 2026<br>
+Admin Panel
+</div>
+
+
+<script>
+
+let properties =
+JSON.parse(localStorage.getItem("propSetUProperties")) || [];
+
+let editIndex = -1;
+
+
+function saveProperty(){
+
+  const title =
+  document.getElementById("title").value.trim();
+
+  const type =
+  document.getElementById("type").value;
+
+  const requirement =
+  document.getElementById("requirement").value;
+
+  const location =
+  document.getElementById("location").value.trim();
+
+  const price =
+  document.getElementById("price").value.trim();
+
+  const bedrooms =
+  document.getElementById("bedrooms").value.trim();
+
+  const area =
+  document.getElementById("area").value.trim();
+
+  const owner =
+  document.getElementById("owner").value.trim();
+
+  const phone =
+  document.getElementById("phone").value.trim();
+
+  const description =
+  document.getElementById("description").value.trim();
+
+  const image =
+  document.getElementById("image").value.trim();
+
+  const video =
+  document.getElementById("video").value.trim();
+
+
+  if(!title || !location || !price){
+
+    alert("Property Title, Location और Price भरना जरूरी है.");
+
+    return;
+  }
+
+
+  const property = {
+
+    title:title,
+    type:type,
+    requirement:requirement,
+    location:location,
+    price:price,
+    bedrooms:bedrooms,
+    area:area,
+    owner:owner,
+    phone:phone,
+    description:description,
+    image:image,
+    video:video,
+    createdAt:new Date().toLocaleString()
+
+  };
+
+
+  if(editIndex === -1){
+
+    properties.push(property);
+
+    alert("✅ Property successfully added.");
+
+  }else{
+
+    properties[editIndex] = property;
+
+    alert("✅ Property updated.");
+
+    editIndex = -1;
+  }
+
+
+  localStorage.setItem(
+    "propSetUProperties",
+    JSON.stringify(properties)
+  );
+
+
+  clearForm();
+
+  showProperties();
+
+}
+
+
+function showProperties(){
+
+  const list =
+  document.getElementById("propertyList");
+
+
+  if(properties.length === 0){
+
+    list.innerHTML =
+    '<div class="empty">अभी कोई Property Added नहीं है.</div>';
+
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  properties.forEach((p,index)=>{
+
+    const div =
+    document.createElement("div");
+
+    div.className = "property";
+
+
+    div.innerHTML = `
+
+      <h3>${escapeHtml(p.title)}</h3>
+
+      <span class="badge">
+      ${escapeHtml(p.requirement)}
+      </span>
+
+      <p>🏠 <b>Type:</b>
+      ${escapeHtml(p.type)}</p>
+
+      <p>📍 <b>Location:</b>
+      ${escapeHtml(p.location)}</p>
+
+      <p>💰 <b>Price:</b>
+      ${escapeHtml(p.price)}</p>
+
+      ${p.bedrooms ?
+      `<p>🛏️ <b>Bedrooms:</b>
+      ${escapeHtml(p.bedrooms)}</p>` : ""}
+
+      ${p.area ?
+      `<p>📐 <b>Area:</b>
+      ${escapeHtml(p.area)}</p>` : ""}
+
+      ${p.owner ?
+      `<p>👤 <b>Owner/Agent:</b>
+      ${escapeHtml(p.owner)}</p>` : ""}
+
+      ${p.phone ?
+      `<p>📞 <b>Mobile:</b>
+      ${escapeHtml(p.phone)}</p>` : ""}
+
+      ${p.description ?
+      `<p>📝 ${escapeHtml(p.description)}</p>` : ""}
+
+      <button class="edit"
+      onclick="editProperty(${index})">
+      ✏️ Edit
+      </button>
+
+      <button class="delete"
+      onclick="deleteProperty(${index})">
+      🗑️ Delete
+      </button>
+
+    `;
+
+
+    list.appendChild(div);
+
+  });
+
+}
+
+
+function editProperty(index){
+
+  const p = properties[index];
+
+  document.getElementById("title").value = p.title;
+  document.getElementById("type").value = p.type;
+  document.getElementById("requirement").value = p.requirement;
+  document.getElementById("location").value = p.location;
+  document.getElementById("price").value = p.price;
+  document.getElementById("bedrooms").value = p.bedrooms;
+  document.getElementById("area").value = p.area;
+  document.getElementById("owner").value = p.owner;
+  document.getElementById("phone").value = p.phone;
+  document.getElementById("description").value = p.description;
+  document.getElementById("image").value = p.image;
+  document.getElementById("video").value = p.video;
+
+  editIndex = index;
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function deleteProperty(index){
+
+  if(!confirm("क्या आप यह Property Delete करना चाहते हैं?")){
+    return;
+  }
+
+  properties.splice(index,1);
+
+  localStorage.setItem(
+    "propSetUProperties",
+    JSON.stringify(properties)
+  );
+
+  showProperties();
+
+}
+
+
+function clearForm(){
+
+  document.getElementById("title").value="";
+  document.getElementById("location").value="";
+  document.getElementById("price").value="";
+  document.getElementById("bedrooms").value="";
+  document.getElementById("area").value="";
+  document.getElementById("owner").value="";
+  document.getElementById("phone").value="";
+  document.getElementById("description").value="";
+  document.getElementById("image").value="";
+  document.getElementById("video").value="";
+
+  document.getElementById("type").selectedIndex=0;
+  document.getElementById("requirement").selectedIndex=0;
+
+  editIndex=-1;
+
+}
+
+
+function escapeHtml(text){
+
+  return String(text || "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+showProperties();
+
+</script>
+
+</body>
+</html>
