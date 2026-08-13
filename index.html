@@ -7,6 +7,7 @@
 <title>Prop Set U - Property Marketplace</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -15,76 +16,85 @@
 }
 
 body{
-  background:#f4f6f8;
-  color:#222;
+  background:#f3f6fa;
+  color:#172033;
 }
 
 .header{
-  background:#123c69;
+  background:#063b68;
   color:white;
-  padding:22px 15px;
+  padding:18px 15px;
   text-align:center;
 }
 
 .header h1{
-  font-size:28px;
+  font-size:25px;
+  font-weight:800;
 }
 
 .header p{
-  margin-top:6px;
-  font-size:14px;
+  margin-top:5px;
+  font-size:13px;
   color:#dbeafe;
 }
 
 .container{
-  max-width:700px;
+  max-width:650px;
   margin:auto;
-  padding:15px;
+  padding:12px;
 }
 
 .card{
   background:white;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
+  border-radius:15px;
+  padding:16px;
+  margin-bottom:14px;
   box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
 .card h2{
-  font-size:20px;
-  margin-bottom:15px;
+  font-size:18px;
+  margin-bottom:13px;
 }
 
 label{
   display:block;
-  margin-top:12px;
-  margin-bottom:6px;
+  font-size:13px;
   font-weight:bold;
-  font-size:14px;
+  margin-top:11px;
+  margin-bottom:5px;
 }
 
-input,select{
+input,
+select,
+textarea{
   width:100%;
-  padding:13px;
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  font-size:15px;
+  padding:12px;
+  border:1px solid #d5dbe3;
+  border-radius:9px;
+  font-size:14px;
   background:white;
+  outline:none;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
 }
 
 button{
   width:100%;
   border:0;
-  border-radius:10px;
-  padding:14px;
-  margin-top:14px;
-  font-size:16px;
+  border-radius:9px;
+  padding:13px;
+  margin-top:12px;
+  font-size:15px;
   font-weight:bold;
   cursor:pointer;
 }
 
 .primary{
-  background:#123c69;
+  background:#063b68;
   color:white;
 }
 
@@ -94,44 +104,25 @@ button{
 }
 
 .orange{
-  background:#ea580c;
+  background:#f97316;
   color:white;
 }
 
-.secondary{
-  background:#e5e7eb;
-  color:#111827;
-}
-
-.categories{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-.category{
-  background:#eff6ff;
-  border:1px solid #bfdbfe;
-  padding:14px 8px;
-  border-radius:12px;
-  text-align:center;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.category:hover{
-  background:#dbeafe;
+.light{
+  background:#eaf2fb;
+  color:#063b68;
 }
 
 .property{
-  border:1px solid #e5e7eb;
-  border-radius:14px;
+  border:1px solid #e1e7ef;
+  border-radius:13px;
   overflow:hidden;
-  margin-top:15px;
+  margin-top:13px;
+  background:white;
 }
 
-.property-image{
-  height:170px;
+.property-img{
+  height:145px;
   background:#dbeafe;
   display:flex;
   align-items:center;
@@ -139,233 +130,388 @@ button{
   font-size:55px;
 }
 
-.property-body{
-  padding:15px;
+.property-content{
+  padding:13px;
 }
 
 .property-title{
+  font-size:16px;
+  font-weight:bold;
+  color:#172033;
+}
+
+.price{
+  color:#063b68;
   font-size:18px;
   font-weight:bold;
+  margin-top:7px;
 }
 
-.property-price{
-  font-size:22px;
-  font-weight:bold;
-  color:#123c69;
-  margin-top:8px;
-}
-
-.property-location{
+.location{
   color:#6b7280;
-  margin-top:6px;
-  font-size:14px;
+  font-size:12px;
+  margin-top:5px;
 }
 
-.badge{
+.tag{
   display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:11px;
+  margin-top:7px;
   background:#dcfce7;
   color:#166534;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:12px;
   font-weight:bold;
-  margin-top:8px;
 }
 
-.note{
-  background:#fff7ed;
-  color:#9a3412;
+.search-box{
+  background:#f8fafc;
+  padding:12px;
+  border-radius:12px;
+}
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.category{
+  background:#eff6ff;
+  border:1px solid #dbeafe;
+  border-radius:9px;
+  padding:11px 5px;
+  text-align:center;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.category:active{
+  transform:scale(.98);
+}
+
+.details-box{
+  background:#f8fafc;
   padding:12px;
   border-radius:10px;
+  margin-top:10px;
+}
+
+.detail-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:7px 0;
+  border-bottom:1px solid #e5e7eb;
   font-size:13px;
+}
+
+.detail-row:last-child{
+  border-bottom:0;
+}
+
+.detail-label{
+  color:#6b7280;
+}
+
+.detail-value{
+  font-weight:bold;
+  text-align:right;
+}
+
+.notice{
+  background:#fff7ed;
+  color:#9a3412;
+  padding:11px;
+  border-radius:9px;
   margin-top:12px;
+  font-size:12px;
+}
+
+.success{
+  background:#ecfdf5;
+  color:#166534;
+  padding:12px;
+  border-radius:10px;
+  margin-top:10px;
+  font-size:13px;
+  display:none;
+}
+
+.contact-box{
+  background:#f8fafc;
+  border-radius:12px;
+  padding:13px;
+  margin-top:10px;
 }
 
 .hidden{
-  display:none;
+  display:none !important;
+}
+
+.small{
+  color:#6b7280;
+  font-size:12px;
+  line-height:1.5;
 }
 
 .footer{
   text-align:center;
-  padding:25px;
+  padding:20px;
   color:#6b7280;
-  font-size:13px;
+  font-size:11px;
 }
 
-.contact{
-  background:#ecfdf5;
-  color:#166534;
-  padding:15px;
-  border-radius:12px;
-  text-align:center;
-  margin-top:15px;
+.back{
+  background:#e5e7eb;
+  color:#111827;
 }
 
-.contact a{
-  display:block;
-  margin-top:8px;
-  font-size:19px;
-  font-weight:bold;
-  color:#166534;
-  text-decoration:none;
+.video-box{
+  height:150px;
+  background:#dbeafe;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+  margin-top:10px;
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+
 <div class="header">
+
   <h1>🏠 Prop Set U</h1>
-  <p>Buy • Rent • Lease • Sell • PG • Commercial Properties</p>
+
+  <p>
+    Buy • Rent • Lease • Sell • PG • Commercial Properties
+  </p>
+
 </div>
+
 
 <div class="container">
 
-  <!-- SEARCH -->
-  <div class="card">
 
-    <h2>🔎 Find Your Property</h2>
+<!-- ================= SEARCH ================= -->
+
+<div class="card">
+
+  <h2>🔎 Find Your Property</h2>
+
+  <div class="search-box">
 
     <label>Search Area / Location</label>
+
     <input
       id="searchLocation"
       type="text"
-      placeholder="Area, City या Location लिखें">
+      placeholder="Area, City or Location लिखें"
+    >
 
     <label>Property Type</label>
 
-    <select id="propertyType">
+    <select id="searchType">
+
       <option value="All">All Properties</option>
-      <option value="House">House</option>
-      <option value="Flat">Flat / Apartment</option>
-      <option value="Villa">Villa</option>
-      <option value="Independent">Independent Property</option>
+      <option value="Buy">Buy</option>
+      <option value="Rent">Rent</option>
+      <option value="Lease">Lease</option>
+      <option value="Sell">Sell</option>
+      <option value="Commercial">Commercial</option>
       <option value="Open Plot">Open Plot</option>
-      <option value="Commercial">Commercial Property</option>
+      <option value="Independent">Independent</option>
       <option value="PG">PG</option>
+
     </select>
 
     <label>Requirement</label>
 
     <select id="requirement">
-      <option value="All">Buy / Rent / Lease / Sell</option>
-      <option value="Buy">Buy</option>
-      <option value="Rent">Rent</option>
-      <option value="Lease">Lease</option>
-      <option value="Sell">Sell</option>
+
+      <option>Buy / Rent / Lease / Sell</option>
+      <option>Buy</option>
+      <option>Rent</option>
+      <option>Lease</option>
+      <option>Sell</option>
+
     </select>
 
-    <button class="primary" onclick="searchProperties()">
+    <button
+      class="primary"
+      onclick="searchProperties()"
+    >
       🔎 Search Property
     </button>
 
   </div>
 
+</div>
 
-  <!-- CATEGORIES -->
 
-  <div class="card">
+<!-- ================= CATEGORIES ================= -->
 
-    <h2>🏘️ Property Categories</h2>
+<div class="card">
 
-    <div class="categories">
+  <h2>🏘️ Property Categories</h2>
 
-      <div class="category" onclick="selectCategory('Buy')">
-        🏠<br>Buy
-      </div>
+  <div class="categories">
 
-      <div class="category" onclick="selectCategory('Rent')">
-        🔑<br>Rent
-      </div>
+    <div class="category" onclick="categorySearch('Buy')">
+      🏠<br>Buy
+    </div>
 
-      <div class="category" onclick="selectCategory('Lease')">
-        📄<br>Lease
-      </div>
+    <div class="category" onclick="categorySearch('Rent')">
+      🏢<br>Rent
+    </div>
 
-      <div class="category" onclick="selectCategory('Sell')">
-        💰<br>Sell
-      </div>
+    <div class="category" onclick="categorySearch('Lease')">
+      📄<br>Lease
+    </div>
 
-      <div class="category" onclick="selectCategory('PG')">
-        🛏️<br>PG
-      </div>
+    <div class="category" onclick="categorySearch('Sell')">
+      💰<br>Sell
+    </div>
 
-      <div class="category" onclick="selectCategory('Commercial')">
-        🏢<br>Commercial
-      </div>
+    <div class="category" onclick="categorySearch('PG')">
+      🛏️<br>PG
+    </div>
 
-      <div class="category" onclick="selectCategory('Open Plot')">
-        🌳<br>Open Plot
-      </div>
+    <div class="category" onclick="categorySearch('Commercial')">
+      🏢<br>Commercial
+    </div>
 
-      <div class="category" onclick="selectCategory('Independent')">
-        🏡<br>Independent
-      </div>
+    <div class="category" onclick="categorySearch('Open Plot')">
+      🌳<br>Open Plot
+    </div>
 
+    <div class="category" onclick="categorySearch('Independent')">
+      🏡<br>Independent
     </div>
 
   </div>
 
+</div>
 
-  <!-- PROPERTY LIST -->
 
-  <div class="card">
+<!-- ================= PROPERTY LIST ================= -->
 
-    <h2>🏡 Available Properties</h2>
+<div class="card">
 
-    <div id="propertyList"></div>
+  <h2>🏡 Available Properties</h2>
+
+  <div id="propertyList"></div>
+
+</div>
+
+
+<!-- ================= PROPERTY DETAILS ================= -->
+
+<div class="card hidden" id="detailsCard">
+
+  <h2>🏠 Property Details</h2>
+
+  <div id="propertyDetails"></div>
+
+  <button
+    class="back"
+    onclick="closeDetails()"
+  >
+    ← Back to Properties
+  </button>
+
+</div>
+
+
+<!-- ================= ENQUIRY ================= -->
+
+<div class="card hidden" id="enquiryCard">
+
+  <h2>📝 Property Enquiry</h2>
+
+  <p class="small">
+    Property के बारे में जानकारी लेने के लिए अपना नाम और मोबाइल नंबर डालें।
+  </p>
+
+  <label>Customer Name</label>
+
+  <input
+    id="enquiryName"
+    type="text"
+    placeholder="अपना नाम"
+  >
+
+  <label>Mobile Number</label>
+
+  <input
+    id="enquiryPhone"
+    type="tel"
+    maxlength="10"
+    placeholder="10 digit mobile number"
+  >
+
+  <label>Message</label>
+
+  <textarea
+    id="enquiryMessage"
+    placeholder="आप क्या जानकारी चाहते हैं?"
+  ></textarea>
+
+  <button
+    class="green"
+    onclick="sendEnquiry()"
+  >
+    💬 Send Enquiry on WhatsApp
+  </button>
+
+  <div
+    id="enquirySuccess"
+    class="success"
+  >
+    ✅ Enquiry तैयार है। WhatsApp खुल रहा है।
+  </div>
+
+  <div class="notice">
+
+    🔒 Owner का मोबाइल नंबर Customer को नहीं दिखाया जाएगा।
+    Customer केवल Prop Set U Admin से संपर्क करेगा।
 
   </div>
 
+</div>
 
-  <!-- ADMIN CONTACT -->
 
-  <div class="card">
+<!-- ================= ADMIN CONTACT ================= -->
 
-    <h2>📞 Contact Prop Set U</h2>
+<div class="card">
 
-    <p>
-      Property की पूरी जानकारी, visit, owner/agent details
-      और booking के लिए Prop Set U Admin से संपर्क करें।
+  <h2>📞 Contact Prop Set U</h2>
+
+  <p class="small">
+    Property खरीदने, किराये, lease या sale की जानकारी के लिए
+    Prop Set U Admin से संपर्क करें।
+  </p>
+
+  <div class="contact-box">
+
+    <b>📱 Prop Set U Admin</b>
+
+    <p class="small" style="margin-top:6px;">
+      Owner / Agent का personal number customer को नहीं दिखाया जाएगा।
     </p>
 
-    <div class="contact">
-
-      <b>Prop Set U Admin</b>
-
-      <a href="tel:08062180745">
-        📞 08062180745
-      </a>
-
-      <a href="https://wa.me/918062180745" target="_blank">
-        💬 WhatsApp
-      </a>
-
-    </div>
-
-    <div class="note">
-      🔐 Customer को Owner का personal mobile number
-      सीधे नहीं दिखाया जाएगा। Contact Prop Set U Admin के
-      माध्यम से होगा।
-    </div>
-
-  </div>
-
-
-  <!-- PROPERTY POST -->
-
-  <div class="card">
-
-    <h2>➕ List Your Property</h2>
-
-    <p style="color:#6b7280;font-size:14px;">
-      Owner या Agent अपनी property Prop Set U पर
-      list करवाने के लिए Admin से संपर्क करें।
-    </p>
-
-    <button class="green"
-      onclick="contactAdmin()">
-      📞 Contact Admin
+    <button
+      class="green"
+      onclick="contactAdmin()"
+    >
+      💬 WhatsApp Admin
     </button>
 
   </div>
@@ -373,77 +519,241 @@ button{
 </div>
 
 
+<!-- ================= LIST PROPERTY ================= -->
+
+<div class="card">
+
+  <h2>➕ List Your Property</h2>
+
+  <p class="small">
+    Owner या Agent अपनी Property Prop Set U पर List करवाने के लिए
+    Admin से संपर्क करें।
+  </p>
+
+  <button
+    class="green"
+    onclick="contactAdmin()"
+  >
+    📞 Contact Admin
+  </button>
+
+</div>
+
+
+</div>
+
+
 <div class="footer">
+
   Prop Set U © 2026<br>
   Property Buy • Rent • Lease • Sell
+
 </div>
 
 
 <script>
 
+/* =====================================================
+   ADMIN WHATSAPP NUMBER
+   ===================================================== */
+
+const ADMIN_WHATSAPP = "918062180745";
+
+
+/* =====================================================
+   PROPERTY DATA
+   ===================================================== */
+
 const properties = [
 
   {
+    id:1,
+
     title:"3 BHK Independent House",
-    type:"Independent",
-    requirement:"Buy",
-    location:"Hyderabad",
+
+    type:"Buy",
+
+    category:"Independent",
+
     price:"₹85 Lakh",
-    icon:"🏡"
+
+    location:"Hyderabad",
+
+    area:"1800 Sq Ft",
+
+    bedrooms:"3 BHK",
+
+    bathrooms:"3",
+
+    parking:"Yes",
+
+    furnishing:"Semi Furnished",
+
+    icon:"🏡",
+
+    description:
+    "Beautiful 3 BHK independent house suitable for family living.",
+
+    video:""
   },
 
+
   {
+    id:2,
+
     title:"2 BHK Flat",
-    type:"Flat",
-    requirement:"Rent",
-    location:"Hyderabad",
+
+    type:"Rent",
+
+    category:"Rent",
+
     price:"₹18,000 / Month",
-    icon:"🏢"
+
+    location:"Hyderabad",
+
+    area:"1200 Sq Ft",
+
+    bedrooms:"2 BHK",
+
+    bathrooms:"2",
+
+    parking:"Yes",
+
+    furnishing:"Semi Furnished",
+
+    icon:"🏢",
+
+    description:
+    "Well maintained 2 BHK flat available for monthly rent.",
+
+    video:""
   },
 
+
   {
+    id:3,
+
     title:"Commercial Shop",
-    type:"Commercial",
-    requirement:"Lease",
-    location:"Hyderabad",
+
+    type:"Lease",
+
+    category:"Commercial",
+
     price:"₹35,000 / Month",
-    icon:"🏪"
+
+    location:"Hyderabad",
+
+    area:"650 Sq Ft",
+
+    bedrooms:"Commercial",
+
+    bathrooms:"1",
+
+    parking:"Available",
+
+    furnishing:"Ready",
+
+    icon:"🏪",
+
+    description:
+    "Commercial shop suitable for business, office or retail use.",
+
+    video:""
   },
 
+
   {
+    id:4,
+
     title:"Residential Open Plot",
-    type:"Open Plot",
-    requirement:"Buy",
-    location:"Hyderabad",
+
+    type:"Buy",
+
+    category:"Open Plot",
+
     price:"₹45 Lakh",
-    icon:"🌳"
+
+    location:"Hyderabad",
+
+    area:"200 Sq Yards",
+
+    bedrooms:"Open Plot",
+
+    bathrooms:"-",
+
+    parking:"-",
+
+    furnishing:"-",
+
+    icon:"🌳",
+
+    description:
+    "Residential open plot suitable for constructing an independent house.",
+
+    video:""
   },
 
+
   {
+    id:5,
+
     title:"PG Accommodation",
-    type:"PG",
-    requirement:"Rent",
-    location:"Hyderabad",
+
+    type:"Rent",
+
+    category:"PG",
+
     price:"₹7,000 / Month",
-    icon:"🛏️"
+
+    location:"Hyderabad",
+
+    area:"Shared / Private",
+
+    bedrooms:"PG",
+
+    bathrooms:"Shared",
+
+    parking:"Available",
+
+    furnishing:"Fully Furnished",
+
+    icon:"🛏️",
+
+    description:
+    "Affordable PG accommodation for students and working professionals.",
+
+    video:""
   }
 
 ];
 
 
-function renderProperties(list){
+/* =====================================================
+   CURRENT PROPERTY
+   ===================================================== */
+
+let currentProperty = null;
+
+
+/* =====================================================
+   SHOW PROPERTY LIST
+   ===================================================== */
+
+function renderProperties(list = properties){
 
   const container =
     document.getElementById("propertyList");
 
-  container.innerHTML="";
+  container.innerHTML = "";
 
-  if(list.length===0){
 
-    container.innerHTML =
-      "<p style='color:#6b7280;padding:10px;'>" +
-      "❌ इस search में कोई property नहीं मिली।" +
-      "</p>";
+  if(list.length === 0){
+
+    container.innerHTML = `
+      <div class="notice">
+        ❌ इस Search के लिए कोई Property नहीं मिली।
+      </div>
+    `;
 
     return;
   }
@@ -454,40 +764,43 @@ function renderProperties(list){
     const div =
       document.createElement("div");
 
-    div.className="property";
+    div.className = "property";
 
-    div.innerHTML =
 
-      "<div class='property-image'>" +
-      property.icon +
-      "</div>" +
+    div.innerHTML = `
 
-      "<div class='property-body'>" +
+      <div class="property-img">
+        ${property.icon}
+      </div>
 
-      "<div class='property-title'>" +
-      property.title +
-      "</div>" +
+      <div class="property-content">
 
-      "<div class='property-price'>" +
-      property.price +
-      "</div>" +
+        <div class="property-title">
+          ${property.title}
+        </div>
 
-      "<div class='property-location'>" +
-      "📍 " + property.location +
-      "</div>" +
+        <div class="price">
+          ${property.price}
+        </div>
 
-      "<span class='badge'>" +
-      property.requirement +
-      "</span>" +
+        <div class="location">
+          📍 ${property.location}
+        </div>
 
-      "<button class='primary' " +
-      "onclick=\"propertyEnquiry('" +
-      property.title.replace(/'/g,"\\'") +
-      "')\">" +
-      "📞 Enquire Now" +
-      "</button>" +
+        <span class="tag">
+          ${property.type}
+        </span>
 
-      "</div>";
+        <button
+          class="primary"
+          onclick="showDetails(${property.id})"
+        >
+          🔎 Enquire Now
+        </button>
+
+      </div>
+
+    `;
 
     container.appendChild(div);
 
@@ -496,103 +809,498 @@ function renderProperties(list){
 }
 
 
+/* =====================================================
+   SHOW PROPERTY DETAILS
+   ===================================================== */
+
+function showDetails(id){
+
+  const property =
+    properties.find(function(item){
+      return item.id === id;
+    });
+
+
+  if(!property){
+    return;
+  }
+
+
+  currentProperty = property;
+
+
+  const details =
+    document.getElementById("propertyDetails");
+
+
+  details.innerHTML = `
+
+    <div class="property">
+
+      <div class="property-img">
+        ${property.icon}
+      </div>
+
+      <div class="property-content">
+
+        <div class="property-title">
+          ${property.title}
+        </div>
+
+        <div class="price">
+          ${property.price}
+        </div>
+
+        <div class="location">
+          📍 ${property.location}
+        </div>
+
+        <span class="tag">
+          ${property.type}
+        </span>
+
+        <div class="details-box">
+
+          <div class="detail-row">
+            <span class="detail-label">Property Type</span>
+            <span class="detail-value">
+              ${property.category}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Area</span>
+            <span class="detail-value">
+              ${property.area}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Bedrooms</span>
+            <span class="detail-value">
+              ${property.bedrooms}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Bathrooms</span>
+            <span class="detail-value">
+              ${property.bathrooms}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Parking</span>
+            <span class="detail-value">
+              ${property.parking}
+            </span>
+          </div>
+
+          <div class="detail-row">
+            <span class="detail-label">Furnishing</span>
+            <span class="detail-value">
+              ${property.furnishing}
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="details-box">
+
+          <b>Property Description</b>
+
+          <p class="small" style="margin-top:7px;">
+            ${property.description}
+          </p>
+
+        </div>
+
+
+        <div class="video-box">
+          🎥
+        </div>
+
+
+        <button
+          class="green"
+          onclick="openEnquiry()"
+        >
+          📝 Send Property Enquiry
+        </button>
+
+
+        <button
+          class="primary"
+          onclick="contactAdminForProperty()"
+        >
+          💬 WhatsApp Admin
+        </button>
+
+
+      </div>
+
+    </div>
+
+    <div class="notice">
+
+      🔒 Owner का मोबाइल नंबर इस Property Details में
+      नहीं दिखाया गया है।
+
+      <br><br>
+
+      Customer की enquiry केवल Prop Set U Admin को जाएगी।
+
+    </div>
+
+  `;
+
+
+  document
+    .getElementById("detailsCard")
+    .classList.remove("hidden");
+
+
+  document
+    .getElementById("enquiryCard")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("detailsCard")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+/* =====================================================
+   CLOSE DETAILS
+   ===================================================== */
+
+function closeDetails(){
+
+  document
+    .getElementById("detailsCard")
+    .classList.add("hidden");
+
+  document
+    .getElementById("enquiryCard")
+    .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   OPEN ENQUIRY
+   ===================================================== */
+
+function openEnquiry(){
+
+  if(!currentProperty){
+    return;
+  }
+
+
+  document
+    .getElementById("enquiryCard")
+    .classList.remove("hidden");
+
+
+  document
+    .getElementById("enquiryCard")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+
+  document
+    .getElementById("enquiryMessage").value =
+    "मुझे इस Property के बारे में जानकारी चाहिए: " +
+    currentProperty.title +
+    " - " +
+    currentProperty.location;
+
+}
+
+
+/* =====================================================
+   SEND ENQUIRY
+   ===================================================== */
+
+function sendEnquiry(){
+
+  if(!currentProperty){
+
+    alert("पहले Property select करें");
+
+    return;
+  }
+
+
+  const name =
+    document
+      .getElementById("enquiryName")
+      .value
+      .trim();
+
+
+  const phone =
+    document
+      .getElementById("enquiryPhone")
+      .value
+      .trim();
+
+
+  const message =
+    document
+      .getElementById("enquiryMessage")
+      .value
+      .trim();
+
+
+  if(!name){
+
+    alert("अपना नाम डालिए");
+
+    return;
+  }
+
+
+  if(!/^[0-9]{10}$/.test(phone)){
+
+    alert("सही 10 digit mobile number डालिए");
+
+    return;
+  }
+
+
+  let text =
+
+    "🏠 *Prop Set U Property Enquiry*%0A%0A" +
+
+    "Property: " +
+    encodeURIComponent(currentProperty.title) +
+
+    "%0A" +
+
+    "Price: " +
+    encodeURIComponent(currentProperty.price) +
+
+    "%0A" +
+
+    "Location: " +
+    encodeURIComponent(currentProperty.location) +
+
+    "%0A%0A" +
+
+    "👤 Customer Name: " +
+    encodeURIComponent(name) +
+
+    "%0A" +
+
+    "📱 Customer Mobile: " +
+    encodeURIComponent(phone) +
+
+    "%0A%0A" +
+
+    "💬 Message: " +
+    encodeURIComponent(message);
+
+
+  document
+    .getElementById("enquirySuccess")
+    .style.display = "block";
+
+
+  const url =
+    "https://wa.me/" +
+    ADMIN_WHATSAPP +
+    "?text=" +
+    text;
+
+
+  setTimeout(function(){
+
+    window.open(url,"_blank");
+
+  },500);
+
+}
+
+
+/* =====================================================
+   CONTACT ADMIN
+   ===================================================== */
+
+function contactAdmin(){
+
+  const message =
+    "Hello Prop Set U Admin, मुझे Property की जानकारी चाहिए।";
+
+
+  const url =
+    "https://wa.me/" +
+    ADMIN_WHATSAPP +
+    "?text=" +
+    encodeURIComponent(message);
+
+
+  window.open(url,"_blank");
+
+}
+
+
+/* =====================================================
+   PROPERTY WHATSAPP
+   ===================================================== */
+
+function contactAdminForProperty(){
+
+  if(!currentProperty){
+    return;
+  }
+
+
+  const message =
+
+    "Hello Prop Set U Admin,%0A%0A" +
+
+    "मुझे इस Property की जानकारी चाहिए।%0A%0A" +
+
+    "Property: " +
+    currentProperty.title +
+
+    "%0APrice: " +
+    currentProperty.price +
+
+    "%0ALocation: " +
+    currentProperty.location;
+
+
+  const url =
+    "https://wa.me/" +
+    ADMIN_WHATSAPP +
+    "?text=" +
+    message;
+
+
+  window.open(url,"_blank");
+
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
 function searchProperties(){
 
   const location =
-    document.getElementById("searchLocation")
-    .value.trim()
-    .toLowerCase();
+    document
+      .getElementById("searchLocation")
+      .value
+      .trim()
+      .toLowerCase();
+
 
   const type =
-    document.getElementById("propertyType").value;
+    document
+      .getElementById("searchType")
+      .value;
 
-  const requirement =
-    document.getElementById("requirement").value;
 
-
-  const result =
+  let result =
     properties.filter(function(property){
 
       const locationMatch =
         !location ||
-        property.location.toLowerCase()
-        .includes(location);
+        property.location
+          .toLowerCase()
+          .includes(location);
+
 
       const typeMatch =
-        type==="All" ||
-        property.type===type;
+        type === "All" ||
+        property.type === type ||
+        property.category === type;
 
-      const requirementMatch =
-        requirement==="All" ||
-        property.requirement===requirement;
 
-      return locationMatch &&
-             typeMatch &&
-             requirementMatch;
+      return locationMatch && typeMatch;
 
     });
 
 
   renderProperties(result);
 
+
+  document
+    .getElementById("propertyList")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
 }
 
 
-function selectCategory(category){
+/* =====================================================
+   CATEGORY SEARCH
+   ===================================================== */
 
-  if(
-    category==="Buy" ||
-    category==="Rent" ||
-    category==="Lease" ||
-    category==="Sell"
-  ){
+function categorySearch(category){
 
-    document.getElementById("requirement")
-      .value=category;
+  document
+    .getElementById("searchType")
+    .value = category;
+
+
+  let result;
+
+
+  if(category === "Buy"){
+
+    result =
+      properties.filter(function(property){
+
+        return property.type === "Buy";
+
+      });
 
   }
+
   else{
 
-    document.getElementById("propertyType")
-      .value=category;
+    result =
+      properties.filter(function(property){
+
+        return (
+          property.type === category ||
+          property.category === category
+        );
+
+      });
 
   }
 
-  searchProperties();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
+  renderProperties(result);
 
 
-function propertyEnquiry(propertyName){
-
-  const message =
-    "Hello Prop Set U Admin,%0A%0A" +
-    "I am interested in this property:%0A" +
-    propertyName;
-
-  window.open(
-    "https://wa.me/918062180745?text=" +
-    message,
-    "_blank"
-  );
+  document
+    .getElementById("propertyList")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
 
 }
 
 
-function contactAdmin(){
+/* =====================================================
+   START
+   ===================================================== */
 
-  window.location.href =
-    "tel:08062180745";
-
-}
-
-
-renderProperties(properties);
+renderProperties();
 
 </script>
 
