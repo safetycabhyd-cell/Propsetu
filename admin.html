@@ -2,25 +2,35 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prop Set U - Admin Panel</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#f3f6f9;
   color:#222;
 }
+
 .header{
   background:#063b66;
   color:white;
   padding:18px 15px;
   text-align:center;
 }
-.header h1{margin:0;font-size:24px}
-.header p{margin:6px 0 0;font-size:13px}
+
+.header h1{
+  margin:0;
+  font-size:24px;
+}
+
+.header p{
+  margin:6px 0 0;
+  font-size:13px;
+}
 
 .container{
   max-width:700px;
@@ -132,6 +142,15 @@ button{
   padding:15px;
 }
 
+.status{
+  padding:10px;
+  border-radius:8px;
+  background:#eef5ff;
+  color:#063b66;
+  margin-bottom:12px;
+  font-size:13px;
+}
+
 .footer{
   text-align:center;
   padding:20px;
@@ -153,6 +172,10 @@ button{
 <div class="card">
 
 <h2>➕ Add New Property</h2>
+
+<div id="status" class="status">
+Firebase connecting...
+</div>
 
 <label>Property Title</label>
 <input id="title" placeholder="जैसे 3 BHK Independent House">
@@ -178,7 +201,7 @@ button{
 </select>
 
 <label>Area / Location</label>
-<input id="location" placeholder="जैसे Hyderabad, Hyderabad">
+<input id="location" placeholder="जैसे Hyderabad">
 
 <label>Price</label>
 <input id="price" placeholder="जैसे ₹85 Lakh या ₹18,000 / Month">
@@ -220,7 +243,9 @@ Clear Form
 
 <h2>🏘️ Property List</h2>
 
-<div id="propertyList"></div>
+<div id="propertyList">
+<div class="empty">Properties loading...</div>
+</div>
 
 </div>
 
@@ -232,15 +257,141 @@ Admin Panel
 </div>
 
 
-<script>
+<!-- Firebase -->
 
-let properties =
-JSON.parse(localStorage.getItem("propSetUProperties")) || [];
+<script type="module">
 
-let editIndex = -1;
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-function saveProperty(){
+/* =====================================================
+   FIREBASE CONFIG
+   =====================================================
+
+   यहाँ बाद में आपके Firebase Project का
+   असली configuration आएगा.
+
+   अभी इसे बदलना नहीं है.
+   ===================================================== */
+
+const firebaseConfig = {
+
+  apiKey: "YOUR_API_KEY",
+
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+
+  projectId: "YOUR_PROJECT_ID",
+
+  storageBucket: "YOUR_PROJECT.firebasestorage.app",
+
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+
+  appId: "YOUR_APP_ID"
+
+};
+
+
+/* Firebase Start */
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+/* Collection */
+
+const propertiesRef =
+collection(db,"properties");
+
+
+let properties = [];
+
+let editId = null;
+
+
+/* Status */
+
+function setStatus(message){
+
+  document.getElementById("status").textContent =
+  message;
+
+}
+
+
+/* Escape HTML */
+
+function escapeHtml(text){
+
+  return String(text || "")
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+/* Load Properties */
+
+async function loadProperties(){
+
+  try{
+
+    setStatus("Properties loading...");
+
+    const snapshot =
+    await getDocs(propertiesRef);
+
+    properties = [];
+
+    snapshot.forEach((item)=>{
+
+      properties.push({
+
+        id:item.id,
+        ...item.data()
+
+      });
+
+    });
+
+    showProperties();
+
+    setStatus(
+      "✅ Firebase connected"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    setStatus(
+      "❌ Firebase connection error"
+    );
+
+  }
+
+}
+
+
+/* Save Property */
+
+window.saveProperty = async function(){
 
   const title =
   document.getElementById("title").value.trim();
@@ -281,59 +432,104 @@ function saveProperty(){
 
   if(!title || !location || !price){
 
-    alert("Property Title, Location और Price भरना जरूरी है.");
+    alert(
+      "Property Title, Location और Price भरना जरूरी है."
+    );
 
     return;
+
   }
 
 
   const property = {
 
     title:title,
+
     type:type,
+
     requirement:requirement,
+
     location:location,
+
     price:price,
+
     bedrooms:bedrooms,
+
     area:area,
+
     owner:owner,
+
     phone:phone,
+
     description:description,
+
     image:image,
+
     video:video,
-    createdAt:new Date().toLocaleString()
+
+    updatedAt:serverTimestamp()
 
   };
 
 
-  if(editIndex === -1){
+  try{
 
-    properties.push(property);
+    setStatus("Saving property...");
 
-    alert("✅ Property successfully added.");
 
-  }else{
+    if(editId === null){
 
-    properties[editIndex] = property;
+      property.createdAt =
+      serverTimestamp();
 
-    alert("✅ Property updated.");
+      await addDoc(
+        propertiesRef,
+        property
+      );
 
-    editIndex = -1;
+      alert(
+        "✅ Property successfully added."
+      );
+
+    }else{
+
+      await updateDoc(
+        doc(db,"properties",editId),
+        property
+      );
+
+      alert(
+        "✅ Property successfully updated."
+      );
+
+      editId = null;
+
+    }
+
+
+    clearForm();
+
+    await loadProperties();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "❌ Property save नहीं हुई."
+    );
+
+    setStatus(
+      "❌ Firebase error"
+    );
+
   }
 
-
-  localStorage.setItem(
-    "propSetUProperties",
-    JSON.stringify(properties)
-  );
+};
 
 
-  clearForm();
-
-  showProperties();
-
-}
-
+/* Show Properties */
 
 function showProperties(){
 
@@ -347,63 +543,130 @@ function showProperties(){
     '<div class="empty">अभी कोई Property Added नहीं है.</div>';
 
     return;
+
   }
 
 
   list.innerHTML = "";
 
 
-  properties.forEach((p,index)=>{
+  properties.forEach((p)=>{
 
     const div =
     document.createElement("div");
 
-    div.className = "property";
+    div.className =
+    "property";
 
 
     div.innerHTML = `
 
-      <h3>${escapeHtml(p.title)}</h3>
+      <h3>
+      ${escapeHtml(p.title)}
+      </h3>
 
       <span class="badge">
       ${escapeHtml(p.requirement)}
       </span>
 
-      <p>🏠 <b>Type:</b>
-      ${escapeHtml(p.type)}</p>
+      <p>
+      🏠 <b>Type:</b>
+      ${escapeHtml(p.type)}
+      </p>
 
-      <p>📍 <b>Location:</b>
-      ${escapeHtml(p.location)}</p>
+      <p>
+      📍 <b>Location:</b>
+      ${escapeHtml(p.location)}
+      </p>
 
-      <p>💰 <b>Price:</b>
-      ${escapeHtml(p.price)}</p>
+      <p>
+      💰 <b>Price:</b>
+      ${escapeHtml(p.price)}
+      </p>
 
-      ${p.bedrooms ?
-      `<p>🛏️ <b>Bedrooms:</b>
-      ${escapeHtml(p.bedrooms)}</p>` : ""}
+      ${
+        p.bedrooms
+        ?
+        `<p>
+        🛏️ <b>Bedrooms:</b>
+        ${escapeHtml(p.bedrooms)}
+        </p>`
+        :
+        ""
+      }
 
-      ${p.area ?
-      `<p>📐 <b>Area:</b>
-      ${escapeHtml(p.area)}</p>` : ""}
+      ${
+        p.area
+        ?
+        `<p>
+        📐 <b>Area:</b>
+        ${escapeHtml(p.area)}
+        </p>`
+        :
+        ""
+      }
 
-      ${p.owner ?
-      `<p>👤 <b>Owner/Agent:</b>
-      ${escapeHtml(p.owner)}</p>` : ""}
+      ${
+        p.owner
+        ?
+        `<p>
+        👤 <b>Owner/Agent:</b>
+        ${escapeHtml(p.owner)}
+        </p>`
+        :
+        ""
+      }
 
-      ${p.phone ?
-      `<p>📞 <b>Mobile:</b>
-      ${escapeHtml(p.phone)}</p>` : ""}
+      ${
+        p.phone
+        ?
+        `<p>
+        📞 <b>Mobile:</b>
+        ${escapeHtml(p.phone)}
+        </p>`
+        :
+        ""
+      }
 
-      ${p.description ?
-      `<p>📝 ${escapeHtml(p.description)}</p>` : ""}
+      ${
+        p.description
+        ?
+        `<p>
+        📝 ${escapeHtml(p.description)}
+        </p>`
+        :
+        ""
+      }
 
-      <button class="edit"
-      onclick="editProperty(${index})">
+      ${
+        p.image
+        ?
+        `<p>
+        🖼️ Image URL saved
+        </p>`
+        :
+        ""
+      }
+
+      ${
+        p.video
+        ?
+        `<p>
+        🎥 Video URL saved
+        </p>`
+        :
+        ""
+      }
+
+      <button
+      class="edit"
+      onclick="editProperty('${p.id}')">
       ✏️ Edit
       </button>
 
-      <button class="delete"
-      onclick="deleteProperty(${index})">
+      <button
+      class="delete"
+      onclick="deleteProperty('${p.id}')">
       🗑️ Delete
       </button>
 
@@ -417,85 +680,156 @@ function showProperties(){
 }
 
 
-function editProperty(index){
+/* Edit Property */
 
-  const p = properties[index];
+window.editProperty = function(id){
 
-  document.getElementById("title").value = p.title;
-  document.getElementById("type").value = p.type;
-  document.getElementById("requirement").value = p.requirement;
-  document.getElementById("location").value = p.location;
-  document.getElementById("price").value = p.price;
-  document.getElementById("bedrooms").value = p.bedrooms;
-  document.getElementById("area").value = p.area;
-  document.getElementById("owner").value = p.owner;
-  document.getElementById("phone").value = p.phone;
-  document.getElementById("description").value = p.description;
-  document.getElementById("image").value = p.image;
-  document.getElementById("video").value = p.video;
-
-  editIndex = index;
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function deleteProperty(index){
-
-  if(!confirm("क्या आप यह Property Delete करना चाहते हैं?")){
-    return;
-  }
-
-  properties.splice(index,1);
-
-  localStorage.setItem(
-    "propSetUProperties",
-    JSON.stringify(properties)
+  const p =
+  properties.find(
+    item => item.id === id
   );
 
-  showProperties();
 
-}
-
-
-function clearForm(){
-
-  document.getElementById("title").value="";
-  document.getElementById("location").value="";
-  document.getElementById("price").value="";
-  document.getElementById("bedrooms").value="";
-  document.getElementById("area").value="";
-  document.getElementById("owner").value="";
-  document.getElementById("phone").value="";
-  document.getElementById("description").value="";
-  document.getElementById("image").value="";
-  document.getElementById("video").value="";
-
-  document.getElementById("type").selectedIndex=0;
-  document.getElementById("requirement").selectedIndex=0;
-
-  editIndex=-1;
-
-}
+  if(!p) return;
 
 
-function escapeHtml(text){
+  document.getElementById("title").value =
+  p.title || "";
 
-  return String(text || "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+  document.getElementById("type").value =
+  p.type || "Independent";
 
-}
+  document.getElementById("requirement").value =
+  p.requirement || "Buy";
+
+  document.getElementById("location").value =
+  p.location || "";
+
+  document.getElementById("price").value =
+  p.price || "";
+
+  document.getElementById("bedrooms").value =
+  p.bedrooms || "";
+
+  document.getElementById("area").value =
+  p.area || "";
+
+  document.getElementById("owner").value =
+  p.owner || "";
+
+  document.getElementById("phone").value =
+  p.phone || "";
+
+  document.getElementById("description").value =
+  p.description || "";
+
+  document.getElementById("image").value =
+  p.image || "";
+
+  document.getElementById("video").value =
+  p.video || "";
 
 
-showProperties();
+  editId = id;
+
+
+  window.scrollTo({
+
+    top:0,
+
+    behavior:"smooth"
+
+  });
+
+};
+
+
+/* Delete Property */
+
+window.deleteProperty = async function(id){
+
+  if(
+    !confirm(
+      "क्या आप यह Property Delete करना चाहते हैं?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    setStatus(
+      "Deleting property..."
+    );
+
+
+    await deleteDoc(
+      doc(db,"properties",id)
+    );
+
+
+    alert(
+      "🗑️ Property deleted."
+    );
+
+
+    await loadProperties();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "❌ Property delete नहीं हुई."
+    );
+
+  }
+
+};
+
+
+/* Clear Form */
+
+window.clearForm = function(){
+
+  document.getElementById("title").value = "";
+
+  document.getElementById("location").value = "";
+
+  document.getElementById("price").value = "";
+
+  document.getElementById("bedrooms").value = "";
+
+  document.getElementById("area").value = "";
+
+  document.getElementById("owner").value = "";
+
+  document.getElementById("phone").value = "";
+
+  document.getElementById("description").value = "";
+
+  document.getElementById("image").value = "";
+
+  document.getElementById("video").value = "";
+
+
+  document.getElementById("type").selectedIndex = 0;
+
+  document.getElementById("requirement").selectedIndex = 0;
+
+
+  editId = null;
+
+};
+
+
+/* Start */
+
+loadProperties();
 
 </script>
 
