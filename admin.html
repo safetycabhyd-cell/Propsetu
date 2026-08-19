@@ -6,7 +6,9 @@
 <title>Prop Set U - Admin Panel</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -59,7 +61,9 @@ label{
   margin-top:11px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
   padding:12px;
   margin-top:6px;
@@ -80,6 +84,20 @@ button{
   font-size:14px;
   font-weight:bold;
   cursor:pointer;
+}
+
+.login-btn{
+  width:100%;
+  margin-top:16px;
+  background:#063b66;
+  color:white;
+}
+
+.logout{
+  background:#d62828;
+  color:white;
+  width:100%;
+  margin-top:10px;
 }
 
 .save{
@@ -151,11 +169,53 @@ button{
   font-size:13px;
 }
 
+.success{
+  background:#e7f7ec;
+  color:#13843d;
+}
+
+.error{
+  background:#ffe9e9;
+  color:#c1121f;
+}
+
+.admin-info{
+  background:#eef5ff;
+  border-radius:8px;
+  padding:10px;
+  font-size:13px;
+  margin-bottom:12px;
+}
+
 .footer{
   text-align:center;
   padding:20px;
   color:#777;
   font-size:12px;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.login-card{
+  max-width:500px;
+  margin:35px auto;
+}
+
+.preview-image{
+  width:100%;
+  max-height:220px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-top:10px;
+}
+
+.video-link{
+  display:inline-block;
+  margin-top:6px;
+  color:#063b66;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -167,102 +227,277 @@ button{
   <p>Admin Property Management Panel</p>
 </div>
 
-<div class="container">
 
-<div class="card">
+<!-- ================= LOGIN ================= -->
 
-<h2>➕ Add New Property</h2>
+<div id="loginSection" class="container">
 
-<div id="status" class="status">
-Firebase connecting...
-</div>
+  <div class="card login-card">
 
-<label>Property Title</label>
-<input id="title" placeholder="जैसे 3 BHK Independent House">
+    <h2>🔐 Admin Login</h2>
 
-<label>Property Type</label>
-<select id="type">
-  <option value="Independent">Independent</option>
-  <option value="Flat">Flat</option>
-  <option value="Villa">Villa</option>
-  <option value="Open Plot">Open Plot</option>
-  <option value="Commercial">Commercial</option>
-  <option value="Shop">Shop</option>
-  <option value="Office">Office</option>
-  <option value="PG">PG</option>
-</select>
+    <div id="loginStatus" class="status">
+      कृपया Admin Email और Password से Login करें।
+    </div>
 
-<label>Requirement</label>
-<select id="requirement">
-  <option value="Buy">Buy</option>
-  <option value="Rent">Rent</option>
-  <option value="Lease">Lease</option>
-  <option value="Sell">Sell</option>
-</select>
+    <label>Admin Email</label>
 
-<label>Area / Location</label>
-<input id="location" placeholder="जैसे Hyderabad">
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="Admin Email"
+      autocomplete="email"
+    >
 
-<label>Price</label>
-<input id="price" placeholder="जैसे ₹85 Lakh या ₹18,000 / Month">
+    <label>Password</label>
 
-<label>Bedrooms</label>
-<input id="bedrooms" type="number" placeholder="जैसे 3">
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
 
-<label>Property Area</label>
-<input id="area" placeholder="जैसे 1500 Sq Ft">
+    <button
+      class="login-btn"
+      onclick="adminLogin()"
+    >
+      🔐 Login
+    </button>
 
-<label>Owner / Agent Name</label>
-<input id="owner" placeholder="Owner या Agent Name">
-
-<label>Owner / Agent Mobile</label>
-<input id="phone" type="tel" placeholder="10 digit mobile number">
-
-<label>Property Description</label>
-<textarea id="description"
-placeholder="Property की पूरी जानकारी लिखें"></textarea>
-
-<label>Property Image URL</label>
-<input id="image" placeholder="Image URL">
-
-<label>Property Video URL</label>
-<input id="video" placeholder="YouTube / Video URL">
-
-<button class="save" onclick="saveProperty()">
-💾 Save Property
-</button>
-
-<button class="clear" onclick="clearForm()">
-Clear Form
-</button>
+  </div>
 
 </div>
 
 
-<div class="card">
+<!-- ================= ADMIN PANEL ================= -->
 
-<h2>🏘️ Property List</h2>
+<div id="adminSection" class="container hidden">
 
-<div id="propertyList">
-<div class="empty">Properties loading...</div>
+  <div class="card">
+
+    <div class="admin-info">
+      👤 Logged in as:
+      <b id="adminEmail"></b>
+    </div>
+
+    <button
+      class="logout"
+      onclick="adminLogout()"
+    >
+      🚪 Logout
+    </button>
+
+  </div>
+
+
+  <!-- ADD PROPERTY -->
+
+  <div class="card">
+
+    <h2>➕ Add New Property</h2>
+
+    <div id="status" class="status">
+      Firebase connecting...
+    </div>
+
+    <label>Property Title</label>
+
+    <input
+      id="title"
+      placeholder="जैसे 3 BHK Independent House"
+    >
+
+
+    <label>Property Type</label>
+
+    <select id="type">
+
+      <option value="Independent">
+        Independent
+      </option>
+
+      <option value="Flat">
+        Flat
+      </option>
+
+      <option value="Villa">
+        Villa
+      </option>
+
+      <option value="Open Plot">
+        Open Plot
+      </option>
+
+      <option value="Commercial">
+        Commercial
+      </option>
+
+      <option value="Shop">
+        Shop
+      </option>
+
+      <option value="Office">
+        Office
+      </option>
+
+      <option value="PG">
+        PG
+      </option>
+
+    </select>
+
+
+    <label>Requirement</label>
+
+    <select id="requirement">
+
+      <option value="Buy">
+        Buy
+      </option>
+
+      <option value="Rent">
+        Rent
+      </option>
+
+      <option value="Lease">
+        Lease
+      </option>
+
+      <option value="Sell">
+        Sell
+      </option>
+
+    </select>
+
+
+    <label>Area / Location</label>
+
+    <input
+      id="location"
+      placeholder="जैसे Hyderabad"
+    >
+
+
+    <label>Price</label>
+
+    <input
+      id="price"
+      placeholder="जैसे ₹85 Lakh या ₹18,000 / Month"
+    >
+
+
+    <label>Bedrooms</label>
+
+    <input
+      id="bedrooms"
+      type="number"
+      placeholder="जैसे 3"
+    >
+
+
+    <label>Property Area</label>
+
+    <input
+      id="area"
+      placeholder="जैसे 1500 Sq Ft"
+    >
+
+
+    <label>Owner / Agent Name</label>
+
+    <input
+      id="owner"
+      placeholder="Owner या Agent Name"
+    >
+
+
+    <label>Owner / Agent Mobile</label>
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="10 digit mobile number"
+    >
+
+
+    <label>Property Description</label>
+
+    <textarea
+      id="description"
+      placeholder="Property की पूरी जानकारी लिखें"
+    ></textarea>
+
+
+    <label>Property Image URL</label>
+
+    <input
+      id="image"
+      placeholder="Image URL"
+    >
+
+
+    <label>Property Video URL</label>
+
+    <input
+      id="video"
+      placeholder="YouTube / Video URL"
+    >
+
+
+    <button
+      class="save"
+      onclick="saveProperty()"
+    >
+      💾 Save Property
+    </button>
+
+
+    <button
+      class="clear"
+      onclick="clearForm()"
+    >
+      Clear Form
+    </button>
+
+  </div>
+
+
+  <!-- PROPERTY LIST -->
+
+  <div class="card">
+
+    <h2>🏘️ Property List</h2>
+
+    <div id="propertyList">
+
+      <div class="empty">
+        Properties loading...
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
-</div>
-
-</div>
 
 <div class="footer">
-Prop Set U © 2026<br>
-Admin Panel
+  Prop Set U © 2026<br>
+  Admin Panel
 </div>
 
 
-<!-- Firebase -->
+
+<!-- ================= FIREBASE ================= -->
 
 <script type="module">
 
-import { initializeApp }
+import {
+  initializeApp
+}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
   getFirestore,
@@ -277,38 +512,62 @@ import {
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
 /* =====================================================
    FIREBASE CONFIG
-   =====================================================
-
-   यहाँ बाद में आपके Firebase Project का
-   असली configuration आएगा.
-
-   अभी इसे बदलना नहीं है.
    ===================================================== */
 
 const firebaseConfig = {
 
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyAZDxR264P2oguKbqKbZuS2CZ494g8g_uI",
 
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  authDomain: "propsetu-14b6c.firebaseapp.com",
 
-  projectId: "YOUR_PROJECT_ID",
+  projectId: "propsetu-14b6c",
 
-  storageBucket: "YOUR_PROJECT.firebasestorage.app",
+  storageBucket: "propsetu-14b6c.firebasestorage.app",
 
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  messagingSenderId: "462302586078",
 
-  appId: "YOUR_APP_ID"
+  appId: "1:462302586078:web:d17e1998b2d620c7448e4f",
+
+  measurementId: "G-51JBRNNC86"
 
 };
 
 
+
 /* Firebase Start */
 
-const app = initializeApp(firebaseConfig);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+
+const db =
+getFirestore(app);
+
+
+const auth =
+getAuth(app);
+
+
+
+/* =====================================================
+   ADMIN EMAIL
+   ===================================================== */
+
+const ADMIN_EMAIL =
+"propsetu@gmail.com";
+
 
 
 /* Collection */
@@ -322,66 +581,308 @@ let properties = [];
 let editId = null;
 
 
-/* Status */
 
-function setStatus(message){
-
-  document.getElementById("status").textContent =
-  message;
-
-}
-
-
-/* Escape HTML */
+/* =====================================================
+   HTML ESCAPE
+   ===================================================== */
 
 function escapeHtml(text){
 
   return String(text || "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
 
 }
 
 
-/* Load Properties */
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+function setStatus(message,type="normal"){
+
+  const status =
+  document.getElementById("status");
+
+  status.textContent =
+  message;
+
+  status.className =
+  "status";
+
+  if(type === "success"){
+
+    status.classList.add("success");
+
+  }
+
+  if(type === "error"){
+
+    status.classList.add("error");
+
+  }
+
+}
+
+
+
+function setLoginStatus(message,type="normal"){
+
+  const status =
+  document.getElementById("loginStatus");
+
+  status.textContent =
+  message;
+
+  status.className =
+  "status";
+
+  if(type === "success"){
+
+    status.classList.add("success");
+
+  }
+
+  if(type === "error"){
+
+    status.classList.add("error");
+
+  }
+
+}
+
+
+
+/* =====================================================
+   ADMIN LOGIN
+   ===================================================== */
+
+window.adminLogin =
+async function(){
+
+  const email =
+  document
+  .getElementById("loginEmail")
+  .value
+  .trim();
+
+  const password =
+  document
+  .getElementById("loginPassword")
+  .value;
+
+
+  if(!email || !password){
+
+    setLoginStatus(
+      "Email और Password दोनों भरें।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(email.toLowerCase() !== ADMIN_EMAIL){
+
+    setLoginStatus(
+      "❌ यह Admin Email नहीं है।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    setLoginStatus(
+      "Login हो रहा है..."
+    );
+
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    setLoginStatus(
+      "❌ Login failed. Email या Password गलत है।",
+      "error"
+    );
+
+  }
+
+};
+
+
+
+/* =====================================================
+   ADMIN LOGOUT
+   ===================================================== */
+
+window.adminLogout =
+async function(){
+
+  try{
+
+    await signOut(auth);
+
+    clearForm();
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+
+
+/* =====================================================
+   AUTH STATE
+   ===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async(user)=>{
+
+    const loginSection =
+    document.getElementById(
+      "loginSection"
+    );
+
+    const adminSection =
+    document.getElementById(
+      "adminSection"
+    );
+
+
+    if(user){
+
+      if(
+        user.email.toLowerCase()
+        !== ADMIN_EMAIL
+      ){
+
+        await signOut(auth);
+
+        setLoginStatus(
+          "❌ इस account को Admin access नहीं है।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      loginSection
+      .classList
+      .add("hidden");
+
+
+      adminSection
+      .classList
+      .remove("hidden");
+
+
+      document
+      .getElementById("adminEmail")
+      .textContent =
+      user.email;
+
+
+      await loadProperties();
+
+
+    }else{
+
+      loginSection
+      .classList
+      .remove("hidden");
+
+
+      adminSection
+      .classList
+      .add("hidden");
+
+    }
+
+  }
+);
+
+
+
+/* =====================================================
+   LOAD PROPERTIES
+   ===================================================== */
 
 async function loadProperties(){
 
   try{
 
-    setStatus("Properties loading...");
+    setStatus(
+      "Properties loading..."
+    );
+
 
     const snapshot =
     await getDocs(propertiesRef);
 
+
     properties = [];
 
-    snapshot.forEach((item)=>{
 
-      properties.push({
+    snapshot.forEach(
+      (item)=>{
 
-        id:item.id,
-        ...item.data()
+        properties.push({
 
-      });
+          id:item.id,
 
-    });
+          ...item.data()
+
+        });
+
+      }
+    );
+
 
     showProperties();
 
+
     setStatus(
-      "✅ Firebase connected"
+      "✅ Firebase connected",
+      "success"
     );
+
 
   }catch(error){
 
     console.error(error);
 
     setStatus(
-      "❌ Firebase connection error"
+      "❌ Properties load नहीं हुईं। Firestore Rules check करें।",
+      "error"
     );
 
   }
@@ -389,48 +890,131 @@ async function loadProperties(){
 }
 
 
-/* Save Property */
 
-window.saveProperty = async function(){
+/* =====================================================
+   SAVE PROPERTY
+   ===================================================== */
+
+window.saveProperty =
+async function(){
+
+  const user =
+  auth.currentUser;
+
+
+  if(!user){
+
+    alert(
+      "पहले Admin Login करें।"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    user.email.toLowerCase()
+    !== ADMIN_EMAIL
+  ){
+
+    alert(
+      "आपको Admin permission नहीं है।"
+    );
+
+    return;
+
+  }
+
 
   const title =
-  document.getElementById("title").value.trim();
+  document
+  .getElementById("title")
+  .value
+  .trim();
+
 
   const type =
-  document.getElementById("type").value;
+  document
+  .getElementById("type")
+  .value;
+
 
   const requirement =
-  document.getElementById("requirement").value;
+  document
+  .getElementById("requirement")
+  .value;
+
 
   const location =
-  document.getElementById("location").value.trim();
+  document
+  .getElementById("location")
+  .value
+  .trim();
+
 
   const price =
-  document.getElementById("price").value.trim();
+  document
+  .getElementById("price")
+  .value
+  .trim();
+
 
   const bedrooms =
-  document.getElementById("bedrooms").value.trim();
+  document
+  .getElementById("bedrooms")
+  .value
+  .trim();
+
 
   const area =
-  document.getElementById("area").value.trim();
+  document
+  .getElementById("area")
+  .value
+  .trim();
+
 
   const owner =
-  document.getElementById("owner").value.trim();
+  document
+  .getElementById("owner")
+  .value
+  .trim();
+
 
   const phone =
-  document.getElementById("phone").value.trim();
+  document
+  .getElementById("phone")
+  .value
+  .trim();
+
 
   const description =
-  document.getElementById("description").value.trim();
+  document
+  .getElementById("description")
+  .value
+  .trim();
+
 
   const image =
-  document.getElementById("image").value.trim();
+  document
+  .getElementById("image")
+  .value
+  .trim();
+
 
   const video =
-  document.getElementById("video").value.trim();
+  document
+  .getElementById("video")
+  .value
+  .trim();
 
 
-  if(!title || !location || !price){
+
+  if(
+    !title ||
+    !location ||
+    !price
+  ){
 
     alert(
       "Property Title, Location और Price भरना जरूरी है."
@@ -439,6 +1023,7 @@ window.saveProperty = async function(){
     return;
 
   }
+
 
 
   const property = {
@@ -467,14 +1052,21 @@ window.saveProperty = async function(){
 
     video:video,
 
-    updatedAt:serverTimestamp()
+    updatedAt:
+    serverTimestamp(),
+
+    updatedBy:
+    user.email
 
   };
 
 
+
   try{
 
-    setStatus("Saving property...");
+    setStatus(
+      "Saving property..."
+    );
 
 
     if(editId === null){
@@ -482,25 +1074,41 @@ window.saveProperty = async function(){
       property.createdAt =
       serverTimestamp();
 
+
+      property.createdBy =
+      user.email;
+
+
       await addDoc(
         propertiesRef,
         property
       );
 
+
       alert(
         "✅ Property successfully added."
       );
 
+
     }else{
 
       await updateDoc(
-        doc(db,"properties",editId),
+
+        doc(
+          db,
+          "properties",
+          editId
+        ),
+
         property
+
       );
+
 
       alert(
         "✅ Property successfully updated."
       );
+
 
       editId = null;
 
@@ -508,6 +1116,7 @@ window.saveProperty = async function(){
 
 
     clearForm();
+
 
     await loadProperties();
 
@@ -517,11 +1126,13 @@ window.saveProperty = async function(){
     console.error(error);
 
     alert(
-      "❌ Property save नहीं हुई."
+      "❌ Property save नहीं हुई। Firestore Rules check करें।"
     );
 
+
     setStatus(
-      "❌ Firebase error"
+      "❌ Firebase error",
+      "error"
     );
 
   }
@@ -529,12 +1140,17 @@ window.saveProperty = async function(){
 };
 
 
-/* Show Properties */
+
+/* =====================================================
+   SHOW PROPERTIES
+   ===================================================== */
 
 function showProperties(){
 
   const list =
-  document.getElementById("propertyList");
+  document.getElementById(
+    "propertyList"
+  );
 
 
   if(properties.length === 0){
@@ -555,6 +1171,7 @@ function showProperties(){
     const div =
     document.createElement("div");
 
+
     div.className =
     "property";
 
@@ -562,34 +1179,34 @@ function showProperties(){
     div.innerHTML = `
 
       <h3>
-      ${escapeHtml(p.title)}
+        ${escapeHtml(p.title)}
       </h3>
 
       <span class="badge">
-      ${escapeHtml(p.requirement)}
+        ${escapeHtml(p.requirement)}
       </span>
 
       <p>
-      🏠 <b>Type:</b>
-      ${escapeHtml(p.type)}
+        🏠 <b>Type:</b>
+        ${escapeHtml(p.type)}
       </p>
 
       <p>
-      📍 <b>Location:</b>
-      ${escapeHtml(p.location)}
+        📍 <b>Location:</b>
+        ${escapeHtml(p.location)}
       </p>
 
       <p>
-      💰 <b>Price:</b>
-      ${escapeHtml(p.price)}
+        💰 <b>Price:</b>
+        ${escapeHtml(p.price)}
       </p>
 
       ${
         p.bedrooms
         ?
         `<p>
-        🛏️ <b>Bedrooms:</b>
-        ${escapeHtml(p.bedrooms)}
+          🛏️ <b>Bedrooms:</b>
+          ${escapeHtml(p.bedrooms)}
         </p>`
         :
         ""
@@ -599,8 +1216,8 @@ function showProperties(){
         p.area
         ?
         `<p>
-        📐 <b>Area:</b>
-        ${escapeHtml(p.area)}
+          📐 <b>Area:</b>
+          ${escapeHtml(p.area)}
         </p>`
         :
         ""
@@ -610,8 +1227,8 @@ function showProperties(){
         p.owner
         ?
         `<p>
-        👤 <b>Owner/Agent:</b>
-        ${escapeHtml(p.owner)}
+          👤 <b>Owner/Agent:</b>
+          ${escapeHtml(p.owner)}
         </p>`
         :
         ""
@@ -621,8 +1238,8 @@ function showProperties(){
         p.phone
         ?
         `<p>
-        📞 <b>Mobile:</b>
-        ${escapeHtml(p.phone)}
+          📞 <b>Mobile:</b>
+          ${escapeHtml(p.phone)}
         </p>`
         :
         ""
@@ -632,7 +1249,7 @@ function showProperties(){
         p.description
         ?
         `<p>
-        📝 ${escapeHtml(p.description)}
+          📝 ${escapeHtml(p.description)}
         </p>`
         :
         ""
@@ -641,9 +1258,18 @@ function showProperties(){
       ${
         p.image
         ?
-        `<p>
-        🖼️ Image URL saved
-        </p>`
+        `
+        <p>
+          🖼️ <b>Image:</b>
+        </p>
+
+        <img
+          class="preview-image"
+          src="${escapeHtml(p.image)}"
+          alt="Property Image"
+          onerror="this.style.display='none'"
+        >
+        `
         :
         ""
       }
@@ -651,23 +1277,37 @@ function showProperties(){
       ${
         p.video
         ?
-        `<p>
-        🎥 Video URL saved
-        </p>`
+        `
+        <p>
+          🎥 <b>Video:</b>
+          <br>
+
+          <a
+            class="video-link"
+            href="${escapeHtml(p.video)}"
+            target="_blank"
+            rel="noopener"
+          >
+            ▶️ Open Video
+          </a>
+        </p>
+        `
         :
         ""
       }
 
       <button
-      class="edit"
-      onclick="editProperty('${p.id}')">
-      ✏️ Edit
+        class="edit"
+        onclick="editProperty('${p.id}')"
+      >
+        ✏️ Edit
       </button>
 
       <button
-      class="delete"
-      onclick="deleteProperty('${p.id}')">
-      🗑️ Delete
+        class="delete"
+        onclick="deleteProperty('${p.id}')"
+      >
+        🗑️ Delete
       </button>
 
     `;
@@ -680,9 +1320,13 @@ function showProperties(){
 }
 
 
-/* Edit Property */
 
-window.editProperty = function(id){
+/* =====================================================
+   EDIT PROPERTY
+   ===================================================== */
+
+window.editProperty =
+function(id){
 
   const p =
   properties.find(
@@ -690,43 +1334,82 @@ window.editProperty = function(id){
   );
 
 
-  if(!p) return;
+  if(!p){
+
+    return;
+
+  }
 
 
-  document.getElementById("title").value =
+  document
+  .getElementById("title")
+  .value =
   p.title || "";
 
-  document.getElementById("type").value =
+
+  document
+  .getElementById("type")
+  .value =
   p.type || "Independent";
 
-  document.getElementById("requirement").value =
+
+  document
+  .getElementById("requirement")
+  .value =
   p.requirement || "Buy";
 
-  document.getElementById("location").value =
+
+  document
+  .getElementById("location")
+  .value =
   p.location || "";
 
-  document.getElementById("price").value =
+
+  document
+  .getElementById("price")
+  .value =
   p.price || "";
 
-  document.getElementById("bedrooms").value =
+
+  document
+  .getElementById("bedrooms")
+  .value =
   p.bedrooms || "";
 
-  document.getElementById("area").value =
+
+  document
+  .getElementById("area")
+  .value =
   p.area || "";
 
-  document.getElementById("owner").value =
+
+  document
+  .getElementById("owner")
+  .value =
   p.owner || "";
 
-  document.getElementById("phone").value =
+
+  document
+  .getElementById("phone")
+  .value =
   p.phone || "";
 
-  document.getElementById("description").value =
+
+  document
+  .getElementById("description")
+  .value =
   p.description || "";
 
-  document.getElementById("image").value =
+
+  document
+  .getElementById("image")
+  .value =
   p.image || "";
 
-  document.getElementById("video").value =
+
+  document
+  .getElementById("video")
+  .value =
   p.video || "";
 
 
@@ -741,12 +1424,50 @@ window.editProperty = function(id){
 
   });
 
+
+  setStatus(
+    "✏️ Editing property. बदलाव करके Save करें."
+  );
+
 };
 
 
-/* Delete Property */
 
-window.deleteProperty = async function(id){
+/* =====================================================
+   DELETE PROPERTY
+   ===================================================== */
+
+window.deleteProperty =
+async function(id){
+
+  const user =
+  auth.currentUser;
+
+
+  if(!user){
+
+    alert(
+      "पहले Admin Login करें।"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    user.email.toLowerCase()
+    !== ADMIN_EMAIL
+  ){
+
+    alert(
+      "आपको Admin permission नहीं है।"
+    );
+
+    return;
+
+  }
+
 
   if(
     !confirm(
@@ -767,7 +1488,11 @@ window.deleteProperty = async function(id){
 
 
     await deleteDoc(
-      doc(db,"properties",id)
+      doc(
+        db,
+        "properties",
+        id
+      )
     );
 
 
@@ -784,7 +1509,13 @@ window.deleteProperty = async function(id){
     console.error(error);
 
     alert(
-      "❌ Property delete नहीं हुई."
+      "❌ Property delete नहीं हुई। Firestore Rules check करें।"
+    );
+
+
+    setStatus(
+      "❌ Delete error",
+      "error"
     );
 
   }
@@ -792,34 +1523,72 @@ window.deleteProperty = async function(id){
 };
 
 
-/* Clear Form */
 
-window.clearForm = function(){
+/* =====================================================
+   CLEAR FORM
+   ===================================================== */
 
-  document.getElementById("title").value = "";
+window.clearForm =
+function(){
 
-  document.getElementById("location").value = "";
-
-  document.getElementById("price").value = "";
-
-  document.getElementById("bedrooms").value = "";
-
-  document.getElementById("area").value = "";
-
-  document.getElementById("owner").value = "";
-
-  document.getElementById("phone").value = "";
-
-  document.getElementById("description").value = "";
-
-  document.getElementById("image").value = "";
-
-  document.getElementById("video").value = "";
+  document
+  .getElementById("title")
+  .value = "";
 
 
-  document.getElementById("type").selectedIndex = 0;
+  document
+  .getElementById("location")
+  .value = "";
 
-  document.getElementById("requirement").selectedIndex = 0;
+
+  document
+  .getElementById("price")
+  .value = "";
+
+
+  document
+  .getElementById("bedrooms")
+  .value = "";
+
+
+  document
+  .getElementById("area")
+  .value = "";
+
+
+  document
+  .getElementById("owner")
+  .value = "";
+
+
+  document
+  .getElementById("phone")
+  .value = "";
+
+
+  document
+  .getElementById("description")
+  .value = "";
+
+
+  document
+  .getElementById("image")
+  .value = "";
+
+
+  document
+  .getElementById("video")
+  .value = "";
+
+
+  document
+  .getElementById("type")
+  .selectedIndex = 0;
+
+
+  document
+  .getElementById("requirement")
+  .selectedIndex = 0;
 
 
   editId = null;
@@ -827,9 +1596,6 @@ window.clearForm = function(){
 };
 
 
-/* Start */
-
-loadProperties();
 
 </script>
 
