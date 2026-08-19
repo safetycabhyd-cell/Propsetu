@@ -284,7 +284,7 @@ button{
 
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 
 <div class="header">
 
@@ -542,6 +542,8 @@ button{
 
 </div>
 
+
+<!-- ================= FOOTER ================= -->
 
 <div class="footer">
 
@@ -1076,37 +1078,37 @@ function sendEnquiry(){
   }
 
 
-  let text =
+  const text =
 
-    "🏠 *Prop Set U Property Enquiry*%0A%0A" +
+    "🏠 Prop Set U Property Enquiry\n\n" +
 
     "Property: " +
-    encodeURIComponent(currentProperty.title) +
+    currentProperty.title +
 
-    "%0A" +
+    "\n" +
 
     "Price: " +
-    encodeURIComponent(currentProperty.price) +
+    currentProperty.price +
 
-    "%0A" +
+    "\n" +
 
     "Location: " +
-    encodeURIComponent(currentProperty.location) +
+    currentProperty.location +
 
-    "%0A%0A" +
+    "\n\n" +
 
     "👤 Customer Name: " +
-    encodeURIComponent(name) +
+    name +
 
-    "%0A" +
+    "\n" +
 
     "📱 Customer Mobile: " +
-    encodeURIComponent(phone) +
+    phone +
 
-    "%0A%0A" +
+    "\n\n" +
 
     "💬 Message: " +
-    encodeURIComponent(message);
+    message;
 
 
   document
@@ -1118,7 +1120,7 @@ function sendEnquiry(){
     "https://wa.me/" +
     ADMIN_WHATSAPP +
     "?text=" +
-    text;
+    encodeURIComponent(text);
 
 
   setTimeout(function(){
@@ -1165,17 +1167,17 @@ function contactAdminForProperty(){
 
   const message =
 
-    "Hello Prop Set U Admin,%0A%0A" +
+    "Hello Prop Set U Admin,\n\n" +
 
-    "मुझे इस Property की जानकारी चाहिए।%0A%0A" +
+    "मुझे इस Property की जानकारी चाहिए।\n\n" +
 
     "Property: " +
     currentProperty.title +
 
-    "%0APrice: " +
+    "\nPrice: " +
     currentProperty.price +
 
-    "%0ALocation: " +
+    "\nLocation: " +
     currentProperty.location;
 
 
@@ -1183,7 +1185,7 @@ function contactAdminForProperty(){
     "https://wa.me/" +
     ADMIN_WHATSAPP +
     "?text=" +
-    message;
+    encodeURIComponent(message);
 
 
   window.open(url,"_blank");
