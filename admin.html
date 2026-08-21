@@ -73,6 +73,11 @@ textarea{
   font-size:14px;
 }
 
+input[type="file"]{
+  background:#fafafa;
+  padding:10px;
+}
+
 textarea{
   min-height:90px;
   resize:vertical;
@@ -218,6 +223,21 @@ button{
   margin-top:6px;
   color:#063b66;
   font-weight:bold;
+}
+
+.file-note{
+  font-size:12px;
+  color:#777;
+  margin-top:5px;
+}
+
+.current-file{
+  background:#f4f8fc;
+  padding:9px;
+  border-radius:8px;
+  margin-top:7px;
+  font-size:12px;
+  word-break:break-all;
 }
 </style>
 </head>
@@ -380,19 +400,60 @@ button{
       placeholder="Property की पूरी जानकारी लिखें"
     ></textarea>
 
-    <label>Property Image URL</label>
+
+    <!-- ================= IMAGE UPLOAD ================= -->
+
+    <label>📷 Property Image</label>
 
     <input
-      id="image"
-      placeholder="Image URL"
+      id="imageFile"
+      type="file"
+      accept="image/*"
     >
 
-    <label>Property Video URL</label>
+    <div class="file-note">
+      Phone Gallery से Property की फोटो चुनें।
+    </div>
+
+    <div
+      id="imageStatus"
+      class="status hidden"
+    >
+      Image upload status
+    </div>
+
+    <div
+      id="currentImage"
+      class="current-file hidden"
+    ></div>
+
+
+    <!-- ================= VIDEO UPLOAD ================= -->
+
+    <label>🎥 Property Video</label>
 
     <input
-      id="video"
-      placeholder="YouTube / Video URL"
+      id="videoFile"
+      type="file"
+      accept="video/*"
     >
+
+    <div class="file-note">
+      Phone Gallery से Property का video चुनें।
+    </div>
+
+    <div
+      id="videoStatus"
+      class="status hidden"
+    >
+      Video upload status
+    </div>
+
+    <div
+      id="currentVideo"
+      class="current-file hidden"
+    ></div>
+
 
     <button
       class="save"
@@ -409,6 +470,7 @@ button{
     </button>
 
   </div>
+
 
   <!-- PROPERTY LIST -->
 
@@ -460,6 +522,13 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
 
 /* =====================================================
    FIREBASE CONFIG
@@ -504,26 +573,27 @@ const db =
 const auth =
   getAuth(app);
 
+const storage =
+  getStorage(app);
+
 
 /* =====================================================
    ADMIN SETTINGS
    ===================================================== */
 
-/* IMPORTANT:
-   Firebase Admin account email
-*/
-
 const ADMIN_EMAIL =
-  "propsetu1@gmail.com";
-
+  "propsetu@gmail.com";
 
 const propertiesRef =
   collection(db, "properties");
 
-
 let properties = [];
 
 let editId = null;
+
+let editOldImage = "";
+
+let editOldVideo = "";
 
 
 /* =====================================================
@@ -579,8 +649,6 @@ function setLoginStatus(message, type = "normal"){
 
   const status =
     document.getElementById("loginStatus");
-
-  if(!status) return;
 
   status.textContent =
     message;
@@ -666,38 +734,8 @@ async function(){
       error
     );
 
-    let message =
-      "❌ Login failed. Email या Password गलत है।";
-
-
-    if(error.code === "auth/invalid-credential"){
-      message =
-        "❌ Email या Password गलत है।";
-    }
-
-    if(error.code === "auth/user-not-found"){
-      message =
-        "❌ यह Admin account Firebase Authentication में नहीं मिला।";
-    }
-
-    if(error.code === "auth/wrong-password"){
-      message =
-        "❌ Password गलत है।";
-    }
-
-    if(error.code === "auth/invalid-email"){
-      message =
-        "❌ Email सही format में नहीं है।";
-    }
-
-    if(error.code === "auth/too-many-requests"){
-      message =
-        "❌ बहुत ज्यादा login attempts हुए हैं। थोड़ी देर बाद फिर कोशिश करें।";
-    }
-
-
     setLoginStatus(
-      message,
+      "❌ Login failed. Email या Password गलत है।",
       "error"
     );
 
@@ -815,6 +853,104 @@ onAuthStateChanged(
 
 
 /* =====================================================
+   FILE UPLOAD
+   ===================================================== */
+
+async function uploadFile(
+  file,
+  folder,
+  statusId
+){
+
+  if(!file){
+    return "";
+  }
+
+
+  const status =
+    document.getElementById(
+      statusId
+    );
+
+
+  status.className =
+    "status";
+
+
+  status.textContent =
+    "⏳ Upload हो रहा है...";
+
+
+  try{
+
+    const safeName =
+      file.name
+        .replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_"
+        );
+
+
+    const fileName =
+      Date.now()
+      + "_"
+      + safeName;
+
+
+    const storageRef =
+      ref(
+        storage,
+        folder + "/" + fileName
+      );
+
+
+    await uploadBytes(
+      storageRef,
+      file
+    );
+
+
+    const downloadURL =
+      await getDownloadURL(
+        storageRef
+      );
+
+
+    status.textContent =
+      "✅ Upload successfully हुआ।";
+
+
+    status.className =
+      "status success";
+
+
+    return downloadURL;
+
+
+  }catch(error){
+
+    console.error(
+      "Upload Error:",
+      error
+    );
+
+
+    status.textContent =
+      "❌ Upload failed। Firebase Storage check करें।";
+
+
+    status.className =
+      "status error";
+
+
+    throw error;
+
+  }
+
+}
+
+
+/* =====================================================
    LOAD PROPERTIES
    ===================================================== */
 
@@ -855,7 +991,7 @@ async function loadProperties(){
 
 
     setStatus(
-      "✅ Firebase connected — Properties loaded",
+      "✅ Firebase connected",
       "success"
     );
 
@@ -865,11 +1001,6 @@ async function loadProperties(){
     console.error(
       "Load Error:",
       error
-    );
-
-    console.error(
-      "Firestore error code:",
-      error.code
     );
 
 
@@ -977,17 +1108,17 @@ async function(){
       .value
       .trim();
 
-  const image =
-    document
-      .getElementById("image")
-      .value
-      .trim();
 
-  const video =
+  const imageFile =
     document
-      .getElementById("video")
-      .value
-      .trim();
+      .getElementById("imageFile")
+      .files[0];
+
+
+  const videoFile =
+    document
+      .getElementById("videoFile")
+      .files[0];
 
 
   if(
@@ -1005,47 +1136,153 @@ async function(){
   }
 
 
-  const property = {
+  /* ==========================================
+     FILE SIZE CHECK
+     ========================================== */
 
-    title: title,
+  if(imageFile){
 
-    type: type,
+    const maxImageSize =
+      10 * 1024 * 1024;
 
-    requirement: requirement,
+    if(
+      imageFile.size >
+      maxImageSize
+    ){
 
-    location: location,
+      alert(
+        "❌ Image 10 MB से छोटी होनी चाहिए।"
+      );
 
-    price: price,
+      return;
 
-    bedrooms: bedrooms,
+    }
 
-    area: area,
+  }
 
-    owner: owner,
 
-    phone: phone,
+  if(videoFile){
 
-    description: description,
+    const maxVideoSize =
+      100 * 1024 * 1024;
 
-    image: image,
+    if(
+      videoFile.size >
+      maxVideoSize
+    ){
 
-    video: video,
+      alert(
+        "❌ Video 100 MB से छोटी होनी चाहिए।"
+      );
 
-    updatedAt:
-      serverTimestamp(),
+      return;
 
-    updatedBy:
-      user.email
+    }
 
-  };
+  }
 
 
   try{
 
     setStatus(
-      "Saving property..."
+      "⏳ Property और files तैयार हो रहे हैं..."
     );
 
+
+    /* ==========================================
+       IMAGE
+       ========================================== */
+
+    let image =
+      editOldImage || "";
+
+
+    if(imageFile){
+
+      image =
+        await uploadFile(
+          imageFile,
+          "property-images",
+          "imageStatus"
+        );
+
+    }
+
+
+    /* ==========================================
+       VIDEO
+       ========================================== */
+
+    let video =
+      editOldVideo || "";
+
+
+    if(videoFile){
+
+      video =
+        await uploadFile(
+          videoFile,
+          "property-videos",
+          "videoStatus"
+        );
+
+    }
+
+
+    /* ==========================================
+       PROPERTY DATA
+       ========================================== */
+
+    const property = {
+
+      title:
+        title,
+
+      type:
+        type,
+
+      requirement:
+        requirement,
+
+      location:
+        location,
+
+      price:
+        price,
+
+      bedrooms:
+        bedrooms,
+
+      area:
+        area,
+
+      owner:
+        owner,
+
+      phone:
+        phone,
+
+      description:
+        description,
+
+      image:
+        image,
+
+      video:
+        video,
+
+      updatedAt:
+        serverTimestamp(),
+
+      updatedBy:
+        user.email
+
+    };
+
+
+    /* ==========================================
+       ADD
+       ========================================== */
 
     if(editId === null){
 
@@ -1067,7 +1304,13 @@ async function(){
       );
 
 
-    }else{
+    }
+
+    /* ==========================================
+       UPDATE
+       ========================================== */
+
+    else{
 
       await updateDoc(
 
@@ -1086,9 +1329,6 @@ async function(){
         "✅ Property successfully updated."
       );
 
-
-      editId = null;
-
     }
 
 
@@ -1104,18 +1344,14 @@ async function(){
       error
     );
 
-    console.error(
-      "Firestore error code:",
-      error.code
-    );
-
 
     alert(
-      "❌ Property save नहीं हुई। Firestore Rules check करें।"
+      "❌ Property save नहीं हुई। Firebase Storage/Firestore settings check करें।"
     );
 
+
     setStatus(
-      "❌ Firebase error",
+      "❌ Save error",
       "error"
     );
 
@@ -1397,19 +1633,82 @@ function(id){
     p.description || "";
 
 
-  document
-    .getElementById("image")
-    .value =
+  /* पुराने file URL सुरक्षित रखें */
+
+  editOldImage =
     p.image || "";
 
 
-  document
-    .getElementById("video")
-    .value =
+  editOldVideo =
     p.video || "";
 
 
-  editId = id;
+  /* File input reset करें */
+
+  document
+    .getElementById("imageFile")
+    .value =
+    "";
+
+
+  document
+    .getElementById("videoFile")
+    .value =
+    "";
+
+
+  const currentImage =
+    document.getElementById(
+      "currentImage"
+    );
+
+
+  const currentVideo =
+    document.getElementById(
+      "currentVideo"
+    );
+
+
+  if(editOldImage){
+
+    currentImage.className =
+      "current-file";
+
+    currentImage.innerHTML =
+      "🖼️ Current Image मौजूद है। नया Image चुनेंगे तो replace होगा।";
+
+  }else{
+
+    currentImage.className =
+      "current-file hidden";
+
+    currentImage.innerHTML =
+      "";
+
+  }
+
+
+  if(editOldVideo){
+
+    currentVideo.className =
+      "current-file";
+
+    currentVideo.innerHTML =
+      "🎥 Current Video मौजूद है। नया Video चुनेंगे तो replace होगा।";
+
+  }else{
+
+    currentVideo.className =
+      "current-file hidden";
+
+    currentVideo.innerHTML =
+      "";
+
+  }
+
+
+  editId =
+    id;
 
 
   window.scrollTo({
@@ -1506,11 +1805,6 @@ async function(id){
       error
     );
 
-    console.error(
-      "Firestore error code:",
-      error.code
-    );
-
 
     alert(
       "❌ Property delete नहीं हुई। Firestore Rules check करें।"
@@ -1575,12 +1869,12 @@ function(){
 
 
   document
-    .getElementById("image")
+    .getElementById("imageFile")
     .value = "";
 
 
   document
-    .getElementById("video")
+    .getElementById("videoFile")
     .value = "";
 
 
@@ -1594,7 +1888,40 @@ function(){
     .selectedIndex = 0;
 
 
-  editId = null;
+  document
+    .getElementById("imageStatus")
+    .className =
+    "status hidden";
+
+
+  document
+    .getElementById("videoStatus")
+    .className =
+    "status hidden";
+
+
+  document
+    .getElementById("currentImage")
+    .className =
+    "current-file hidden";
+
+
+  document
+    .getElementById("currentVideo")
+    .className =
+    "current-file hidden";
+
+
+  editId =
+    null;
+
+
+  editOldImage =
+    "";
+
+
+  editOldVideo =
+    "";
 
 };
 
