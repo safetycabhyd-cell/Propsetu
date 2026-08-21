@@ -1,0 +1,10 @@
+{
+  "name": "Prop Set U",
+  "short_name": "Prop Set U",
+  "description": "Buy • Rent • Lease • Sell • PG • Commercial Properties",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f6f9",
+  "theme_color": "#063b66",
+  "orientation": "portrait"
+}
