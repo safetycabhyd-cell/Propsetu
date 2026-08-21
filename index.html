@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#063b66">
@@ -15,7 +10,6 @@
 <title>Prop Set U - Property Marketplace</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -72,8 +66,7 @@ label{
 }
 
 input,
-select,
-textarea{
+select{
   width:100%;
   padding:12px;
   margin-top:6px;
@@ -214,13 +207,19 @@ button{
   object-fit:cover;
   border-radius:10px;
   margin-top:8px;
+  display:block;
 }
 
 .video-link{
-  display:inline-block;
-  margin-top:5px;
+  display:block;
+  margin-top:8px;
+  padding:11px;
+  background:#eef5ff;
+  border-radius:8px;
   color:#063b66;
   font-weight:bold;
+  text-decoration:none;
+  text-align:center;
 }
 
 .empty{
@@ -236,256 +235,221 @@ button{
   font-size:12px;
 }
 
-.hidden{
-  display:none !important;
-}
-
 .loading{
   text-align:center;
   padding:15px;
   color:#777;
 }
 
-</style>
+.hidden{
+  display:none !important;
+}
 
+.error-image{
+  display:none;
+  background:#ffe9e9;
+  color:#c1121f;
+  padding:10px;
+  border-radius:8px;
+  margin-top:8px;
+  font-size:13px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="header">
-
   <h1>🏠 Prop Set U</h1>
-
   <p>
     Buy • Rent • Lease • Sell • PG • Commercial Properties
   </p>
-
 </div>
 
 <div class="container">
 
-<div class="card">
+  <!-- SEARCH -->
+  <div class="card">
 
-  <h2>🔎 Property Search</h2>
+    <h2>🔎 Property Search</h2>
 
-  <label>
-    Area, City या Location
-  </label>
+    <label>Area, City या Location</label>
 
-  <input
-    id="searchLocation"
-    type="text"
-    placeholder="जैसे Hyderabad"
-  >
+    <input
+      id="searchLocation"
+      type="text"
+      placeholder="जैसे Hyderabad"
+    >
 
-  <label>
-    Property Type
-  </label>
+    <label>Property Type</label>
 
-  <select id="searchType">
+    <select id="searchType">
 
-    <option value="All">
-      All Properties
-    </option>
+      <option value="All">All Properties</option>
+      <option value="Independent">Independent</option>
+      <option value="Flat">Flat</option>
+      <option value="Villa">Villa</option>
+      <option value="Open Plot">Open Plot</option>
+      <option value="Commercial">Commercial</option>
+      <option value="Shop">Shop</option>
+      <option value="Office">Office</option>
+      <option value="PG">PG</option>
 
-    <option value="Independent">
-      Independent
-    </option>
+    </select>
 
-    <option value="Flat">
-      Flat
-    </option>
+    <label>Requirement</label>
 
-    <option value="Villa">
-      Villa
-    </option>
+    <select id="searchRequirement">
 
-    <option value="Open Plot">
-      Open Plot
-    </option>
+      <option value="All">All</option>
+      <option value="Buy">Buy</option>
+      <option value="Rent">Rent</option>
+      <option value="Lease">Lease</option>
+      <option value="Sell">Sell</option>
 
-    <option value="Commercial">
-      Commercial
-    </option>
-
-    <option value="Shop">
-      Shop
-    </option>
-
-    <option value="Office">
-      Office
-    </option>
-
-    <option value="PG">
-      PG
-    </option>
-
-  </select>
-
-  <label>
-    Requirement
-  </label>
-
-  <select id="searchRequirement">
-
-    <option value="All">
-      All
-    </option>
-
-    <option value="Buy">
-      Buy
-    </option>
-
-    <option value="Rent">
-      Rent
-    </option>
-
-    <option value="Lease">
-      Lease
-    </option>
-
-    <option value="Sell">
-      Sell
-    </option>
-
-  </select>
-
-  <button
-    class="search-btn"
-    onclick="searchProperties()"
-  >
-    🔎 Search Property
-  </button>
-
-</div>
-
-<div class="card">
-
-  <h2>🏘️ Categories</h2>
-
-  <div class="categories">
+    </select>
 
     <button
-      class="category-btn"
-      onclick="filterCategory('Buy',this)"
+      class="search-btn"
+      onclick="searchProperties()"
     >
-      🏠 Buy
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterCategory('Rent',this)"
-    >
-      🏢 Rent
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterCategory('Lease',this)"
-    >
-      📄 Lease
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterCategory('Sell',this)"
-    >
-      💰 Sell
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterCategory('PG',this)"
-    >
-      🛏️ PG
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterCategory('Commercial',this)"
-    >
-      🏢 Commercial
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterCategory('Open Plot',this)"
-    >
-      🌳 Open Plot
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterCategory('Independent',this)"
-    >
-      🏠 Independent
+      🔎 Search Property
     </button>
 
   </div>
 
-</div>
 
-<div class="card">
+  <!-- CATEGORIES -->
+  <div class="card">
 
-  <div
-    id="status"
-    class="status"
-  >
-    Firebase connecting...
-  </div>
+    <h2>🏘️ Categories</h2>
 
-</div>
+    <div class="categories">
 
-<div class="card">
+      <button
+        class="category-btn"
+        onclick="filterCategory('Buy',this)"
+      >
+        🏠 Buy
+      </button>
 
-  <h2>
-    🏘️ Available Properties
-  </h2>
+      <button
+        class="category-btn"
+        onclick="filterCategory('Rent',this)"
+      >
+        🏢 Rent
+      </button>
 
-  <div id="propertyList">
+      <button
+        class="category-btn"
+        onclick="filterCategory('Lease',this)"
+      >
+        📄 Lease
+      </button>
 
-    <div class="loading">
-      Properties loading...
+      <button
+        class="category-btn"
+        onclick="filterCategory('Sell',this)"
+      >
+        💰 Sell
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterCategory('PG',this)"
+      >
+        🛏️ PG
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterCategory('Commercial',this)"
+      >
+        🏢 Commercial
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterCategory('Open Plot',this)"
+      >
+        🌳 Open Plot
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterCategory('Independent',this)"
+      >
+        🏠 Independent
+      </button>
+
     </div>
 
   </div>
 
-</div>
 
-<div class="card admin-card">
+  <!-- STATUS -->
+  <div class="card">
 
-  <h2>
-    📞 Prop Set U Admin
-  </h2>
-
-  <div class="admin-text">
-
-    Property के बारे में जानकारी या enquiry के लिए
-    सीधे Prop Set U Admin से संपर्क करें।
+    <div
+      id="status"
+      class="status"
+    >
+      Firebase connecting...
+    </div>
 
   </div>
 
-  <div class="notice">
 
-    🔒 Customer को Owner / Agent का personal mobile
-    number नहीं दिखाया जाएगा।
+  <!-- PROPERTY LIST -->
+  <div class="card">
 
-    <br><br>
+    <h2>🏘️ Available Properties</h2>
 
-    सभी enquiries Prop Set U Admin के माध्यम से होंगी।
+    <div id="propertyList">
+
+      <div class="loading">
+        Properties loading...
+      </div>
+
+    </div>
 
   </div>
 
-  <button
-    class="whatsapp"
-    onclick="openAdminWhatsApp()"
-  >
-    💬 WhatsApp Admin
-  </button>
+
+  <!-- ADMIN WHATSAPP -->
+  <div class="card admin-card">
+
+    <h2>📞 Prop Set U Admin</h2>
+
+    <div class="admin-text">
+
+      Property के बारे में जानकारी या enquiry के लिए
+      सीधे Prop Set U Admin से संपर्क करें।
+
+    </div>
+
+    <div class="notice">
+
+      🔒 Customer को Owner / Agent का personal mobile
+      number नहीं दिखाया जाएगा।
+
+      <br><br>
+
+      सभी enquiries Prop Set U Admin के माध्यम से होंगी।
+
+    </div>
+
+    <button
+      class="whatsapp"
+      onclick="openAdminWhatsApp()"
+    >
+      💬 WhatsApp Admin
+    </button>
+
+  </div>
 
 </div>
 
-</div>
 
 <div class="footer">
 
@@ -496,6 +460,7 @@ button{
   Buy • Rent • Lease • Sell • PG • Commercial
 
 </div>
+
 
 <script type="module">
 
@@ -512,6 +477,11 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+   ===================================================== */
 
 const firebaseConfig = {
 
@@ -538,6 +508,7 @@ const firebaseConfig = {
 
 };
 
+
 const app =
   initializeApp(firebaseConfig);
 
@@ -550,14 +521,27 @@ const propertiesRef =
     "properties"
   );
 
+
+/* =====================================================
+   ADMIN WHATSAPP
+   0806180745
+   India country code = 91
+   ===================================================== */
+
 const ADMIN_WHATSAPP =
-  "918062180745";
+  "91806180745";
+
 
 let properties = [];
 
 let currentProperties = [];
 
 let selectedCategory = "All";
+
+
+/* =====================================================
+   HTML ESCAPE
+   ===================================================== */
 
 function escapeHtml(text){
 
@@ -575,13 +559,22 @@ function escapeHtml(text){
 
 }
 
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
 function setStatus(
   message,
   type = "normal"
 ){
 
   const status =
-    document.getElementById("status");
+    document.getElementById(
+      "status"
+    );
+
+  if(!status) return;
 
   status.textContent =
     message;
@@ -607,6 +600,11 @@ function setStatus(
 
 }
 
+
+/* =====================================================
+   LOAD FIREBASE PROPERTIES
+   ===================================================== */
+
 async function loadProperties(){
 
   try{
@@ -615,12 +613,15 @@ async function loadProperties(){
       "Properties loading..."
     );
 
+
     const snapshot =
       await getDocs(
         propertiesRef
       );
 
+
     properties = [];
+
 
     snapshot.forEach(
       item => {
@@ -636,12 +637,15 @@ async function loadProperties(){
       }
     );
 
+
     currentProperties =
       [...properties];
+
 
     renderProperties(
       currentProperties
     );
+
 
     setStatus(
 
@@ -653,12 +657,14 @@ async function loadProperties(){
 
     );
 
+
   }catch(error){
 
     console.error(
       "Firebase Error:",
       error
     );
+
 
     setStatus(
 
@@ -672,6 +678,11 @@ async function loadProperties(){
 
 }
 
+
+/* =====================================================
+   RENDER PROPERTY LIST
+   ===================================================== */
+
 function renderProperties(list){
 
   const propertyList =
@@ -679,7 +690,8 @@ function renderProperties(list){
       "propertyList"
     );
 
-  if(list.length === 0){
+
+  if(!list.length){
 
     propertyList.innerHTML =
 
@@ -695,7 +707,9 @@ function renderProperties(list){
 
   }
 
+
   propertyList.innerHTML = "";
+
 
   list.forEach(
     property => {
@@ -705,8 +719,10 @@ function renderProperties(list){
           "div"
         );
 
+
       div.className =
         "property";
+
 
       div.innerHTML =
 
@@ -716,43 +732,29 @@ function renderProperties(list){
         ${escapeHtml(property.title)}
       </h3>
 
+
       <span class="badge">
-
-        ${escapeHtml(
-          property.requirement || ""
-        )}
-
+        ${escapeHtml(property.requirement || "")}
       </span>
 
-      <p>
 
+      <p>
         🏠 <b>Type:</b>
-
-        ${escapeHtml(
-          property.type || ""
-        )}
-
+        ${escapeHtml(property.type || "")}
       </p>
 
-      <p>
 
+      <p>
         📍 <b>Location:</b>
-
-        ${escapeHtml(
-          property.location || ""
-        )}
-
+        ${escapeHtml(property.location || "")}
       </p>
+
 
       <p>
-
         💰 <b>Price:</b>
-
-        ${escapeHtml(
-          property.price || ""
-        )}
-
+        ${escapeHtml(property.price || "")}
       </p>
+
 
       ${
         property.bedrooms
@@ -760,23 +762,17 @@ function renderProperties(list){
         ?
 
         `
-
         <p>
-
           🛏️ <b>Bedrooms:</b>
-
-          ${escapeHtml(
-            property.bedrooms
-          )}
-
+          ${escapeHtml(property.bedrooms)}
         </p>
-
         `
 
         :
 
         ""
       }
+
 
       ${
         property.area
@@ -784,17 +780,10 @@ function renderProperties(list){
         ?
 
         `
-
         <p>
-
           📐 <b>Area:</b>
-
-          ${escapeHtml(
-            property.area
-          )}
-
+          ${escapeHtml(property.area)}
         </p>
-
         `
 
         :
@@ -802,23 +791,16 @@ function renderProperties(list){
         ""
       }
 
+
       <button
-
         class="details-btn"
-
-        onclick="showDetails('${
-
-          property.id
-
-        }')"
-
+        onclick="showDetails('${escapeHtml(property.id)}')"
       >
-
         👁️ View Property Details
-
       </button>
 
       `;
+
 
       propertyList.appendChild(
         div
@@ -829,6 +811,11 @@ function renderProperties(list){
 
 }
 
+
+/* =====================================================
+   SHOW DETAILS
+   ===================================================== */
+
 window.showDetails =
 function(id){
 
@@ -837,6 +824,7 @@ function(id){
       item =>
         item.id === id
     );
+
 
   if(!property){
 
@@ -848,10 +836,12 @@ function(id){
 
   }
 
+
   const existing =
     document.getElementById(
       "details-" + id
     );
+
 
   if(existing){
 
@@ -861,12 +851,15 @@ function(id){
 
   }
 
+
   const cards =
     document.querySelectorAll(
       ".property"
     );
 
+
   let target = null;
+
 
   cards.forEach(
     card => {
@@ -875,6 +868,7 @@ function(id){
         card.querySelector(
           ".details-btn"
         );
+
 
       if(
         button &&
@@ -891,15 +885,19 @@ function(id){
     }
   );
 
+
   if(!target) return;
+
 
   const details =
     document.createElement(
       "div"
     );
 
+
   details.id =
     "details-" + id;
+
 
   details.style.marginTop =
     "12px";
@@ -909,6 +907,7 @@ function(id){
 
   details.style.paddingTop =
     "12px";
+
 
   details.innerHTML =
 
@@ -920,9 +919,7 @@ function(id){
     ?
 
     `
-
     <p>
-
       📝 <b>Description:</b>
 
       <br>
@@ -930,15 +927,14 @@ function(id){
       ${escapeHtml(
         property.description
       )}
-
     </p>
-
     `
 
     :
 
     ""
   }
+
 
   ${
     property.image
@@ -946,33 +942,27 @@ function(id){
     ?
 
     `
-
     <p>
-
       🖼️ <b>Property Image:</b>
-
     </p>
 
     <img
-
       class="preview-image"
-
-      src="${escapeHtml(
-        property.image
-      )}"
-
+      src="${escapeHtml(property.image)}"
       alt="Property Image"
-
-      onerror="this.style.display='none'"
-
+      onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
     >
 
+    <div class="error-image">
+      ❌ Property image अभी open नहीं हो रही।
+    </div>
     `
 
     :
 
     ""
   }
+
 
   ${
     property.video
@@ -980,39 +970,25 @@ function(id){
     ?
 
     `
-
     <p>
-
       🎥 <b>Property Video:</b>
-
-      <br>
-
-      <a
-
-        class="video-link"
-
-        href="${escapeHtml(
-          property.video
-        )}"
-
-        target="_blank"
-
-        rel="noopener noreferrer"
-
-      >
-
-        ▶️ Open Property Video
-
-      </a>
-
     </p>
 
+    <a
+      class="video-link"
+      href="${escapeHtml(property.video)}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      ▶️ Open Property Video
+    </a>
     `
 
     :
 
     ""
   }
+
 
   <div class="notice">
 
@@ -1026,50 +1002,44 @@ function(id){
 
   </div>
 
+
   <button
-
     class="whatsapp"
-
-    onclick="propertyEnquiry('${
-
-      property.id
-
-    }')"
-
+    onclick="propertyEnquiry('${escapeHtml(property.id)}')"
   >
-
     💬 WhatsApp Admin — Property Enquiry
-
   </button>
 
+
   <button
-
     class="close-btn"
-
-    onclick="closeDetails('${
-
-      property.id
-
-    }')"
-
+    onclick="closeDetails('${escapeHtml(property.id)}')"
   >
-
     ❌ Close Details
-
   </button>
 
   `;
+
 
   target.appendChild(
     details
   );
 
+
   details.scrollIntoView({
+
     behavior:"smooth",
+
     block:"nearest"
+
   });
 
 };
+
+
+/* =====================================================
+   CLOSE DETAILS
+   ===================================================== */
 
 window.closeDetails =
 function(id){
@@ -1079,6 +1049,7 @@ function(id){
       "details-" + id
     );
 
+
   if(details){
 
     details.remove();
@@ -1086,6 +1057,11 @@ function(id){
   }
 
 };
+
+
+/* =====================================================
+   PROPERTY ENQUIRY
+   ===================================================== */
 
 window.propertyEnquiry =
 function(id){
@@ -1096,6 +1072,7 @@ function(id){
         item.id === id
     );
 
+
   if(!property){
 
     alert(
@@ -1105,6 +1082,7 @@ function(id){
     return;
 
   }
+
 
   const message =
 
@@ -1135,11 +1113,17 @@ ${property.area || "N/A"}
 
 कृपया इस Property के बारे में जानकारी दें।`;
 
+
   openAdminWhatsApp(
     message
   );
 
 };
+
+
+/* =====================================================
+   WHATSAPP ADMIN
+   ===================================================== */
 
 window.openAdminWhatsApp =
 function(message){
@@ -1151,6 +1135,7 @@ function(message){
 `नमस्ते Prop Set U Admin,
 
 मुझे Property के बारे में जानकारी चाहिए।`;
+
 
   const url =
 
@@ -1164,12 +1149,19 @@ function(message){
       finalMessage
     );
 
+
   window.open(
     url,
-    "_blank"
+    "_blank",
+    "noopener,noreferrer"
   );
 
 };
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
 
 window.searchProperties =
 function(){
@@ -1188,6 +1180,7 @@ function(){
 
       .toLowerCase();
 
+
   const type =
 
     document
@@ -1197,6 +1190,7 @@ function(){
       )
 
       .value;
+
 
   const requirement =
 
@@ -1208,7 +1202,8 @@ function(){
 
       .value;
 
-  let result =
+
+  const result =
 
     properties.filter(
       property => {
@@ -1227,11 +1222,13 @@ function(){
             location
           );
 
+
         const typeMatch =
 
           type === "All" ||
 
           property.type === type;
+
 
         const requirementMatch =
 
@@ -1239,6 +1236,7 @@ function(){
 
           property.requirement ===
           requirement;
+
 
         return
 
@@ -1251,8 +1249,10 @@ function(){
       }
     );
 
+
   selectedCategory =
     "All";
+
 
   document
 
@@ -1267,12 +1267,15 @@ function(){
         )
     );
 
+
   currentProperties =
     result;
+
 
   renderProperties(
     result
   );
+
 
   setStatus(
 
@@ -1283,6 +1286,7 @@ function(){
     "success"
 
   );
+
 
   document
 
@@ -1300,6 +1304,11 @@ function(){
 
 };
 
+
+/* =====================================================
+   CATEGORY FILTER
+   ===================================================== */
+
 window.filterCategory =
 function(
   category,
@@ -1308,6 +1317,7 @@ function(
 
   selectedCategory =
     category;
+
 
   document
 
@@ -1322,6 +1332,7 @@ function(
         )
     );
 
+
   if(button){
 
     button.classList.add(
@@ -1330,7 +1341,9 @@ function(
 
   }
 
+
   let result;
+
 
   if(
     category === "Buy" ||
@@ -1347,6 +1360,7 @@ function(
       );
 
   }
+
 
   else if(
     category === "PG" ||
@@ -1367,10 +1381,10 @@ function(
 
           property.category ===
           category
-
       );
 
   }
+
 
   else{
 
@@ -1379,12 +1393,15 @@ function(
 
   }
 
+
   currentProperties =
     result;
+
 
   renderProperties(
     result
   );
+
 
   setStatus(
 
@@ -1397,6 +1414,11 @@ function(
   );
 
 };
+
+
+/* =====================================================
+   START
+   ===================================================== */
 
 loadProperties();
 
