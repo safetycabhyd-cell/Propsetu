@@ -509,6 +509,10 @@ const auth =
    ADMIN SETTINGS
    ===================================================== */
 
+/* IMPORTANT:
+   Firebase Admin account email
+*/
+
 const ADMIN_EMAIL =
   "propsetu1@gmail.com";
 
@@ -575,6 +579,8 @@ function setLoginStatus(message, type = "normal"){
 
   const status =
     document.getElementById("loginStatus");
+
+  if(!status) return;
 
   status.textContent =
     message;
@@ -660,41 +666,38 @@ async function(){
       error
     );
 
-    let errorMessage =
+    let message =
       "❌ Login failed. Email या Password गलत है।";
 
+
     if(error.code === "auth/invalid-credential"){
-      errorMessage =
+      message =
         "❌ Email या Password गलत है।";
     }
 
-    else if(error.code === "auth/wrong-password"){
-      errorMessage =
+    if(error.code === "auth/user-not-found"){
+      message =
+        "❌ यह Admin account Firebase Authentication में नहीं मिला।";
+    }
+
+    if(error.code === "auth/wrong-password"){
+      message =
         "❌ Password गलत है।";
     }
 
-    else if(error.code === "auth/user-not-found"){
-      errorMessage =
-        "❌ यह Email Firebase Authentication में नहीं मिला।";
+    if(error.code === "auth/invalid-email"){
+      message =
+        "❌ Email सही format में नहीं है।";
     }
 
-    else if(error.code === "auth/invalid-email"){
-      errorMessage =
-        "❌ Email सही नहीं है।";
+    if(error.code === "auth/too-many-requests"){
+      message =
+        "❌ बहुत ज्यादा login attempts हुए हैं। थोड़ी देर बाद फिर कोशिश करें।";
     }
 
-    else if(error.code === "auth/too-many-requests"){
-      errorMessage =
-        "❌ बहुत ज्यादा कोशिश हो गई है। थोड़ी देर बाद फिर प्रयास करें।";
-    }
-
-    else if(error.code === "auth/network-request-failed"){
-      errorMessage =
-        "❌ Internet connection की समस्या है।";
-    }
 
     setLoginStatus(
-      errorMessage,
+      message,
       "error"
     );
 
@@ -852,7 +855,7 @@ async function loadProperties(){
 
 
     setStatus(
-      "✅ Firebase connected",
+      "✅ Firebase connected — Properties loaded",
       "success"
     );
 
@@ -863,6 +866,12 @@ async function loadProperties(){
       "Load Error:",
       error
     );
+
+    console.error(
+      "Firestore error code:",
+      error.code
+    );
+
 
     setStatus(
       "❌ Properties load नहीं हुईं। Firestore Rules check करें।",
@@ -1094,6 +1103,12 @@ async function(){
       "Save Error:",
       error
     );
+
+    console.error(
+      "Firestore error code:",
+      error.code
+    );
+
 
     alert(
       "❌ Property save नहीं हुई। Firestore Rules check करें।"
@@ -1490,6 +1505,12 @@ async function(id){
       "Delete Error:",
       error
     );
+
+    console.error(
+      "Firestore error code:",
+      error.code
+    );
+
 
     alert(
       "❌ Property delete नहीं हुई। Firestore Rules check करें।"
