@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Prop Set U - Admin Panel</title>
 
 <style>
@@ -22,8 +23,15 @@ body{
   text-align:center;
 }
 
-.header h1{margin:0;font-size:24px}
-.header p{margin:6px 0 0;font-size:13px}
+.header h1{
+  margin:0;
+  font-size:24px;
+}
+
+.header p{
+  margin:6px 0 0;
+  font-size:13px;
+}
 
 .container{
   max-width:700px;
@@ -52,7 +60,9 @@ label{
   margin-top:11px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
   padding:12px;
   margin-top:6px;
@@ -201,6 +211,25 @@ button{
   margin-top:10px;
 }
 
+.preview-video{
+  width:100%;
+  max-height:300px;
+  margin-top:10px;
+  border-radius:8px;
+}
+
+.file-info{
+  margin-top:6px;
+  font-size:12px;
+  color:#555;
+}
+
+.upload-status{
+  margin-top:8px;
+  font-size:13px;
+  font-weight:bold;
+}
+
 .video-link{
   display:inline-block;
   margin-top:6px;
@@ -216,6 +245,7 @@ button{
   <h1>🏠 Prop Set U</h1>
   <p>Admin Property Management Panel</p>
 </div>
+
 
 <!-- LOGIN -->
 
@@ -258,7 +288,8 @@ button{
 
 </div>
 
-<!-- ADMIN PANEL -->
+
+<!-- ADMIN -->
 
 <div id="adminSection" class="container hidden">
 
@@ -278,7 +309,8 @@ button{
 
   </div>
 
-  <!-- ADD PROPERTY -->
+
+  <!-- PROPERTY FORM -->
 
   <div class="card">
 
@@ -288,12 +320,19 @@ button{
       Firebase connecting...
     </div>
 
+
     <label>Property Title</label>
-    <input id="title" placeholder="जैसे 3 BHK Independent House">
+
+    <input
+      id="title"
+      placeholder="जैसे 3 BHK Independent House"
+    >
+
 
     <label>Property Type</label>
 
     <select id="type">
+
       <option value="Independent">Independent</option>
       <option value="Flat">Flat</option>
       <option value="Villa">Villa</option>
@@ -302,34 +341,71 @@ button{
       <option value="Shop">Shop</option>
       <option value="Office">Office</option>
       <option value="PG">PG</option>
+
     </select>
+
 
     <label>Requirement</label>
 
     <select id="requirement">
+
       <option value="Buy">Buy</option>
       <option value="Rent">Rent</option>
       <option value="Lease">Lease</option>
       <option value="Sell">Sell</option>
+
     </select>
 
+
     <label>Area / Location</label>
-    <input id="location" placeholder="जैसे Hyderabad">
+
+    <input
+      id="location"
+      placeholder="जैसे Hyderabad"
+    >
+
 
     <label>Price</label>
-    <input id="price" placeholder="जैसे ₹85 Lakh या ₹18,000 / Month">
+
+    <input
+      id="price"
+      placeholder="जैसे ₹85 Lakh या ₹18,000 / Month"
+    >
+
 
     <label>Bedrooms</label>
-    <input id="bedrooms" type="number" placeholder="जैसे 3">
+
+    <input
+      id="bedrooms"
+      type="number"
+      placeholder="जैसे 3"
+    >
+
 
     <label>Property Area</label>
-    <input id="area" placeholder="जैसे 1500 Sq Ft">
+
+    <input
+      id="area"
+      placeholder="जैसे 1500 Sq Ft"
+    >
+
 
     <label>Owner / Agent Name</label>
-    <input id="owner" placeholder="Owner या Agent Name">
+
+    <input
+      id="owner"
+      placeholder="Owner या Agent Name"
+    >
+
 
     <label>Owner / Agent Mobile</label>
-    <input id="phone" type="tel" placeholder="10 digit mobile number">
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="10 digit mobile number"
+    >
+
 
     <label>Property Description</label>
 
@@ -338,11 +414,54 @@ button{
       placeholder="Property की पूरी जानकारी लिखें"
     ></textarea>
 
-    <label>Property Image URL</label>
-    <input id="image" placeholder="Image URL">
 
-    <label>Property Video URL</label>
-    <input id="video" placeholder="YouTube / Video URL">
+    <!-- IMAGE -->
+
+    <label>🖼️ Property Image</label>
+
+    <input
+      id="imageFile"
+      type="file"
+      accept="image/*"
+    >
+
+    <div id="imageInfo" class="file-info">
+      कोई Image select नहीं की गई।
+    </div>
+
+    <img
+      id="imagePreview"
+      class="preview-image hidden"
+      alt="Image Preview"
+    >
+
+
+    <!-- VIDEO -->
+
+    <label>🎥 Property Video</label>
+
+    <input
+      id="videoFile"
+      type="file"
+      accept="video/*"
+    >
+
+    <div id="videoInfo" class="file-info">
+      कोई Video select नहीं किया गया।
+    </div>
+
+    <video
+      id="videoPreview"
+      class="preview-video hidden"
+      controls
+    ></video>
+
+
+    <div
+      id="uploadStatus"
+      class="upload-status"
+    ></div>
+
 
     <button
       class="save"
@@ -350,6 +469,7 @@ button{
     >
       💾 Save Property
     </button>
+
 
     <button
       class="clear"
@@ -360,6 +480,7 @@ button{
 
   </div>
 
+
   <!-- PROPERTY LIST -->
 
   <div class="card">
@@ -367,14 +488,17 @@ button{
     <h2>🏘️ Property List</h2>
 
     <div id="propertyList">
+
       <div class="empty">
         Properties loading...
       </div>
+
     </div>
 
   </div>
 
 </div>
+
 
 <div class="footer">
   Prop Set U © 2026<br>
@@ -382,11 +506,14 @@ button{
 </div>
 
 
+<!-- FIREBASE -->
+
 <script type="module">
 
 import {
   initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
   getFirestore,
@@ -399,12 +526,22 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
 import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 
 /* FIREBASE CONFIG */
@@ -435,7 +572,7 @@ const firebaseConfig = {
 };
 
 
-/* FIREBASE START */
+/* START */
 
 const app =
   initializeApp(firebaseConfig);
@@ -446,15 +583,18 @@ const db =
 const auth =
   getAuth(app);
 
+const storage =
+  getStorage(app);
 
-/* IMPORTANT ADMIN EMAIL */
+
+/* ADMIN EMAIL */
 
 const ADMIN_EMAIL =
   "propsetu1@gmail.com";
 
 
 const propertiesRef =
-  collection(db, "properties");
+  collection(db,"properties");
 
 
 let properties = [];
@@ -462,16 +602,16 @@ let properties = [];
 let editId = null;
 
 
-/* HTML ESCAPE */
+/* ESCAPE */
 
 function escapeHtml(text){
 
   return String(text ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
@@ -480,21 +620,21 @@ function escapeHtml(text){
 
 function setStatus(message,type="normal"){
 
-  const status =
+  const el =
     document.getElementById("status");
 
-  if(!status) return;
+  if(!el)return;
 
-  status.textContent = message;
+  el.textContent = message;
 
-  status.className = "status";
+  el.className = "status";
 
-  if(type === "success"){
-    status.classList.add("success");
+  if(type==="success"){
+    el.classList.add("success");
   }
 
-  if(type === "error"){
-    status.classList.add("error");
+  if(type==="error"){
+    el.classList.add("error");
   }
 
 }
@@ -502,19 +642,19 @@ function setStatus(message,type="normal"){
 
 function setLoginStatus(message,type="normal"){
 
-  const status =
+  const el =
     document.getElementById("loginStatus");
 
-  status.textContent = message;
+  el.textContent = message;
 
-  status.className = "status";
+  el.className = "status";
 
-  if(type === "success"){
-    status.classList.add("success");
+  if(type==="success"){
+    el.classList.add("success");
   }
 
-  if(type === "error"){
-    status.classList.add("error");
+  if(type==="error"){
+    el.classList.add("error");
   }
 
 }
@@ -532,6 +672,7 @@ window.adminLogin = async function(){
     document.getElementById("loginPassword")
     .value;
 
+
   if(!email || !password){
 
     setLoginStatus(
@@ -541,6 +682,7 @@ window.adminLogin = async function(){
 
     return;
   }
+
 
   if(
     email.toLowerCase()
@@ -554,6 +696,7 @@ window.adminLogin = async function(){
 
     return;
   }
+
 
   try{
 
@@ -569,7 +712,7 @@ window.adminLogin = async function(){
 
   }catch(error){
 
-    console.error("Login Error:",error);
+    console.error(error);
 
     setLoginStatus(
       "❌ Login failed. Email या Password गलत है।",
@@ -598,14 +741,14 @@ window.adminLogout = async function(){
 
   }catch(error){
 
-    console.error("Logout Error:",error);
+    console.error(error);
 
   }
 
 };
 
 
-/* AUTH STATE */
+/* AUTH */
 
 onAuthStateChanged(
   auth,
@@ -617,14 +760,15 @@ onAuthStateChanged(
     const adminSection =
       document.getElementById("adminSection");
 
+
     if(user){
 
-      const userEmail =
+      const email =
         (user.email || "").toLowerCase();
 
+
       if(
-        userEmail
-        !== ADMIN_EMAIL.toLowerCase()
+        email !== ADMIN_EMAIL.toLowerCase()
       ){
 
         await signOut(auth);
@@ -637,14 +781,18 @@ onAuthStateChanged(
         return;
       }
 
+
       loginSection.classList.add("hidden");
 
       adminSection.classList.remove("hidden");
 
+
       document.getElementById("adminEmail")
         .textContent = user.email;
 
+
       await loadProperties();
+
 
     }else{
 
@@ -658,18 +806,142 @@ onAuthStateChanged(
 );
 
 
-/* LOAD PROPERTIES */
+/* IMAGE PREVIEW */
+
+document.getElementById("imageFile")
+.addEventListener("change",(event)=>{
+
+  const file =
+    event.target.files[0];
+
+  const preview =
+    document.getElementById("imagePreview");
+
+  const info =
+    document.getElementById("imageInfo");
+
+
+  if(!file){
+
+    preview.classList.add("hidden");
+
+    info.textContent =
+      "कोई Image select नहीं की गई।";
+
+    return;
+  }
+
+
+  info.textContent =
+    file.name;
+
+
+  preview.src =
+    URL.createObjectURL(file);
+
+  preview.classList.remove("hidden");
+
+});
+
+
+/* VIDEO PREVIEW */
+
+document.getElementById("videoFile")
+.addEventListener("change",(event)=>{
+
+  const file =
+    event.target.files[0];
+
+  const preview =
+    document.getElementById("videoPreview");
+
+  const info =
+    document.getElementById("videoInfo");
+
+
+  if(!file){
+
+    preview.classList.add("hidden");
+
+    info.textContent =
+      "कोई Video select नहीं किया गया।";
+
+    return;
+  }
+
+
+  info.textContent =
+    file.name;
+
+
+  preview.src =
+    URL.createObjectURL(file);
+
+  preview.classList.remove("hidden");
+
+});
+
+
+/* UPLOAD FILE */
+
+async function uploadFile(file,folder){
+
+  if(!file){
+    return "";
+  }
+
+
+  const safeName =
+    file.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      "_"
+    );
+
+
+  const filePath =
+    folder +
+    "/" +
+    Date.now() +
+    "_" +
+    safeName;
+
+
+  const storageRef =
+    ref(storage,filePath);
+
+
+  await uploadBytes(
+    storageRef,
+    file
+  );
+
+
+  return await getDownloadURL(
+    storageRef
+  );
+
+}
+
+
+/* LOAD */
 
 async function loadProperties(){
 
   try{
 
-    setStatus("Properties loading...");
+    setStatus(
+      "Properties loading..."
+    );
+
 
     const snapshot =
-      await getDocs(propertiesRef);
+      await getDocs(
+        propertiesRef
+      );
+
 
     properties = [];
+
 
     snapshot.forEach((item)=>{
 
@@ -680,19 +952,22 @@ async function loadProperties(){
 
     });
 
+
     showProperties();
+
 
     setStatus(
       "✅ Firebase connected",
       "success"
     );
 
+
   }catch(error){
 
-    console.error("Load Error:",error);
+    console.error(error);
 
     setStatus(
-      "❌ Properties load नहीं हुईं। Firestore Rules check करें।",
+      "❌ Properties load नहीं हुईं। Firestore Rules/Storage Rules check करें।",
       "error"
     );
 
@@ -701,67 +976,92 @@ async function loadProperties(){
 }
 
 
-/* SAVE PROPERTY */
+/* SAVE */
 
 window.saveProperty = async function(){
 
-  const user = auth.currentUser;
+  const user =
+    auth.currentUser;
+
 
   if(!user){
 
-    alert("पहले Admin Login करें।");
-    return;
+    alert(
+      "पहले Admin Login करें।"
+    );
 
+    return;
   }
+
 
   if(
     (user.email || "").toLowerCase()
     !== ADMIN_EMAIL.toLowerCase()
   ){
 
-    alert("आपको Admin permission नहीं है।");
-    return;
+    alert(
+      "आपको Admin permission नहीं है।"
+    );
 
+    return;
   }
 
+
   const title =
-    document.getElementById("title").value.trim();
+    document.getElementById("title")
+    .value.trim();
 
   const type =
-    document.getElementById("type").value;
+    document.getElementById("type")
+    .value;
 
   const requirement =
-    document.getElementById("requirement").value;
+    document.getElementById("requirement")
+    .value;
 
   const location =
-    document.getElementById("location").value.trim();
+    document.getElementById("location")
+    .value.trim();
 
   const price =
-    document.getElementById("price").value.trim();
+    document.getElementById("price")
+    .value.trim();
 
   const bedrooms =
-    document.getElementById("bedrooms").value.trim();
+    document.getElementById("bedrooms")
+    .value.trim();
 
   const area =
-    document.getElementById("area").value.trim();
+    document.getElementById("area")
+    .value.trim();
 
   const owner =
-    document.getElementById("owner").value.trim();
+    document.getElementById("owner")
+    .value.trim();
 
   const phone =
-    document.getElementById("phone").value.trim();
+    document.getElementById("phone")
+    .value.trim();
 
   const description =
-    document.getElementById("description").value.trim();
-
-  const image =
-    document.getElementById("image").value.trim();
-
-  const video =
-    document.getElementById("video").value.trim();
+    document.getElementById("description")
+    .value.trim();
 
 
-  if(!title || !location || !price){
+  const imageFile =
+    document.getElementById("imageFile")
+    .files[0];
+
+  const videoFile =
+    document.getElementById("videoFile")
+    .files[0];
+
+
+  if(
+    !title ||
+    !location ||
+    !price
+  ){
 
     alert(
       "Property Title, Location और Price भरना जरूरी है।"
@@ -771,30 +1071,78 @@ window.saveProperty = async function(){
   }
 
 
-  const property = {
-
-    title,
-    type,
-    requirement,
-    location,
-    price,
-    bedrooms,
-    area,
-    owner,
-    phone,
-    description,
-    image,
-    video,
-
-    updatedAt:serverTimestamp(),
-    updatedBy:user.email
-
-  };
-
-
   try{
 
-    setStatus("Saving property...");
+    const uploadStatus =
+      document.getElementById("uploadStatus");
+
+
+    uploadStatus.textContent =
+      "⏳ Property files upload हो रही हैं...";
+
+
+    let imageUrl = "";
+
+    let videoUrl = "";
+
+
+    if(imageFile){
+
+      uploadStatus.textContent =
+        "🖼️ Image upload हो रही है...";
+
+
+      imageUrl =
+        await uploadFile(
+          imageFile,
+          "properties/images"
+        );
+
+    }
+
+
+    if(videoFile){
+
+      uploadStatus.textContent =
+        "🎥 Video upload हो रहा है...";
+
+
+      videoUrl =
+        await uploadFile(
+          videoFile,
+          "properties/videos"
+        );
+
+    }
+
+
+    uploadStatus.textContent =
+      "💾 Property Firebase में save हो रही है...";
+
+
+    const property = {
+
+      title:title,
+      type:type,
+      requirement:requirement,
+      location:location,
+      price:price,
+      bedrooms:bedrooms,
+      area:area,
+      owner:owner,
+      phone:phone,
+      description:description,
+
+      image:imageUrl,
+      video:videoUrl,
+
+      updatedAt:
+        serverTimestamp(),
+
+      updatedBy:
+        user.email
+
+    };
 
 
     if(editId === null){
@@ -805,14 +1153,17 @@ window.saveProperty = async function(){
       property.createdBy =
         user.email;
 
+
       await addDoc(
         propertiesRef,
         property
       );
 
+
       alert(
-        "✅ Property successfully added."
+        "✅ Property + Image/Video successfully saved."
       );
+
 
     }else{
 
@@ -825,30 +1176,43 @@ window.saveProperty = async function(){
         property
       );
 
+
       alert(
         "✅ Property successfully updated."
       );
+
 
       editId = null;
 
     }
 
 
+    uploadStatus.textContent =
+      "✅ Upload और Save सफल हुआ।";
+
+
     clearForm();
 
     await loadProperties();
 
+
   }catch(error){
 
-    console.error("Save Error:",error);
-
-    alert(
-      "❌ Property save नहीं हुई। Firestore Rules check करें।"
+    console.error(
+      "Upload/Save Error:",
+      error
     );
 
-    setStatus(
-      "❌ Firebase error",
-      "error"
+
+    document.getElementById(
+      "uploadStatus"
+    ).textContent =
+      "❌ Upload failed: " +
+      (error.message || "Unknown error");
+
+
+    alert(
+      "❌ Upload/Save नहीं हुआ। Firebase Storage Rules check करें।"
     );
 
   }
@@ -856,20 +1220,24 @@ window.saveProperty = async function(){
 };
 
 
-/* SHOW PROPERTIES */
+/* SHOW */
 
 function showProperties(){
 
   const list =
-    document.getElementById("propertyList");
+    document.getElementById(
+      "propertyList"
+    );
 
-  if(properties.length === 0){
+
+  if(properties.length===0){
 
     list.innerHTML =
       '<div class="empty">अभी कोई Property Added नहीं है।</div>';
 
     return;
   }
+
 
   list.innerHTML = "";
 
@@ -879,11 +1247,16 @@ function showProperties(){
     const div =
       document.createElement("div");
 
-    div.className = "property";
+
+    div.className =
+      "property";
+
 
     div.innerHTML = `
 
-      <h3>${escapeHtml(p.title)}</h3>
+      <h3>
+        ${escapeHtml(p.title)}
+      </h3>
 
       <span class="badge">
         ${escapeHtml(p.requirement)}
@@ -906,38 +1279,65 @@ function showProperties(){
 
       ${
         p.bedrooms
-        ? `<p>🛏️ <b>Bedrooms:</b> ${escapeHtml(p.bedrooms)}</p>`
+        ? `
+          <p>
+            🛏️ <b>Bedrooms:</b>
+            ${escapeHtml(p.bedrooms)}
+          </p>
+        `
         : ""
       }
 
       ${
         p.area
-        ? `<p>📐 <b>Area:</b> ${escapeHtml(p.area)}</p>`
+        ? `
+          <p>
+            📐 <b>Area:</b>
+            ${escapeHtml(p.area)}
+          </p>
+        `
         : ""
       }
 
       ${
         p.owner
-        ? `<p>👤 <b>Owner/Agent:</b> ${escapeHtml(p.owner)}</p>`
+        ? `
+          <p>
+            👤 <b>Owner/Agent:</b>
+            ${escapeHtml(p.owner)}
+          </p>
+        `
         : ""
       }
 
       ${
         p.phone
-        ? `<p>📞 <b>Mobile:</b> ${escapeHtml(p.phone)}</p>`
+        ? `
+          <p>
+            📞 <b>Mobile:</b>
+            ${escapeHtml(p.phone)}
+          </p>
+        `
         : ""
       }
 
       ${
         p.description
-        ? `<p>📝 ${escapeHtml(p.description)}</p>`
+        ? `
+          <p>
+            📝 ${escapeHtml(p.description)}
+          </p>
+        `
         : ""
       }
 
       ${
         p.image
         ? `
-          <p>🖼️ <b>Image:</b></p>
+          <p>
+            🖼️ <b>Image:</b>
+          </p>
+
           <img
             class="preview-image"
             src="${escapeHtml(p.image)}"
@@ -952,16 +1352,14 @@ function showProperties(){
         p.video
         ? `
           <p>
-            🎥 <b>Video:</b><br>
-            <a
-              class="video-link"
-              href="${escapeHtml(p.video)}"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ▶️ Open Video
-            </a>
+            🎥 <b>Video:</b>
           </p>
+
+          <video
+            class="preview-video"
+            src="${escapeHtml(p.video)}"
+            controls
+          ></video>
         `
         : ""
       }
@@ -982,6 +1380,7 @@ function showProperties(){
 
     `;
 
+
     list.appendChild(div);
 
   });
@@ -998,58 +1397,59 @@ window.editProperty = function(id){
       item => item.id === id
     );
 
+
   if(!p){
 
-    alert("Property नहीं मिली।");
-    return;
+    alert(
+      "Property नहीं मिली।"
+    );
 
+    return;
   }
 
-  document.getElementById("title").value =
-    p.title || "";
 
-  document.getElementById("type").value =
-    p.type || "Independent";
+  document.getElementById("title")
+    .value = p.title || "";
 
-  document.getElementById("requirement").value =
-    p.requirement || "Buy";
+  document.getElementById("type")
+    .value = p.type || "Independent";
 
-  document.getElementById("location").value =
-    p.location || "";
+  document.getElementById("requirement")
+    .value = p.requirement || "Buy";
 
-  document.getElementById("price").value =
-    p.price || "";
+  document.getElementById("location")
+    .value = p.location || "";
 
-  document.getElementById("bedrooms").value =
-    p.bedrooms || "";
+  document.getElementById("price")
+    .value = p.price || "";
 
-  document.getElementById("area").value =
-    p.area || "";
+  document.getElementById("bedrooms")
+    .value = p.bedrooms || "";
 
-  document.getElementById("owner").value =
-    p.owner || "";
+  document.getElementById("area")
+    .value = p.area || "";
 
-  document.getElementById("phone").value =
-    p.phone || "";
+  document.getElementById("owner")
+    .value = p.owner || "";
 
-  document.getElementById("description").value =
-    p.description || "";
+  document.getElementById("phone")
+    .value = p.phone || "";
 
-  document.getElementById("image").value =
-    p.image || "";
+  document.getElementById("description")
+    .value = p.description || "";
 
-  document.getElementById("video").value =
-    p.video || "";
 
   editId = id;
+
 
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
 
+
   setStatus(
-    "✏️ Editing property. बदलाव करके Save करें।"
+    "✏️ Editing property. नई Image/Video चुनकर Save कर सकते हैं।"
   );
 
 };
@@ -1059,24 +1459,32 @@ window.editProperty = function(id){
 
 window.deleteProperty = async function(id){
 
-  const user = auth.currentUser;
+  const user =
+    auth.currentUser;
+
 
   if(!user){
 
-    alert("पहले Admin Login करें।");
-    return;
+    alert(
+      "पहले Admin Login करें।"
+    );
 
+    return;
   }
+
 
   if(
     (user.email || "").toLowerCase()
     !== ADMIN_EMAIL.toLowerCase()
   ){
 
-    alert("आपको Admin permission नहीं है।");
-    return;
+    alert(
+      "आपको Admin permission नहीं है।"
+    );
 
+    return;
   }
+
 
   if(
     !confirm(
@@ -1085,12 +1493,15 @@ window.deleteProperty = async function(id){
   ){
 
     return;
-
   }
+
 
   try{
 
-    setStatus("Deleting property...");
+    setStatus(
+      "Deleting property..."
+    );
+
 
     await deleteDoc(
       doc(
@@ -1100,17 +1511,24 @@ window.deleteProperty = async function(id){
       )
     );
 
-    alert("🗑️ Property deleted.");
+
+    alert(
+      "🗑️ Property deleted."
+    );
+
 
     await loadProperties();
 
+
   }catch(error){
 
-    console.error("Delete Error:",error);
+    console.error(error);
+
 
     alert(
-      "❌ Property delete नहीं हुई। Firestore Rules check करें।"
+      "❌ Property delete नहीं हुई।"
     );
+
 
     setStatus(
       "❌ Delete error",
@@ -1122,23 +1540,68 @@ window.deleteProperty = async function(id){
 };
 
 
-/* CLEAR FORM */
+/* CLEAR */
 
 window.clearForm = function(){
 
-  document.getElementById("title").value = "";
-  document.getElementById("location").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("bedrooms").value = "";
-  document.getElementById("area").value = "";
-  document.getElementById("owner").value = "";
-  document.getElementById("phone").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("image").value = "";
-  document.getElementById("video").value = "";
+  document.getElementById("title")
+    .value = "";
 
-  document.getElementById("type").selectedIndex = 0;
-  document.getElementById("requirement").selectedIndex = 0;
+  document.getElementById("location")
+    .value = "";
+
+  document.getElementById("price")
+    .value = "";
+
+  document.getElementById("bedrooms")
+    .value = "";
+
+  document.getElementById("area")
+    .value = "";
+
+  document.getElementById("owner")
+    .value = "";
+
+  document.getElementById("phone")
+    .value = "";
+
+  document.getElementById("description")
+    .value = "";
+
+
+  document.getElementById("imageFile")
+    .value = "";
+
+  document.getElementById("videoFile")
+    .value = "";
+
+
+  document.getElementById("imageInfo")
+    .textContent =
+    "कोई Image select नहीं की गई।";
+
+  document.getElementById("videoInfo")
+    .textContent =
+    "कोई Video select नहीं किया गया।";
+
+
+  document.getElementById("imagePreview")
+    .classList.add("hidden");
+
+  document.getElementById("videoPreview")
+    .classList.add("hidden");
+
+
+  document.getElementById("uploadStatus")
+    .textContent = "";
+
+
+  document.getElementById("type")
+    .selectedIndex = 0;
+
+  document.getElementById("requirement")
+    .selectedIndex = 0;
+
 
   editId = null;
 
