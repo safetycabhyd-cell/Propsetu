@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#063b66">
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<link
+  rel="manifest"
+  href="manifest.json"
+>
+
+<meta
+  name="theme-color"
+  content="#063b66"
+>
 
 <title>Prop Set U - Property Marketplace</title>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
@@ -74,10 +87,6 @@ select{
   border-radius:8px;
   font-size:14px;
   background:#fff;
-}
-
-input[type="file"]{
-  padding:10px;
 }
 
 button{
@@ -212,20 +221,101 @@ button:disabled{
 
 .preview-image{
   width:100%;
-  max-height:300px;
+  max-height:330px;
   object-fit:cover;
   border-radius:10px;
   margin-top:8px;
   display:block;
+  background:#eee;
 }
 
 .preview-video{
   width:100%;
-  max-height:320px;
+  max-height:340px;
   border-radius:10px;
   margin-top:8px;
   display:block;
   background:#000;
+}
+
+.gallery{
+  margin-top:10px;
+}
+
+.gallery-title{
+  font-size:15px;
+  font-weight:bold;
+  color:#063b66;
+  margin-bottom:8px;
+}
+
+.gallery-main{
+  position:relative;
+}
+
+.gallery-main img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  border-radius:10px;
+  display:block;
+  background:#eee;
+}
+
+.gallery-count{
+  position:absolute;
+  right:10px;
+  top:10px;
+  background:rgba(0,0,0,.65);
+  color:#fff;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.gallery-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:rgba(0,0,0,.60);
+  color:#fff;
+  padding:0;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.gallery-prev{
+  left:8px;
+}
+
+.gallery-next{
+  right:8px;
+}
+
+.gallery-thumbs{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:5px;
+  margin-top:8px;
+}
+
+.gallery-thumb{
+  width:100%;
+  height:55px;
+  object-fit:cover;
+  border-radius:6px;
+  border:2px solid transparent;
+  cursor:pointer;
+}
+
+.gallery-thumb.active{
+  border-color:#063b66;
 }
 
 .video-link{
@@ -273,43 +363,11 @@ button:disabled{
   font-size:13px;
 }
 
-.upload-btn{
-  width:100%;
-  margin-top:12px;
-  background:#159447;
-  color:#fff;
-}
-
-.copy-btn{
-  width:100%;
-  margin-top:8px;
-  background:#063b66;
-  color:#fff;
-}
-
-.upload-result{
-  margin-top:12px;
+.enquiry-box{
+  background:#eef5ff;
+  border-radius:10px;
   padding:12px;
-  border-radius:8px;
-  background:#f3f6f9;
-  word-break:break-all;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.progress-wrap{
   margin-top:12px;
-  height:10px;
-  background:#e2e7ec;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  width:0%;
-  height:100%;
-  background:#159447;
-  transition:width .2s ease;
 }
 
 .small{
@@ -318,10 +376,15 @@ button:disabled{
   margin-top:7px;
   line-height:1.5;
 }
+
 </style>
+
 </head>
 
 <body>
+
+
+<!-- HEADER -->
 
 <div class="header">
 
@@ -333,7 +396,9 @@ button:disabled{
 
 </div>
 
+
 <div class="container">
+
 
 <!-- SEARCH -->
 
@@ -395,6 +460,7 @@ button:disabled{
 
   </select>
 
+
   <label>
     Requirement
   </label>
@@ -423,6 +489,7 @@ button:disabled{
 
   </select>
 
+
   <button
     class="search-btn"
     onclick="searchProperties()"
@@ -431,6 +498,7 @@ button:disabled{
   </button>
 
 </div>
+
 
 
 <!-- CATEGORIES -->
@@ -504,6 +572,7 @@ button:disabled{
 </div>
 
 
+
 <!-- STATUS -->
 
 <div class="card">
@@ -517,86 +586,6 @@ button:disabled{
 
 </div>
 
-
-<!-- CLOUDINARY UPLOAD -->
-
-<div class="card">
-
-  <h2>
-    📤 Property Photo / Video Upload
-  </h2>
-
-  <div class="notice">
-
-    📸 यहाँ Property की Photo या Video
-    Cloudinary पर upload होगी।
-
-    <br><br>
-
-    🔐 API Secret इस वेबसाइट में नहीं रखा गया है।
-    Upload के लिए Unsigned Upload Preset इस्तेमाल हो रहा है।
-
-  </div>
-
-  <label>
-    Property Photo / Video चुनें
-  </label>
-
-  <input
-    id="mediaFile"
-    type="file"
-    accept="image/*,video/*"
-  >
-
-  <div class="small">
-
-    एक बार में एक Photo या Video चुनें।
-
-  </div>
-
-  <button
-    id="uploadMediaBtn"
-    class="upload-btn"
-    onclick="uploadPropertyMedia()"
-  >
-    ☁️ Cloudinary पर Upload करें
-  </button>
-
-  <div
-    id="uploadProgressWrap"
-    class="progress-wrap hidden"
-  >
-
-    <div
-      id="uploadProgressBar"
-      class="progress-bar"
-    ></div>
-
-  </div>
-
-  <div
-    id="uploadStatus"
-    class="status hidden"
-  ></div>
-
-  <div
-    id="uploadPreview"
-  ></div>
-
-  <div
-    id="uploadResult"
-    class="upload-result hidden"
-  ></div>
-
-  <button
-    id="copyUrlBtn"
-    class="copy-btn hidden"
-    onclick="copyUploadedUrl()"
-  >
-    📋 Uploaded URL Copy करें
-  </button>
-
-</div>
 
 
 <!-- PROPERTY LIST -->
@@ -616,6 +605,7 @@ button:disabled{
   </div>
 
 </div>
+
 
 
 <!-- ADMIN WHATSAPP -->
@@ -653,8 +643,12 @@ button:disabled{
 
 </div>
 
+
 </div>
 
+
+
+<!-- FOOTER -->
 
 <div class="footer">
 
@@ -667,7 +661,9 @@ button:disabled{
 </div>
 
 
+
 <script type="module">
+
 
 /* =====================================================
    FIREBASE
@@ -687,6 +683,7 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 
 /* =====================================================
@@ -738,23 +735,6 @@ const propertiesRef =
   );
 
 
-/* =====================================================
-   CLOUDINARY CONFIG
-   ===================================================== */
-
-const CLOUDINARY_CLOUD_NAME =
-  "gga5auev";
-
-
-const CLOUDINARY_UPLOAD_PRESET =
-  "propsetu_upload 2";
-
-
-const CLOUDINARY_UPLOAD_URL =
-  "https://api.cloudinary.com/v1_1/" +
-  CLOUDINARY_CLOUD_NAME +
-  "/auto/upload";
-
 
 /* =====================================================
    ADMIN WHATSAPP
@@ -762,6 +742,7 @@ const CLOUDINARY_UPLOAD_URL =
 
 const ADMIN_WHATSAPP =
   "91806180745";
+
 
 
 /* =====================================================
@@ -774,7 +755,6 @@ let currentProperties = [];
 
 let selectedCategory = "All";
 
-let lastUploadedUrl = "";
 
 
 /* =====================================================
@@ -815,6 +795,7 @@ function escapeHtml(text){
 }
 
 
+
 /* =====================================================
    STATUS
    ===================================================== */
@@ -831,9 +812,7 @@ function setStatus(
 
 
   if(!status){
-
     return;
-
   }
 
 
@@ -869,493 +848,127 @@ function setStatus(
 }
 
 
-/* =====================================================
-   UPLOAD STATUS
-   ===================================================== */
-
-function setUploadStatus(
-  message,
-  type = "normal"
-){
-
-  const box =
-    document.getElementById(
-      "uploadStatus"
-    );
-
-
-  if(!box){
-
-    return;
-
-  }
-
-
-  box.textContent =
-    message;
-
-
-  box.className =
-    "status";
-
-
-  if(
-    type === "success"
-  ){
-
-    box.classList.add(
-      "success"
-    );
-
-  }
-
-
-  if(
-    type === "error"
-  ){
-
-    box.classList.add(
-      "error"
-    );
-
-  }
-
-
-  box.classList.remove(
-    "hidden"
-  );
-
-}
-
 
 /* =====================================================
-   CLOUDINARY UPLOAD
+   MULTIPLE IMAGE NORMALIZER
    ===================================================== */
 
-window.uploadPropertyMedia =
-async function(){
+/*
+  Admin Panel में photos अलग-अलग नाम से save
+  हो सकती हैं। Customer Panel इन सभी को support करेगा:
 
-  const fileInput =
-    document.getElementById(
-      "mediaFile"
-    );
+  images
+  imageUrls
+  photos
+  image
 
+  यानी नई 5-6 photos भी आएंगी और पुरानी
+  single image वाली property भी काम करेगी।
+*/
 
-  const button =
-    document.getElementById(
-      "uploadMediaBtn"
-    );
+function getPropertyImages(property){
 
-
-  const progressWrap =
-    document.getElementById(
-      "uploadProgressWrap"
-    );
+  let images = [];
 
 
-  const progressBar =
-    document.getElementById(
-      "uploadProgressBar"
-    );
+  const possibleFields = [
+
+    property.images,
+
+    property.imageUrls,
+
+    property.photos
+
+  ];
 
 
-  const preview =
-    document.getElementById(
-      "uploadPreview"
-    );
-
-
-  const result =
-    document.getElementById(
-      "uploadResult"
-    );
-
-
-  const copyBtn =
-    document.getElementById(
-      "copyUrlBtn"
-    );
-
-
-  if(
-    !fileInput ||
-    !fileInput.files ||
-    !fileInput.files[0]
+  for(
+    const field of possibleFields
   ){
 
-    setUploadStatus(
-      "❌ पहले Photo या Video चुनिए।",
-      "error"
-    );
+    if(
+      Array.isArray(field)
+    ){
 
-    return;
+      field.forEach(
+        item => {
 
-  }
+          if(
+            typeof item === "string" &&
+            item.trim()
+          ){
 
+            images.push(
+              item.trim()
+            );
 
-  const file =
-    fileInput.files[0];
+          }
 
+          else if(
+            item &&
+            typeof item === "object"
+          ){
 
-  if(
-    file.size >
-    100 * 1024 * 1024
-  ){
-
-    setUploadStatus(
-      "❌ File 100 MB से बड़ी है। छोटी Photo/Video चुनिए।",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  button.disabled =
-    true;
-
-
-  button.textContent =
-    "⏳ Upload हो रहा है...";
-
-
-  progressWrap.classList.remove(
-    "hidden"
-  );
-
-
-  progressBar.style.width =
-    "0%";
-
-
-  result.classList.add(
-    "hidden"
-  );
-
-
-  copyBtn.classList.add(
-    "hidden"
-  );
-
-
-  preview.innerHTML =
-    "";
-
-
-  setUploadStatus(
-    "Cloudinary पर upload शुरू हो रहा है..."
-  );
-
-
-  try{
-
-    const formData =
-      new FormData();
-
-
-    formData.append(
-      "file",
-      file
-    );
-
-
-    formData.append(
-      "upload_preset",
-      CLOUDINARY_UPLOAD_PRESET
-    );
-
-
-    const uploaded =
-      await new Promise(
-        (
-          resolve,
-          reject
-        ) => {
-
-          const xhr =
-            new XMLHttpRequest();
-
-
-          xhr.open(
-            "POST",
-            CLOUDINARY_UPLOAD_URL
-          );
-
-
-          xhr.upload.addEventListener(
-            "progress",
-            event => {
-
-              if(
-                event.lengthComputable
-              ){
-
-                const percent =
-                  Math.round(
-                    (
-                      event.loaded /
-                      event.total
-                    ) * 100
-                  );
-
-
-                progressBar.style.width =
-                  percent + "%";
-
-
-                setUploadStatus(
-                  "☁️ Upload हो रहा है: " +
-                  percent +
-                  "%"
-                );
-
-              }
-
-            }
-          );
-
-
-          xhr.onload =
-          () => {
-
-            let data =
-              null;
-
-
-            try{
-
-              data =
-                JSON.parse(
-                  xhr.responseText
-                );
-
-            }catch(e){}
+            const url =
+              item.url ||
+              item.secure_url ||
+              item.image ||
+              item.src;
 
 
             if(
-              xhr.status >= 200 &&
-              xhr.status < 300
+              url &&
+              typeof url === "string"
             ){
 
-              resolve(
-                data
-              );
-
-            }else{
-
-              reject(
-                new Error(
-                  data?.error?.message ||
-                  "Cloudinary upload failed"
-                )
+              images.push(
+                url.trim()
               );
 
             }
 
-          };
-
-
-          xhr.onerror =
-          () => {
-
-            reject(
-              new Error(
-                "Network error. Internet connection check करें।"
-              )
-            );
-
-          };
-
-
-          xhr.send(
-            formData
-          );
+          }
 
         }
       );
 
-
-    if(
-      !uploaded ||
-      !uploaded.secure_url
-    ){
-
-      throw new Error(
-        "Cloudinary ने upload URL नहीं दिया।"
-      );
-
     }
-
-
-    lastUploadedUrl =
-      uploaded.secure_url;
-
-
-    progressBar.style.width =
-      "100%";
-
-
-    setUploadStatus(
-      "✅ Upload सफल हो गया।",
-      "success"
-    );
-
-
-    result.classList.remove(
-      "hidden"
-    );
-
-
-    result.innerHTML =
-      "<b>Uploaded URL:</b><br>" +
-      escapeHtml(
-        lastUploadedUrl
-      );
-
-
-    copyBtn.classList.remove(
-      "hidden"
-    );
-
-
-    if(
-      String(
-        file.type
-      ).startsWith(
-        "image/"
-      )
-    ){
-
-      const img =
-        document.createElement(
-          "img"
-        );
-
-
-      img.className =
-        "preview-image";
-
-
-      img.src =
-        lastUploadedUrl;
-
-
-      img.alt =
-        "Uploaded Property";
-
-
-      preview.appendChild(
-        img
-      );
-
-    }
-
-
-    else if(
-      String(
-        file.type
-      ).startsWith(
-        "video/"
-      )
-    ){
-
-      const video =
-        document.createElement(
-          "video"
-        );
-
-
-      video.className =
-        "preview-video";
-
-
-      video.controls =
-        true;
-
-
-      video.src =
-        lastUploadedUrl;
-
-
-      preview.appendChild(
-        video
-      );
-
-    }
-
-
-  }catch(error){
-
-    console.error(
-      "Cloudinary upload error:",
-      error
-    );
-
-
-    setUploadStatus(
-      "❌ Upload नहीं हुआ: " +
-      error.message,
-      "error"
-    );
-
-  }finally{
-
-    button.disabled =
-      false;
-
-
-    button.textContent =
-      "☁️ Cloudinary पर Upload करें";
 
   }
 
-};
 
-
-/* =====================================================
-   COPY URL
-   ===================================================== */
-
-window.copyUploadedUrl =
-async function(){
+  /*
+    पुराना single image field
+  */
 
   if(
-    !lastUploadedUrl
+    typeof property.image === "string" &&
+    property.image.trim()
   ){
 
-    setUploadStatus(
-      "❌ Copy करने के लिए कोई uploaded URL नहीं है।",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      lastUploadedUrl
-    );
-
-
-    setUploadStatus(
-      "✅ Uploaded URL copy हो गया।",
-      "success"
-    );
-
-  }catch(error){
-
-    window.prompt(
-      "URL copy करें:",
-      lastUploadedUrl
+    images.push(
+      property.image.trim()
     );
 
   }
 
-};
+
+  /*
+    Duplicate URLs हटाएँ
+  */
+
+  images =
+    [
+      ...new Set(
+        images.filter(Boolean)
+      )
+    ];
+
+
+  return images;
+
+}
+
 
 
 /* =====================================================
@@ -1377,8 +990,7 @@ async function loadProperties(){
       );
 
 
-    properties =
-      [];
+    properties = [];
 
 
     snapshot.forEach(
@@ -1432,8 +1044,9 @@ async function loadProperties(){
 }
 
 
+
 /* =====================================================
-   RENDER PROPERTIES
+   RENDER PROPERTY LIST
    ===================================================== */
 
 function renderProperties(
@@ -1458,7 +1071,6 @@ function renderProperties(
 
       </div>
       `;
-
 
     return;
 
@@ -1615,6 +1227,7 @@ function renderProperties(
 }
 
 
+
 /* =====================================================
    SHOW DETAILS
    ===================================================== */
@@ -1720,6 +1333,12 @@ function(id){
     "12px";
 
 
+  const images =
+    getPropertyImages(
+      property
+    );
+
+
   details.innerHTML =
   `
 
@@ -1751,37 +1370,130 @@ function(id){
 
 
   ${
-    property.image
+    images.length
 
     ?
 
     `
 
-    <p>
+    <div class="gallery">
 
-      🖼️ <b>Property Image:</b>
+      <div class="gallery-title">
 
-    </p>
+        🖼️ Property Photos
+        (${images.length})
 
-
-    <img
-
-      class="preview-image"
-
-      src="${escapeHtml(
-        property.image
-      )}"
-
-      alt="Property Image"
-
-      onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
-
-    >
+      </div>
 
 
-    <div class="error-image">
+      <div
+        class="gallery-main"
+        id="gallery-main-${escapeHtml(id)}"
+      >
 
-      ❌ Property image अभी open नहीं हो रही।
+        <img
+          id="gallery-image-${escapeHtml(id)}"
+          src="${escapeHtml(images[0])}"
+          alt="Property Photo"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
+        >
+
+
+        <div
+          class="error-image"
+        >
+
+          ❌ यह Property Photo अभी open नहीं हो रही।
+
+        </div>
+
+
+        ${
+          images.length > 1
+
+          ?
+
+          `
+
+          <div
+            class="gallery-count"
+            id="gallery-count-${escapeHtml(id)}"
+          >
+            1 / ${images.length}
+          </div>
+
+
+          <button
+            class="gallery-arrow gallery-prev"
+            onclick="previousPhoto('${escapeHtml(id)}')"
+          >
+            ‹
+          </button>
+
+
+          <button
+            class="gallery-arrow gallery-next"
+            onclick="nextPhoto('${escapeHtml(id)}')"
+          >
+            ›
+          </button>
+
+          `
+
+          :
+
+          ""
+        }
+
+      </div>
+
+
+      ${
+        images.length > 1
+
+        ?
+
+        `
+
+        <div
+          class="gallery-thumbs"
+          id="gallery-thumbs-${escapeHtml(id)}"
+        >
+
+          ${
+
+            images.map(
+              (url,index) =>
+
+              `
+
+              <img
+                class="gallery-thumb ${
+                  index === 0
+                  ? "active"
+                  : ""
+                }"
+                src="${escapeHtml(url)}"
+                alt="Photo ${index + 1}"
+                onclick="selectPhoto('${escapeHtml(id)}',${index})"
+                onerror="this.style.display='none'"
+              >
+
+              `
+
+            ).join("")
+
+          }
+
+        </div>
+
+        `
+
+        :
+
+        ""
+
+      }
 
     </div>
 
@@ -1789,7 +1501,16 @@ function(id){
 
     :
 
-    ""
+    `
+
+    <div class="notice">
+
+      📷 इस Property की कोई Photo उपलब्ध नहीं है।
+
+    </div>
+
+    `
+
   }
 
 
@@ -1805,6 +1526,21 @@ function(id){
       🎥 <b>Property Video:</b>
 
     </p>
+
+
+    <video
+
+      class="preview-video"
+
+      src="${escapeHtml(
+        property.video
+      )}"
+
+      controls
+
+      playsinline
+
+    ></video>
 
 
     <a
@@ -1879,6 +1615,20 @@ function(id){
   );
 
 
+  /*
+    Gallery की current position
+  */
+
+  details.dataset.photoIndex =
+    "0";
+
+
+  details.dataset.photoUrls =
+    JSON.stringify(
+      images
+    );
+
+
   details.scrollIntoView({
 
     behavior:"smooth",
@@ -1888,6 +1638,264 @@ function(id){
   });
 
 };
+
+
+
+/* =====================================================
+   SELECT PHOTO
+   ===================================================== */
+
+window.selectPhoto =
+function(
+  id,
+  index
+){
+
+  const details =
+    document.getElementById(
+      "details-" + id
+    );
+
+
+  if(!details){
+
+    return;
+
+  }
+
+
+  let images = [];
+
+
+  try{
+
+    images =
+      JSON.parse(
+        details.dataset.photoUrls ||
+        "[]"
+      );
+
+  }catch(error){
+
+    images = [];
+
+  }
+
+
+  if(
+    !images[index]
+  ){
+
+    return;
+
+  }
+
+
+  details.dataset.photoIndex =
+    String(index);
+
+
+  const mainImage =
+    document.getElementById(
+      "gallery-image-" + id
+    );
+
+
+  if(mainImage){
+
+    mainImage.src =
+      images[index];
+
+    mainImage.style.display =
+      "block";
+
+  }
+
+
+  const count =
+    document.getElementById(
+      "gallery-count-" + id
+    );
+
+
+  if(count){
+
+    count.textContent =
+      (index + 1) +
+      " / " +
+      images.length;
+
+  }
+
+
+  const thumbs =
+    details.querySelectorAll(
+      ".gallery-thumb"
+    );
+
+
+  thumbs.forEach(
+    (thumb,i) => {
+
+      thumb.classList.toggle(
+        "active",
+        i === index
+      );
+
+    }
+  );
+
+};
+
+
+
+/* =====================================================
+   NEXT PHOTO
+   ===================================================== */
+
+window.nextPhoto =
+function(id){
+
+  const details =
+    document.getElementById(
+      "details-" + id
+    );
+
+
+  if(!details){
+
+    return;
+
+  }
+
+
+  let images = [];
+
+
+  try{
+
+    images =
+      JSON.parse(
+        details.dataset.photoUrls ||
+        "[]"
+      );
+
+  }catch(error){
+
+    return;
+
+  }
+
+
+  if(
+    images.length <= 1
+  ){
+
+    return;
+
+  }
+
+
+  let index =
+    Number(
+      details.dataset.photoIndex || 0
+    );
+
+
+  index++;
+
+
+  if(
+    index >= images.length
+  ){
+
+    index = 0;
+
+  }
+
+
+  selectPhoto(
+    id,
+    index
+  );
+
+};
+
+
+
+/* =====================================================
+   PREVIOUS PHOTO
+   ===================================================== */
+
+window.previousPhoto =
+function(id){
+
+  const details =
+    document.getElementById(
+      "details-" + id
+    );
+
+
+  if(!details){
+
+    return;
+
+  }
+
+
+  let images = [];
+
+
+  try{
+
+    images =
+      JSON.parse(
+        details.dataset.photoUrls ||
+        "[]"
+      );
+
+  }catch(error){
+
+    return;
+
+  }
+
+
+  if(
+    images.length <= 1
+  ){
+
+    return;
+
+  }
+
+
+  let index =
+    Number(
+      details.dataset.photoIndex || 0
+    );
+
+
+  index--;
+
+
+  if(
+    index < 0
+  ){
+
+    index =
+      images.length - 1;
+
+  }
+
+
+  selectPhoto(
+    id,
+    index
+  );
+
+};
+
 
 
 /* =====================================================
@@ -1910,6 +1918,7 @@ function(id){
   }
 
 };
+
 
 
 /* =====================================================
@@ -1974,6 +1983,7 @@ ${property.area || "N/A"}
 };
 
 
+
 /* =====================================================
    WHATSAPP
    ===================================================== */
@@ -2010,6 +2020,7 @@ function(message){
   );
 
 };
+
 
 
 /* =====================================================
@@ -2158,6 +2169,7 @@ function(){
 };
 
 
+
 /* =====================================================
    CATEGORY FILTER
    ===================================================== */
@@ -2288,11 +2300,13 @@ function(
 };
 
 
+
 /* =====================================================
    START
    ===================================================== */
 
 loadProperties();
+
 
 </script>
 
