@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>Prop Set U - Admin Panel</title>
 
+
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -59,13 +69,16 @@ label{
   margin-top:11px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
   padding:12px;
   margin-top:6px;
   border:1px solid #ccc;
   border-radius:8px;
   font-size:14px;
+  background:#fff;
 }
 
 textarea{
@@ -80,6 +93,11 @@ button{
   font-size:14px;
   font-weight:bold;
   cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .login-btn{
@@ -115,6 +133,7 @@ button{
   border-radius:10px;
   padding:12px;
   margin-top:12px;
+  background:#fff;
 }
 
 .property h3{
@@ -164,6 +183,7 @@ button{
   color:#063b66;
   margin-bottom:12px;
   font-size:13px;
+  line-height:1.5;
 }
 
 .success{
@@ -182,6 +202,7 @@ button{
   padding:10px;
   font-size:13px;
   margin-bottom:12px;
+  line-height:1.5;
 }
 
 .footer{
@@ -206,6 +227,7 @@ button{
   object-fit:cover;
   border-radius:8px;
   margin-top:10px;
+  display:block;
 }
 
 .preview-video{
@@ -213,18 +235,21 @@ button{
   max-height:300px;
   margin-top:10px;
   border-radius:8px;
+  background:#000;
 }
 
 .file-info{
   margin-top:6px;
   font-size:12px;
   color:#555;
+  line-height:1.4;
 }
 
 .upload-status{
   margin-top:8px;
   font-size:13px;
   font-weight:bold;
+  line-height:1.5;
 }
 
 .old-file{
@@ -233,35 +258,126 @@ button{
   padding:10px;
   margin-top:8px;
   font-size:12px;
+  line-height:1.5;
 }
 
 .old-file a{
   color:#063b66;
   font-weight:bold;
+  text-decoration:none;
 }
+
+.cloudinary-box{
+  background:#fff4d6;
+  color:#806000;
+  border-radius:8px;
+  padding:11px;
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.url-box{
+  background:#f1f5f9;
+  border-radius:8px;
+  padding:10px;
+  margin-top:10px;
+  font-size:12px;
+  line-height:1.5;
+  word-break:break-all;
+}
+
+.url-box b{
+  color:#063b66;
+}
+
+.preview-label{
+  margin-top:10px;
+  font-size:13px;
+  font-weight:bold;
+  color:#063b66;
+}
+
+.progress-wrap{
+  width:100%;
+  height:9px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:10px;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:#159447;
+  transition:width .2s ease;
+}
+
+.warning{
+  background:#fff4d6;
+  color:#806000;
+  padding:10px;
+  border-radius:8px;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:10px;
+}
+
+.success-box{
+  background:#e7f7ec;
+  color:#13843d;
+  padding:10px;
+  border-radius:8px;
+  margin-top:10px;
+  font-size:13px;
+  line-height:1.5;
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="header">
+
   <h1>🏠 Prop Set U</h1>
-  <p>Admin Property Management Panel</p>
+
+  <p>
+    Admin Property Management Panel
+  </p>
+
 </div>
 
-<!-- LOGIN -->
 
-<div id="loginSection" class="container">
+
+<!-- =====================================================
+     LOGIN SECTION
+===================================================== -->
+
+<div
+  id="loginSection"
+  class="container"
+>
 
   <div class="card login-card">
 
     <h2>🔐 Admin Login</h2>
 
-    <div id="loginStatus" class="status">
+    <div
+      id="loginStatus"
+      class="status"
+    >
       कृपया Admin Email और Password से Login करें।
     </div>
 
-    <label>Admin Email</label>
+
+    <label>
+      Admin Email
+    </label>
 
     <input
       id="loginEmail"
@@ -270,7 +386,10 @@ button{
       autocomplete="email"
     >
 
-    <label>Password</label>
+
+    <label>
+      Password
+    </label>
 
     <input
       id="loginPassword"
@@ -278,6 +397,7 @@ button{
       placeholder="Password"
       autocomplete="current-password"
     >
+
 
     <button
       class="login-btn"
@@ -291,16 +411,29 @@ button{
 </div>
 
 
-<!-- ADMIN -->
 
-<div id="adminSection" class="container hidden">
+<!-- =====================================================
+     ADMIN SECTION
+===================================================== -->
+
+<div
+  id="adminSection"
+  class="container hidden"
+>
+
+
+  <!-- ADMIN ACCOUNT -->
 
   <div class="card">
 
     <div class="admin-info">
+
       👤 Logged in as:
+
       <b id="adminEmail"></b>
+
     </div>
+
 
     <button
       class="logout"
@@ -312,60 +445,143 @@ button{
   </div>
 
 
-  <!-- PROPERTY FORM -->
+
+  <!-- ===================================================
+       PROPERTY FORM
+  ==================================================== -->
 
   <div class="card">
 
-    <h2 id="formTitle">➕ Add New Property</h2>
+    <h2 id="formTitle">
+      ➕ Add New Property
+    </h2>
 
-    <div id="status" class="status">
+
+    <div
+      id="status"
+      class="status"
+    >
       Firebase connecting...
     </div>
 
-    <label>Property Title</label>
+
+
+    <!-- TITLE -->
+
+    <label>
+      Property Title
+    </label>
 
     <input
       id="title"
       placeholder="जैसे 3 BHK Independent House"
     >
 
-    <label>Property Type</label>
+
+
+    <!-- TYPE -->
+
+    <label>
+      Property Type
+    </label>
 
     <select id="type">
-      <option value="Independent">Independent</option>
-      <option value="Flat">Flat</option>
-      <option value="Villa">Villa</option>
-      <option value="Open Plot">Open Plot</option>
-      <option value="Commercial">Commercial</option>
-      <option value="Shop">Shop</option>
-      <option value="Office">Office</option>
-      <option value="PG">PG</option>
+
+      <option value="Independent">
+        Independent
+      </option>
+
+      <option value="Flat">
+        Flat
+      </option>
+
+      <option value="Villa">
+        Villa
+      </option>
+
+      <option value="Open Plot">
+        Open Plot
+      </option>
+
+      <option value="Commercial">
+        Commercial
+      </option>
+
+      <option value="Shop">
+        Shop
+      </option>
+
+      <option value="Office">
+        Office
+      </option>
+
+      <option value="PG">
+        PG
+      </option>
+
     </select>
 
-    <label>Requirement</label>
+
+
+    <!-- REQUIREMENT -->
+
+    <label>
+      Requirement
+    </label>
 
     <select id="requirement">
-      <option value="Buy">Buy</option>
-      <option value="Rent">Rent</option>
-      <option value="Lease">Lease</option>
-      <option value="Sell">Sell</option>
+
+      <option value="Buy">
+        Buy
+      </option>
+
+      <option value="Rent">
+        Rent
+      </option>
+
+      <option value="Lease">
+        Lease
+      </option>
+
+      <option value="Sell">
+        Sell
+      </option>
+
     </select>
 
-    <label>Area / Location</label>
+
+
+    <!-- LOCATION -->
+
+    <label>
+      Area / Location
+    </label>
 
     <input
       id="location"
       placeholder="जैसे Hyderabad"
     >
 
-    <label>Price</label>
+
+
+    <!-- PRICE -->
+
+    <label>
+      Price
+    </label>
 
     <input
       id="price"
       placeholder="जैसे ₹85 Lakh या ₹18,000 / Month"
     >
 
-    <label>Bedrooms</label>
+
+
+    <!-- BEDROOMS -->
+
+    <label>
+      Bedrooms
+    </label>
 
     <input
       id="bedrooms"
@@ -373,21 +589,39 @@ button{
       placeholder="जैसे 3"
     >
 
-    <label>Property Area</label>
+
+
+    <!-- AREA -->
+
+    <label>
+      Property Area
+    </label>
 
     <input
       id="area"
       placeholder="जैसे 1500 Sq Ft"
     >
 
-    <label>Owner / Agent Name</label>
+
+
+    <!-- OWNER -->
+
+    <label>
+      Owner / Agent Name
+    </label>
 
     <input
       id="owner"
       placeholder="Owner या Agent Name"
     >
 
-    <label>Owner / Agent Mobile</label>
+
+
+    <!-- PHONE -->
+
+    <label>
+      Owner / Agent Mobile
+    </label>
 
     <input
       id="phone"
@@ -395,7 +629,13 @@ button{
       placeholder="10 digit mobile number"
     >
 
-    <label>Property Description</label>
+
+
+    <!-- DESCRIPTION -->
+
+    <label>
+      Property Description
+    </label>
 
     <textarea
       id="description"
@@ -403,9 +643,36 @@ button{
     ></textarea>
 
 
-    <!-- IMAGE -->
 
-    <label>🖼️ Property Image / Gallery</label>
+    <!-- =================================================
+         CLOUDINARY
+    ================================================== -->
+
+    <div class="cloudinary-box">
+
+      ☁️ <b>Cloudinary Upload</b>
+
+      <br><br>
+
+      Property की Photo और Video
+      Cloudinary पर upload होगी।
+
+      <br><br>
+
+      🔐 API Secret website में नहीं रखा गया है।
+      Unsigned Upload Preset का इस्तेमाल किया जा रहा है।
+
+    </div>
+
+
+
+    <!-- =================================================
+         IMAGE
+    ================================================== -->
+
+    <label>
+      🖼️ Property Photo
+    </label>
 
     <input
       id="imageFile"
@@ -413,9 +680,14 @@ button{
       accept="image/*"
     >
 
-    <div id="imageInfo" class="file-info">
+
+    <div
+      id="imageInfo"
+      class="file-info"
+    >
       कोई नई Image select नहीं की गई।
     </div>
+
 
     <img
       id="imagePreview"
@@ -423,12 +695,18 @@ button{
       alt="Image Preview"
     >
 
+
     <div id="oldImageBox"></div>
 
 
-    <!-- VIDEO -->
 
-    <label>🎥 Property Video</label>
+    <!-- =================================================
+         VIDEO
+    ================================================== -->
+
+    <label>
+      🎥 Property Video
+    </label>
 
     <input
       id="videoFile"
@@ -436,9 +714,14 @@ button{
       accept="video/*"
     >
 
-    <div id="videoInfo" class="file-info">
+
+    <div
+      id="videoInfo"
+      class="file-info"
+    >
       कोई नया Video select नहीं किया गया।
     </div>
+
 
     <video
       id="videoPreview"
@@ -446,8 +729,12 @@ button{
       controls
     ></video>
 
+
     <div id="oldVideoBox"></div>
 
+
+
+    <!-- UPLOAD STATUS -->
 
     <div
       id="uploadStatus"
@@ -455,13 +742,32 @@ button{
     ></div>
 
 
+    <div
+      id="progressWrap"
+      class="progress-wrap hidden"
+    >
+
+      <div
+        id="progressBar"
+        class="progress-bar"
+      ></div>
+
+    </div>
+
+
+
+    <!-- SAVE -->
+
     <button
+      id="saveButton"
       class="save"
       onclick="saveProperty()"
     >
       💾 Save Property
     </button>
 
+
+    <!-- CLEAR -->
 
     <button
       class="clear"
@@ -473,11 +779,17 @@ button{
   </div>
 
 
-  <!-- PROPERTY LIST -->
+
+  <!-- ===================================================
+       PROPERTY LIST
+  ==================================================== -->
 
   <div class="card">
 
-    <h2>🏘️ Property List</h2>
+    <h2>
+      🏘️ Property List
+    </h2>
+
 
     <div id="propertyList">
 
@@ -492,18 +804,36 @@ button{
 </div>
 
 
+
 <div class="footer">
-  Prop Set U © 2026<br>
+
+  Prop Set U © 2026
+
+  <br>
+
   Admin Panel
+
 </div>
 
 
+
+<!-- =====================================================
+     FIREBASE + CLOUDINARY JAVASCRIPT
+===================================================== -->
+
 <script type="module">
+
+
+/* =====================================================
+   FIREBASE IMPORTS
+===================================================== */
 
 import {
   initializeApp
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
   getFirestore,
@@ -514,27 +844,25 @@ import {
   deleteDoc,
   doc,
   serverTimestamp
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged
-} from
+}
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 
-/* FIREBASE CONFIG */
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -562,19 +890,24 @@ const firebaseConfig = {
 };
 
 
-/* FIREBASE START */
+
+/* =====================================================
+   FIREBASE START
+===================================================== */
 
 const app =
-  initializeApp(firebaseConfig);
+  initializeApp(
+    firebaseConfig
+  );
+
 
 const db =
   getFirestore(app);
 
+
 const auth =
   getAuth(app);
 
-const storage =
-  getStorage(app);
 
 const propertiesRef =
   collection(
@@ -583,11 +916,38 @@ const propertiesRef =
   );
 
 
-/* ADMIN */
+
+/* =====================================================
+   CLOUDINARY CONFIG
+===================================================== */
+
+const CLOUDINARY_CLOUD_NAME =
+  "gga5auev";
+
+
+const CLOUDINARY_UPLOAD_PRESET =
+  "propsetu_upload 2";
+
+
+const CLOUDINARY_UPLOAD_URL =
+  "https://api.cloudinary.com/v1_1/" +
+  CLOUDINARY_CLOUD_NAME +
+  "/auto/upload";
+
+
+
+/* =====================================================
+   ADMIN CONFIG
+===================================================== */
 
 const ADMIN_EMAIL =
   "propsetu1@gmail.com";
 
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
 
 let properties = [];
 
@@ -598,22 +958,47 @@ let oldImageUrl = "";
 let oldVideoUrl = "";
 
 
-/* ESCAPE */
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
 function escapeHtml(text){
 
   return String(text ?? "")
 
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
-/* STATUS */
+
+/* =====================================================
+   STATUS
+===================================================== */
 
 function setStatus(
   message,
@@ -625,15 +1010,23 @@ function setStatus(
       "status"
     );
 
-  if(!el)return;
+
+  if(!el){
+
+    return;
+
+  }
+
 
   el.textContent =
     message;
 
+
   el.className =
     "status";
 
-  if(type==="success"){
+
+  if(type === "success"){
 
     el.classList.add(
       "success"
@@ -641,7 +1034,8 @@ function setStatus(
 
   }
 
-  if(type==="error"){
+
+  if(type === "error"){
 
     el.classList.add(
       "error"
@@ -651,6 +1045,11 @@ function setStatus(
 
 }
 
+
+
+/* =====================================================
+   LOGIN STATUS
+===================================================== */
 
 function setLoginStatus(
   message,
@@ -662,13 +1061,23 @@ function setLoginStatus(
       "loginStatus"
     );
 
+
+  if(!el){
+
+    return;
+
+  }
+
+
   el.textContent =
     message;
+
 
   el.className =
     "status";
 
-  if(type==="success"){
+
+  if(type === "success"){
 
     el.classList.add(
       "success"
@@ -676,7 +1085,8 @@ function setLoginStatus(
 
   }
 
-  if(type==="error"){
+
+  if(type === "error"){
 
     el.classList.add(
       "error"
@@ -687,23 +1097,35 @@ function setLoginStatus(
 }
 
 
-/* LOGIN */
+
+/* =====================================================
+   ADMIN LOGIN
+===================================================== */
 
 window.adminLogin =
 async function(){
 
   const email =
-    document.getElementById(
-      "loginEmail"
-    ).value.trim();
+    document
+      .getElementById(
+        "loginEmail"
+      )
+      .value
+      .trim();
+
 
   const password =
-    document.getElementById(
-      "loginPassword"
-    ).value;
+    document
+      .getElementById(
+        "loginPassword"
+      )
+      .value;
 
 
-  if(!email || !password){
+  if(
+    !email ||
+    !password
+  ){
 
     setLoginStatus(
       "Email और Password दोनों भरें।",
@@ -747,7 +1169,11 @@ async function(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Login Error:",
+      error
+    );
+
 
     setLoginStatus(
       "❌ Login failed. Email या Password गलत है।",
@@ -759,32 +1185,46 @@ async function(){
 };
 
 
-/* LOGOUT */
+
+/* =====================================================
+   ADMIN LOGOUT
+===================================================== */
 
 window.adminLogout =
 async function(){
 
   try{
 
-    await signOut(auth);
+    await signOut(
+      auth
+    );
+
 
     clearForm();
+
 
     setLoginStatus(
       "आप Logout हो गए हैं।",
       "success"
     );
 
+
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Logout Error:",
+      error
+    );
 
   }
 
 };
 
 
-/* AUTH */
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
 
 onAuthStateChanged(
   auth,
@@ -795,6 +1235,7 @@ onAuthStateChanged(
         "loginSection"
       );
 
+
     const adminSection =
       document.getElementById(
         "adminSection"
@@ -804,7 +1245,10 @@ onAuthStateChanged(
     if(user){
 
       const email =
-        (user.email || "")
+        (
+          user.email ||
+          ""
+        )
         .toLowerCase();
 
 
@@ -813,12 +1257,16 @@ onAuthStateChanged(
         ADMIN_EMAIL.toLowerCase()
       ){
 
-        await signOut(auth);
+        await signOut(
+          auth
+        );
+
 
         setLoginStatus(
           "❌ इस account को Admin access नहीं है।",
           "error"
         );
+
 
         return;
 
@@ -827,16 +1275,23 @@ onAuthStateChanged(
 
       loginSection
         .classList
-        .add("hidden");
+        .add(
+          "hidden"
+        );
+
 
       adminSection
         .classList
-        .remove("hidden");
+        .remove(
+          "hidden"
+        );
 
 
-      document.getElementById(
-        "adminEmail"
-      ).textContent =
+      document
+        .getElementById(
+          "adminEmail"
+        )
+        .textContent =
         user.email;
 
 
@@ -847,11 +1302,16 @@ onAuthStateChanged(
 
       loginSection
         .classList
-        .remove("hidden");
+        .remove(
+          "hidden"
+        );
+
 
       adminSection
         .classList
-        .add("hidden");
+        .add(
+          "hidden"
+        );
 
     }
 
@@ -859,113 +1319,150 @@ onAuthStateChanged(
 );
 
 
-/* IMAGE PREVIEW */
+
+/* =====================================================
+   IMAGE PREVIEW
+===================================================== */
 
 document
-.getElementById("imageFile")
-.addEventListener(
-  "change",
-  (event)=>{
+  .getElementById(
+    "imageFile"
+  )
+  .addEventListener(
+    "change",
+    (event)=>{
 
-    const file =
-      event.target.files[0];
-
-    const preview =
-      document.getElementById(
-        "imagePreview"
-      );
-
-    const info =
-      document.getElementById(
-        "imageInfo"
-      );
+      const file =
+        event.target.files[0];
 
 
-    if(!file){
+      const preview =
+        document.getElementById(
+          "imagePreview"
+        );
+
+
+      const info =
+        document.getElementById(
+          "imageInfo"
+        );
+
+
+      if(!file){
+
+        preview
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        info.textContent =
+          "कोई नई Image select नहीं की गई।";
+
+
+        return;
+
+      }
+
+
+      info.textContent =
+        "Selected: " +
+        file.name;
+
+
+      preview.src =
+        URL.createObjectURL(
+          file
+        );
+
 
       preview
         .classList
-        .add("hidden");
-
-      info.textContent =
-        "कोई नई Image select नहीं की गई।";
-
-      return;
+        .remove(
+          "hidden"
+        );
 
     }
+  );
 
 
-    info.textContent =
-      file.name;
 
-
-    preview.src =
-      URL.createObjectURL(file);
-
-    preview
-      .classList
-      .remove("hidden");
-
-  }
-);
-
-
-/* VIDEO PREVIEW */
+/* =====================================================
+   VIDEO PREVIEW
+===================================================== */
 
 document
-.getElementById("videoFile")
-.addEventListener(
-  "change",
-  (event)=>{
+  .getElementById(
+    "videoFile"
+  )
+  .addEventListener(
+    "change",
+    (event)=>{
 
-    const file =
-      event.target.files[0];
-
-    const preview =
-      document.getElementById(
-        "videoPreview"
-      );
-
-    const info =
-      document.getElementById(
-        "videoInfo"
-      );
+      const file =
+        event.target.files[0];
 
 
-    if(!file){
+      const preview =
+        document.getElementById(
+          "videoPreview"
+        );
+
+
+      const info =
+        document.getElementById(
+          "videoInfo"
+        );
+
+
+      if(!file){
+
+        preview
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        info.textContent =
+          "कोई नया Video select नहीं किया गया।";
+
+
+        return;
+
+      }
+
+
+      info.textContent =
+        "Selected: " +
+        file.name;
+
+
+      preview.src =
+        URL.createObjectURL(
+          file
+        );
+
 
       preview
         .classList
-        .add("hidden");
-
-      info.textContent =
-        "कोई नया Video select नहीं किया गया।";
-
-      return;
+        .remove(
+          "hidden"
+        );
 
     }
+  );
 
 
-    info.textContent =
-      file.name;
 
+/* =====================================================
+   CLOUDINARY UPLOAD
+   ===================================================== */
 
-    preview.src =
-      URL.createObjectURL(file);
-
-    preview
-      .classList
-      .remove("hidden");
-
-  }
-);
-
-
-/* UPLOAD */
-
-async function uploadFile(
+async function uploadToCloudinary(
   file,
-  folder
+  type
 ){
 
   if(!file){
@@ -975,42 +1472,213 @@ async function uploadFile(
   }
 
 
-  const safeName =
-    file.name.replace(
-      /[^a-zA-Z0-9._-]/g,
-      "_"
-    );
+  return new Promise(
+    (
+      resolve,
+      reject
+    )=>{
 
 
-  const filePath =
-    folder +
-    "/" +
-    Date.now() +
-    "_" +
-    safeName;
+      const xhr =
+        new XMLHttpRequest();
 
 
-  const storageRef =
-    ref(
-      storage,
-      filePath
-    );
+      const formData =
+        new FormData();
 
 
-  await uploadBytes(
-    storageRef,
-    file
-  );
+      formData.append(
+        "file",
+        file
+      );
 
 
-  return await getDownloadURL(
-    storageRef
+      formData.append(
+        "upload_preset",
+        CLOUDINARY_UPLOAD_PRESET
+      );
+
+
+      formData.append(
+        "folder",
+        "propsetu/" + type
+      );
+
+
+      xhr.open(
+        "POST",
+        CLOUDINARY_UPLOAD_URL,
+        true
+      );
+
+
+      xhr.upload.onprogress =
+        function(event){
+
+          if(
+            event.lengthComputable
+          ){
+
+            const percent =
+              Math.round(
+                (
+                  event.loaded /
+                  event.total
+                ) *
+                100
+              );
+
+
+            const progressBar =
+              document.getElementById(
+                "progressBar"
+              );
+
+
+            progressBar.style.width =
+              percent + "%";
+
+
+            const uploadStatus =
+              document.getElementById(
+                "uploadStatus"
+              );
+
+
+            uploadStatus.textContent =
+              "☁️ " +
+              type +
+              " Cloudinary पर upload हो रहा है... " +
+              percent +
+              "%";
+
+          }
+
+        };
+
+
+      xhr.onload =
+        function(){
+
+          if(
+            xhr.status >= 200 &&
+            xhr.status < 300
+          ){
+
+            try{
+
+              const data =
+                JSON.parse(
+                  xhr.responseText
+                );
+
+
+              if(
+                data.secure_url
+              ){
+
+                resolve(
+                  data.secure_url
+                );
+
+              }else{
+
+                reject(
+                  new Error(
+                    "Cloudinary URL नहीं मिला।"
+                  )
+                );
+
+              }
+
+            }catch(error){
+
+              reject(
+                new Error(
+                  "Cloudinary response समझ नहीं आया।"
+                )
+              );
+
+            }
+
+          }else{
+
+            let message =
+              "Cloudinary upload failed.";
+
+
+            try{
+
+              const errorData =
+                JSON.parse(
+                  xhr.responseText
+                );
+
+
+              if(
+                errorData.error &&
+                errorData.error.message
+              ){
+
+                message =
+                  errorData.error.message;
+
+              }
+
+            }catch(error){
+
+            }
+
+
+            reject(
+              new Error(
+                message
+              )
+            );
+
+          }
+
+        };
+
+
+      xhr.onerror =
+        function(){
+
+          reject(
+            new Error(
+              "Internet या Cloudinary connection error."
+            )
+          );
+
+        };
+
+
+      xhr.onabort =
+        function(){
+
+          reject(
+            new Error(
+              "Upload cancel हो गया।"
+            )
+          );
+
+        };
+
+
+      xhr.send(
+        formData
+      );
+
+    }
   );
 
 }
 
 
-/* LOAD PROPERTIES */
+
+/* =====================================================
+   LOAD FIRESTORE PROPERTIES
+===================================================== */
 
 async function loadProperties(){
 
@@ -1074,7 +1742,10 @@ async function loadProperties(){
 }
 
 
-/* SAVE */
+
+/* =====================================================
+   SAVE PROPERTY
+===================================================== */
 
 window.saveProperty =
 async function(){
@@ -1095,7 +1766,10 @@ async function(){
 
 
   if(
-    (user.email || "")
+    (
+      user.email ||
+      ""
+    )
     .toLowerCase()
     !==
     ADMIN_EMAIL.toLowerCase()
@@ -1110,67 +1784,118 @@ async function(){
   }
 
 
+
+  /* FORM VALUES */
+
   const title =
-    document.getElementById(
-      "title"
-    ).value.trim();
+    document
+      .getElementById(
+        "title"
+      )
+      .value
+      .trim();
+
 
   const type =
-    document.getElementById(
-      "type"
-    ).value;
+    document
+      .getElementById(
+        "type"
+      )
+      .value;
+
 
   const requirement =
-    document.getElementById(
-      "requirement"
-    ).value;
+    document
+      .getElementById(
+        "requirement"
+      )
+      .value;
+
 
   const location =
-    document.getElementById(
-      "location"
-    ).value.trim();
+    document
+      .getElementById(
+        "location"
+      )
+      .value
+      .trim();
+
 
   const price =
-    document.getElementById(
-      "price"
-    ).value.trim();
+    document
+      .getElementById(
+        "price"
+      )
+      .value
+      .trim();
+
 
   const bedrooms =
-    document.getElementById(
-      "bedrooms"
-    ).value.trim();
+    document
+      .getElementById(
+        "bedrooms"
+      )
+      .value
+      .trim();
+
 
   const area =
-    document.getElementById(
-      "area"
-    ).value.trim();
+    document
+      .getElementById(
+        "area"
+      )
+      .value
+      .trim();
+
 
   const owner =
-    document.getElementById(
-      "owner"
-    ).value.trim();
+    document
+      .getElementById(
+        "owner"
+      )
+      .value
+      .trim();
+
 
   const phone =
-    document.getElementById(
-      "phone"
-    ).value.trim();
+    document
+      .getElementById(
+        "phone"
+      )
+      .value
+      .trim();
+
 
   const description =
-    document.getElementById(
-      "description"
-    ).value.trim();
+    document
+      .getElementById(
+        "description"
+      )
+      .value
+      .trim();
 
+
+
+  /* FILES */
 
   const imageFile =
-    document.getElementById(
-      "imageFile"
-    ).files[0];
+    document
+      .getElementById(
+        "imageFile"
+      )
+      .files[0];
+
 
   const videoFile =
-    document.getElementById(
-      "videoFile"
-    ).files[0];
+    document
+      .getElementById(
+        "videoFile"
+      )
+      .files[0];
 
+
+
+  /* VALIDATION */
 
   if(
     !title ||
@@ -1187,6 +1912,32 @@ async function(){
   }
 
 
+
+  /* IMAGE OR VIDEO REQUIRED
+     ONLY FOR NEW PROPERTY */
+
+  if(
+    editId === null &&
+    !imageFile &&
+    !videoFile
+  ){
+
+    const answer =
+      confirm(
+        "नई Property के लिए Photo/Video नहीं चुना गया है। क्या फिर भी Property Save करनी है?"
+      );
+
+
+    if(!answer){
+
+      return;
+
+    }
+
+  }
+
+
+
   try{
 
     const uploadStatus =
@@ -1195,83 +1946,168 @@ async function(){
       );
 
 
+    const progressWrap =
+      document.getElementById(
+        "progressWrap"
+      );
+
+
+    const progressBar =
+      document.getElementById(
+        "progressBar"
+      );
+
+
+    const saveButton =
+      document.getElementById(
+        "saveButton"
+      );
+
+
+    saveButton.disabled =
+      true;
+
+
+    progressWrap
+      .classList
+      .remove(
+        "hidden"
+      );
+
+
+    progressBar.style.width =
+      "0%";
+
+
     uploadStatus.textContent =
-      "⏳ Property save हो रही है...";
+      "⏳ Property save होने की तैयारी...";
 
 
-    /*
-      IMPORTANT:
-      अगर Edit करते समय नई Image नहीं चुनी,
-      तो पुरानी Image URL सुरक्षित रहेगी।
-    */
+
+    /* =================================================
+       OLD URL PRESERVE
+    ================================================== */
 
     let imageUrl =
-      oldImageUrl || "";
+      oldImageUrl ||
+      "";
 
 
     let videoUrl =
-      oldVideoUrl || "";
+      oldVideoUrl ||
+      "";
 
+
+
+    /* =================================================
+       IMAGE CLOUDINARY
+    ================================================== */
 
     if(imageFile){
 
       uploadStatus.textContent =
-        "🖼️ Image upload हो रही है...";
+        "🖼️ Image Cloudinary पर upload हो रही है...";
+
+
+      progressBar.style.width =
+        "5%";
 
 
       imageUrl =
-        await uploadFile(
+        await uploadToCloudinary(
           imageFile,
-          "properties/images"
+          "images"
         );
+
+
+      progressBar.style.width =
+        "100%";
+
+
+      uploadStatus.textContent =
+        "✅ Image Cloudinary पर upload हो गई।";
 
     }
 
+
+
+    /* =================================================
+       VIDEO CLOUDINARY
+    ================================================== */
 
     if(videoFile){
 
       uploadStatus.textContent =
-        "🎥 Video upload हो रहा है...";
+        "🎥 Video Cloudinary पर upload हो रहा है...";
+
+
+      progressBar.style.width =
+        "5%";
 
 
       videoUrl =
-        await uploadFile(
+        await uploadToCloudinary(
           videoFile,
-          "properties/videos"
+          "videos"
         );
+
+
+      progressBar.style.width =
+        "100%";
+
+
+      uploadStatus.textContent =
+        "✅ Video Cloudinary पर upload हो गया।";
 
     }
 
 
+
+    /* =================================================
+       FIRESTORE DATA
+    ================================================== */
+
     uploadStatus.textContent =
-      "💾 Firebase Firestore में save हो रहा है...";
+      "💾 Firebase Firestore में Property save हो रही है...";
 
 
     const property = {
 
-      title:title,
+      title:
+        title,
 
-      type:type,
+      type:
+        type,
 
-      requirement:requirement,
+      requirement:
+        requirement,
 
-      location:location,
+      location:
+        location,
 
-      price:price,
+      price:
+        price,
 
-      bedrooms:bedrooms,
+      bedrooms:
+        bedrooms,
 
-      area:area,
+      area:
+        area,
 
-      owner:owner,
+      owner:
+        owner,
 
-      phone:phone,
+      phone:
+        phone,
 
-      description:description,
+      description:
+        description,
 
-      image:imageUrl,
+      image:
+        imageUrl,
 
-      video:videoUrl,
+      video:
+        videoUrl,
 
       updatedAt:
         serverTimestamp(),
@@ -1282,20 +2118,84 @@ async function(){
     };
 
 
-    /* NEW PROPERTY */
 
-    if(editId === null){
+    /* =================================================
+       CATEGORY
+    ================================================== */
+
+    if(
+      type === "PG"
+    ){
+
+      property.category =
+        "PG";
+
+    }
+
+    else if(
+      type === "Commercial" ||
+      type === "Shop" ||
+      type === "Office"
+    ){
+
+      property.category =
+        "Commercial";
+
+    }
+
+    else if(
+      type === "Open Plot"
+    ){
+
+      property.category =
+        "Open Plot";
+
+    }
+
+    else if(
+      type === "Independent"
+    ){
+
+      property.category =
+        "Independent";
+
+    }
+
+    else{
+
+      property.category =
+        type;
+
+    }
+
+
+
+    /* =================================================
+       NEW PROPERTY
+    ================================================== */
+
+    if(
+      editId === null
+    ){
 
       property.createdAt =
         serverTimestamp();
+
 
       property.createdBy =
         user.email;
 
 
-      await addDoc(
-        propertiesRef,
-        property
+      const newDoc =
+        await addDoc(
+          propertiesRef,
+          property
+        );
+
+
+      console.log(
+        "New Property ID:",
+        newDoc.id
       );
 
 
@@ -1303,10 +2203,13 @@ async function(){
         "✅ Property successfully saved in Firebase."
       );
 
-
     }
 
-    /* EDIT PROPERTY */
+
+
+    /* =================================================
+       EDIT PROPERTY
+    ================================================== */
 
     else{
 
@@ -1327,19 +2230,30 @@ async function(){
         "✅ Property successfully updated."
       );
 
-
     }
 
 
-    editId = null;
 
-    oldImageUrl = "";
+    /* RESET */
 
-    oldVideoUrl = "";
+    editId =
+      null;
+
+
+    oldImageUrl =
+      "";
+
+
+    oldVideoUrl =
+      "";
 
 
     uploadStatus.textContent =
       "✅ Save successful.";
+
+
+    progressBar.style.width =
+      "100%";
 
 
     clearForm();
@@ -1356,24 +2270,49 @@ async function(){
     );
 
 
-    document.getElementById(
-      "uploadStatus"
-    ).textContent =
+    const uploadStatus =
+      document.getElementById(
+        "uploadStatus"
+      );
+
+
+    uploadStatus.textContent =
       "❌ Save failed: " +
-      (error.message ||
-       "Unknown error");
+      (
+        error.message ||
+        "Unknown error"
+      );
 
 
     alert(
-      "❌ Property save नहीं हुई। Firebase Rules check करें।"
+      "❌ Property save नहीं हुई।\n\n" +
+      (
+        error.message ||
+        "Firebase या Cloudinary error"
+      )
     );
+
+
+  }finally{
+
+    const saveButton =
+      document.getElementById(
+        "saveButton"
+      );
+
+
+    saveButton.disabled =
+      false;
 
   }
 
 };
 
 
-/* SHOW PROPERTIES */
+
+/* =====================================================
+   SHOW PROPERTIES
+===================================================== */
 
 function showProperties(){
 
@@ -1383,17 +2322,25 @@ function showProperties(){
     );
 
 
-  if(properties.length === 0){
+  if(
+    properties.length === 0
+  ){
 
     list.innerHTML =
-      '<div class="empty">अभी कोई Property Added नहीं है।</div>';
+      `
+      <div class="empty">
+        अभी कोई Property Added नहीं है।
+      </div>
+      `;
 
     return;
 
   }
 
 
-  list.innerHTML = "";
+  list.innerHTML =
+    "";
+
 
 
   properties.forEach(
@@ -1409,30 +2356,46 @@ function showProperties(){
         "property";
 
 
+
       div.innerHTML = `
 
         <h3>
-          ${escapeHtml(p.title)}
+          ${escapeHtml(
+            p.title
+          )}
         </h3>
 
+
         <span class="badge">
-          ${escapeHtml(p.requirement)}
+          ${escapeHtml(
+            p.requirement
+          )}
         </span>
+
 
         <p>
           🏠 <b>Type:</b>
-          ${escapeHtml(p.type)}
+          ${escapeHtml(
+            p.type
+          )}
         </p>
+
 
         <p>
           📍 <b>Location:</b>
-          ${escapeHtml(p.location)}
+          ${escapeHtml(
+            p.location
+          )}
         </p>
+
 
         <p>
           💰 <b>Price:</b>
-          ${escapeHtml(p.price)}
+          ${escapeHtml(
+            p.price
+          )}
         </p>
+
 
         ${
           p.bedrooms
@@ -1440,12 +2403,15 @@ function showProperties(){
           `
           <p>
             🛏️ <b>Bedrooms:</b>
-            ${escapeHtml(p.bedrooms)}
+            ${escapeHtml(
+              p.bedrooms
+            )}
           </p>
           `
           :
           ""
         }
+
 
         ${
           p.area
@@ -1453,12 +2419,15 @@ function showProperties(){
           `
           <p>
             📐 <b>Area:</b>
-            ${escapeHtml(p.area)}
+            ${escapeHtml(
+              p.area
+            )}
           </p>
           `
           :
           ""
         }
+
 
         ${
           p.owner
@@ -1466,12 +2435,15 @@ function showProperties(){
           `
           <p>
             👤 <b>Owner/Agent:</b>
-            ${escapeHtml(p.owner)}
+            ${escapeHtml(
+              p.owner
+            )}
           </p>
           `
           :
           ""
         }
+
 
         ${
           p.phone
@@ -1479,76 +2451,133 @@ function showProperties(){
           `
           <p>
             📞 <b>Mobile:</b>
-            ${escapeHtml(p.phone)}
+            ${escapeHtml(
+              p.phone
+            )}
           </p>
           `
           :
           ""
         }
+
 
         ${
           p.description
           ?
           `
           <p>
-            📝 ${escapeHtml(p.description)}
+            📝 <b>Description:</b>
+            ${escapeHtml(
+              p.description
+            )}
           </p>
           `
           :
           ""
         }
+
 
         ${
           p.image
           ?
           `
-          <p>
-            🖼️ <b>Image:</b>
-          </p>
+          <div class="preview-label">
+            🖼️ Property Image
+          </div>
 
           <img
             class="preview-image"
-            src="${escapeHtml(p.image)}"
+            src="${escapeHtml(
+              p.image
+            )}"
             alt="Property Image"
             onerror="this.style.display='none'"
           >
+
+          <div class="url-box">
+
+            <b>Image URL:</b>
+
+            <br>
+
+            ${escapeHtml(
+              p.image
+            )}
+
+          </div>
           `
           :
-          ""
+          `
+          <div class="warning">
+            🖼️ इस Property की Image उपलब्ध नहीं है।
+          </div>
+          `
         }
+
 
         ${
           p.video
           ?
           `
-          <p>
-            🎥 <b>Video:</b>
-          </p>
+          <div class="preview-label">
+            🎥 Property Video
+          </div>
 
           <video
             class="preview-video"
-            src="${escapeHtml(p.video)}"
+            src="${escapeHtml(
+              p.video
+            )}"
             controls
+            preload="metadata"
           ></video>
+
+          <div class="url-box">
+
+            <b>Video URL:</b>
+
+            <br>
+
+            ${escapeHtml(
+              p.video
+            )}
+
+          </div>
           `
           :
           ""
         }
 
-        <p style="font-size:11px;color:#777;">
-          ID: ${escapeHtml(p.id)}
+
+        <p
+          style="
+            font-size:11px;
+            color:#777;
+            word-break:break-all;
+          "
+        >
+          ID:
+          ${escapeHtml(
+            p.id
+          )}
         </p>
+
 
         <button
           class="edit"
-          onclick="editProperty('${escapeHtml(p.id)}')"
+          onclick="editProperty('${escapeHtml(
+            p.id
+          )}')"
         >
           ✏️ Edit
         </button>
 
+
         <button
           class="delete"
-          onclick="deleteProperty('${escapeHtml(p.id)}')"
+          onclick="deleteProperty('${escapeHtml(
+            p.id
+          )}')"
         >
           🗑️ Delete
         </button>
@@ -1556,7 +2585,9 @@ function showProperties(){
       `;
 
 
-      list.appendChild(div);
+      list.appendChild(
+        div
+      );
 
     }
   );
@@ -1564,7 +2595,10 @@ function showProperties(){
 }
 
 
-/* EDIT */
+
+/* =====================================================
+   EDIT PROPERTY
+===================================================== */
 
 window.editProperty =
 function(id){
@@ -1587,71 +2621,98 @@ function(id){
   }
 
 
-  document.getElementById(
-    "title"
-  ).value =
+
+  /* FORM */
+
+  document
+    .getElementById(
+      "title"
+    )
+    .value =
     p.title || "";
 
 
-  document.getElementById(
-    "type"
-  ).value =
+  document
+    .getElementById(
+      "type"
+    )
+    .value =
     p.type || "Independent";
 
 
-  document.getElementById(
-    "requirement"
-  ).value =
+  document
+    .getElementById(
+      "requirement"
+    )
+    .value =
     p.requirement || "Buy";
 
 
-  document.getElementById(
-    "location"
-  ).value =
+  document
+    .getElementById(
+      "location"
+    )
+    .value =
     p.location || "";
 
 
-  document.getElementById(
-    "price"
-  ).value =
+  document
+    .getElementById(
+      "price"
+    )
+    .value =
     p.price || "";
 
 
-  document.getElementById(
-    "bedrooms"
-  ).value =
+  document
+    .getElementById(
+      "bedrooms"
+    )
+    .value =
     p.bedrooms || "";
 
 
-  document.getElementById(
-    "area"
-  ).value =
+  document
+    .getElementById(
+      "area"
+    )
+    .value =
     p.area || "";
 
 
-  document.getElementById(
-    "owner"
-  ).value =
+  document
+    .getElementById(
+      "owner"
+    )
+    .value =
     p.owner || "";
 
 
-  document.getElementById(
-    "phone"
-  ).value =
+  document
+    .getElementById(
+      "phone"
+    )
+    .value =
     p.phone || "";
 
 
-  document.getElementById(
-    "description"
-  ).value =
+  document
+    .getElementById(
+      "description"
+    )
+    .value =
     p.description || "";
 
+
+
+  /* EDIT ID */
 
   editId =
     id;
 
 
-  /* SAVE OLD FILE URLS */
+
+  /* OLD URLS */
 
   oldImageUrl =
     p.image || "";
@@ -1661,7 +2722,8 @@ function(id){
     p.video || "";
 
 
-  /* SHOW OLD IMAGE */
+
+  /* OLD IMAGE */
 
   const oldImageBox =
     document.getElementById(
@@ -1669,21 +2731,38 @@ function(id){
     );
 
 
-  if(oldImageUrl){
+  if(
+    oldImageUrl
+  ){
 
     oldImageBox.innerHTML = `
 
       <div class="old-file">
 
-        🖼️ Current Image
+        🖼️ <b>Current Image</b>
 
         <br><br>
 
         <img
           class="preview-image"
-          src="${escapeHtml(oldImageUrl)}"
+          src="${escapeHtml(
+            oldImageUrl
+          )}"
           alt="Current Image"
+          onerror="this.style.display='none'"
         >
+
+        <div class="url-box">
+
+          <b>Current Image URL:</b>
+
+          <br>
+
+          ${escapeHtml(
+            oldImageUrl
+          )}
+
+        </div>
 
       </div>
 
@@ -1691,12 +2770,14 @@ function(id){
 
   }else{
 
-    oldImageBox.innerHTML = "";
+    oldImageBox.innerHTML =
+      "";
 
   }
 
 
-  /* SHOW OLD VIDEO */
+
+  /* OLD VIDEO */
 
   const oldVideoBox =
     document.getElementById(
@@ -1704,23 +2785,40 @@ function(id){
     );
 
 
-  if(oldVideoUrl){
+  if(
+    oldVideoUrl
+  ){
 
     oldVideoBox.innerHTML = `
 
       <div class="old-file">
 
-        🎥 Current Video
+        🎥 <b>Current Video</b>
 
         <br><br>
 
         <a
-          href="${escapeHtml(oldVideoUrl)}"
+          href="${escapeHtml(
+            oldVideoUrl
+          )}"
           target="_blank"
           rel="noopener noreferrer"
         >
           ▶️ Open Current Video
         </a>
+
+
+        <div class="url-box">
+
+          <b>Current Video URL:</b>
+
+          <br>
+
+          ${escapeHtml(
+            oldVideoUrl
+          )}
+
+        </div>
 
       </div>
 
@@ -1728,14 +2826,20 @@ function(id){
 
   }else{
 
-    oldVideoBox.innerHTML = "";
+    oldVideoBox.innerHTML =
+      "";
 
   }
 
 
-  document.getElementById(
-    "formTitle"
-  ).textContent =
+
+  /* TITLE */
+
+  document
+    .getElementById(
+      "formTitle"
+    )
+    .textContent =
     "✏️ Edit Property";
 
 
@@ -1744,15 +2848,22 @@ function(id){
   );
 
 
+
   window.scrollTo({
+
     top:0,
+
     behavior:"smooth"
+
   });
 
 };
 
 
-/* DELETE */
+
+/* =====================================================
+   DELETE PROPERTY
+===================================================== */
 
 window.deleteProperty =
 async function(id){
@@ -1773,7 +2884,10 @@ async function(id){
 
 
   if(
-    (user.email || "")
+    (
+      user.email ||
+      ""
+    )
     .toLowerCase()
     !==
     ADMIN_EMAIL.toLowerCase()
@@ -1788,15 +2902,21 @@ async function(id){
   }
 
 
-  if(
-    !confirm(
+
+  const confirmDelete =
+    confirm(
       "क्या आप यह Property Delete करना चाहते हैं?"
-    )
+    );
+
+
+  if(
+    !confirmDelete
   ){
 
     return;
 
   }
+
 
 
   try{
@@ -1846,127 +2966,233 @@ async function(id){
 };
 
 
-/* CLEAR */
+
+/* =====================================================
+   CLEAR FORM
+===================================================== */
 
 window.clearForm =
 function(){
 
-  document.getElementById(
-    "title"
-  ).value = "";
+  document
+    .getElementById(
+      "title"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "location"
-  ).value = "";
+  document
+    .getElementById(
+      "location"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "price"
-  ).value = "";
+  document
+    .getElementById(
+      "price"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "bedrooms"
-  ).value = "";
+  document
+    .getElementById(
+      "bedrooms"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "area"
-  ).value = "";
+  document
+    .getElementById(
+      "area"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "owner"
-  ).value = "";
+  document
+    .getElementById(
+      "owner"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "phone"
-  ).value = "";
+  document
+    .getElementById(
+      "phone"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "description"
-  ).value = "";
+  document
+    .getElementById(
+      "description"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "imageFile"
-  ).value = "";
+  document
+    .getElementById(
+      "imageFile"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "videoFile"
-  ).value = "";
+  document
+    .getElementById(
+      "videoFile"
+    )
+    .value =
+    "";
 
 
-  document.getElementById(
-    "imageInfo"
-  ).textContent =
+  document
+    .getElementById(
+      "imageInfo"
+    )
+    .textContent =
     "कोई नई Image select नहीं की गई।";
 
 
-  document.getElementById(
-    "videoInfo"
-  ).textContent =
+  document
+    .getElementById(
+      "videoInfo"
+    )
+    .textContent =
     "कोई नया Video select नहीं किया गया।";
 
 
-  document.getElementById(
-    "imagePreview"
-  ).classList.add(
-    "hidden"
-  );
+  document
+    .getElementById(
+      "imagePreview"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 
-  document.getElementById(
-    "videoPreview"
-  ).classList.add(
-    "hidden"
-  );
+  document
+    .getElementById(
+      "videoPreview"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 
-  document.getElementById(
-    "oldImageBox"
-  ).innerHTML = "";
+  document
+    .getElementById(
+      "oldImageBox"
+    )
+    .innerHTML =
+    "";
 
 
-  document.getElementById(
-    "oldVideoBox"
-  ).innerHTML = "";
+  document
+    .getElementById(
+      "oldVideoBox"
+    )
+    .innerHTML =
+    "";
 
 
-  document.getElementById(
-    "uploadStatus"
-  ).textContent = "";
+  document
+    .getElementById(
+      "uploadStatus"
+    )
+    .textContent =
+    "";
 
 
-  document.getElementById(
-    "formTitle"
-  ).textContent =
+  document
+    .getElementById(
+      "progressWrap"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "progressBar"
+    )
+    .style
+    .width =
+    "0%";
+
+
+  document
+    .getElementById(
+      "formTitle"
+    )
+    .textContent =
     "➕ Add New Property";
 
 
-  document.getElementById(
-    "type"
-  ).selectedIndex = 0;
+  document
+    .getElementById(
+      "type"
+    )
+    .selectedIndex =
+    0;
 
 
-  document.getElementById(
-    "requirement"
-  ).selectedIndex = 0;
+  document
+    .getElementById(
+      "requirement"
+    )
+    .selectedIndex =
+    0;
 
 
-  editId = null;
+  editId =
+    null;
 
-  oldImageUrl = "";
 
-  oldVideoUrl = "";
+  oldImageUrl =
+    "";
+
+
+  oldVideoUrl =
+    "";
 
 };
 
+
+
+/* =====================================================
+   FINISH
+===================================================== */
+
+console.log(
+  "Prop Set U Admin Panel Loaded"
+);
+
+console.log(
+  "Cloudinary:",
+  CLOUDINARY_CLOUD_NAME
+);
+
+console.log(
+  "Cloudinary Upload Preset:",
+  CLOUDINARY_UPLOAD_PRESET
+);
+
+
 </script>
+
 
 </body>
 </html>
