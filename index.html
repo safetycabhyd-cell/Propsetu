@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
 
 <meta charset="UTF-8">
@@ -11,7 +12,7 @@
 
 <link
   rel="manifest"
-  href="manifest.json"
+  href="./manifest.json"
 >
 
 <meta
@@ -19,7 +20,18 @@
   content="#063b66"
 >
 
+<meta
+  name="mobile-web-app-capable"
+  content="yes"
+>
+
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
+
 <title>Prop Set U - Property Marketplace</title>
+
 
 <style>
 
@@ -96,11 +108,6 @@ button{
   font-size:14px;
   font-weight:bold;
   cursor:pointer;
-}
-
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
 }
 
 .search-btn{
@@ -274,7 +281,7 @@ button:disabled{
   background:rgba(0,0,0,.60);
   color:#fff;
   padding:0;
-  font-size:22px;
+  font-size:25px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -339,10 +346,6 @@ button:disabled{
   color:#777;
 }
 
-.hidden{
-  display:none !important;
-}
-
 .error-image{
   display:none;
   background:#ffe9e9;
@@ -363,6 +366,7 @@ button:disabled{
 </style>
 
 </head>
+
 
 <body>
 
@@ -398,6 +402,7 @@ button:disabled{
     type="text"
     placeholder="जैसे Hyderabad"
   >
+
 
   <label>
     Property Type
@@ -501,12 +506,14 @@ button:disabled{
       🏠 Buy
     </button>
 
+
     <button
       class="category-btn"
       onclick="filterCategory('Rent',this)"
     >
       🏢 Rent
     </button>
+
 
     <button
       class="category-btn"
@@ -515,12 +522,14 @@ button:disabled{
       📄 Lease
     </button>
 
+
     <button
       class="category-btn"
       onclick="filterCategory('Sell',this)"
     >
       💰 Sell
     </button>
+
 
     <button
       class="category-btn"
@@ -529,6 +538,7 @@ button:disabled{
       🛏️ PG
     </button>
 
+
     <button
       class="category-btn"
       onclick="filterCategory('Commercial',this)"
@@ -536,12 +546,14 @@ button:disabled{
       🏢 Commercial
     </button>
 
+
     <button
       class="category-btn"
       onclick="filterCategory('Open Plot',this)"
     >
       🌳 Open Plot
     </button>
+
 
     <button
       class="category-btn"
@@ -606,6 +618,7 @@ button:disabled{
 
   </div>
 
+
   <div class="notice">
 
     🔒 Customer को Owner / Agent का personal mobile
@@ -616,6 +629,7 @@ button:disabled{
     सभी enquiries Prop Set U Admin के माध्यम से होंगी।
 
   </div>
+
 
   <button
     class="whatsapp"
@@ -724,13 +738,13 @@ const propertiesRef =
    ===================================================== */
 
 /*
-   आपका Normal WhatsApp नंबर:
+   आपका नंबर:
    08062180745
 
-   India format:
+   WhatsApp international format:
    918062180745
 
-   WhatsApp link में पहला 0 नहीं लगाया जाता।
+   पहला 0 हटाकर India country code 91 लगाया गया है.
 */
 
 const ADMIN_WHATSAPP =
@@ -847,19 +861,18 @@ function setStatus(
    ===================================================== */
 
 /*
-   Admin Panel से photos अलग-अलग field names
-   में save हो सकती हैं।
+  Admin Panel से images अलग-अलग field में आ
+  सकती हैं।
 
-   Customer Panel इन सभी को support करता है:
+  Supported fields:
 
-   images
-   imageUrls
-   photos
-   image
+  images
+  imageUrls
+  photos
+  image
 
-   इसलिए पुरानी single-photo property भी
-   काम करेगी और नई 5-6 photos वाली property
-   भी काम करेगी।
+  इससे नई 5-6 photos वाली properties और
+  पुरानी single-image properties दोनों चलेंगी।
 */
 
 function getPropertyImages(property){
@@ -1395,9 +1408,7 @@ function(id){
         >
 
 
-        <div
-          class="error-image"
-        >
+        <div class="error-image">
 
           ❌ यह Property Photo अभी open नहीं हो रही।
 
@@ -1415,7 +1426,9 @@ function(id){
             class="gallery-count"
             id="gallery-count-${escapeHtml(id)}"
           >
+
             1 / ${images.length}
+
           </div>
 
 
@@ -1423,7 +1436,9 @@ function(id){
             class="gallery-arrow gallery-prev"
             onclick="previousPhoto('${escapeHtml(id)}')"
           >
+
             ‹
+
           </button>
 
 
@@ -1431,7 +1446,9 @@ function(id){
             class="gallery-arrow gallery-next"
             onclick="nextPhoto('${escapeHtml(id)}')"
           >
+
             ›
+
           </button>
 
           `
@@ -1610,10 +1627,6 @@ function(id){
     details
   );
 
-
-  /*
-    Gallery की current position
-  */
 
   details.dataset.photoIndex =
     "0";
@@ -2009,11 +2022,8 @@ function(message){
     );
 
 
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
+  window.location.href =
+    url;
 
 };
 
@@ -2305,6 +2315,57 @@ loadProperties();
 
 
 </script>
+
+
+<!-- ===================================================
+     SERVICE WORKER
+     APP / PWA SUPPORT
+     =================================================== -->
+
+<script>
+
+if(
+  "serviceWorker" in navigator
+){
+
+  window.addEventListener(
+    "load",
+    function(){
+
+      navigator.serviceWorker
+        .register(
+          "./sw.js"
+        )
+
+        .then(
+          function(registration){
+
+            console.log(
+              "Prop Set U Service Worker registered:",
+              registration.scope
+            );
+
+          }
+        )
+
+        .catch(
+          function(error){
+
+            console.error(
+              "Service Worker registration failed:",
+              error
+            );
+
+          }
+        );
+
+    }
+  );
+
+}
+
+</script>
+
 
 </body>
 
