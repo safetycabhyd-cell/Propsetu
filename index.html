@@ -1,42 +1,33 @@
 <!DOCTYPE html>
 <html lang="hi">
-
 <head>
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link
-  rel="manifest"
-  href="./manifest.json"
->
+<link rel="manifest" href="./manifest.json">
 
-<meta
-  name="theme-color"
-  content="#063b66"
->
+<meta name="theme-color" content="#063b66">
 
-<meta
-  name="mobile-web-app-capable"
-  content="yes"
->
+<meta name="mobile-web-app-capable" content="yes">
 
-<meta
-  name="apple-mobile-web-app-capable"
-  content="yes"
->
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>Prop Set U - Property Marketplace</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
+<meta name="apple-mobile-web-app-title" content="Prop Set U">
+
+<title>Prop Set U - Buy, Rent, Lease, Sell, PG & Commercial Properties</title>
 
 <style>
 
 *{
   box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
@@ -49,22 +40,25 @@ body{
 .header{
   background:#063b66;
   color:#fff;
-  padding:18px 12px;
+  padding:18px 15px;
   text-align:center;
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
 .header h1{
   margin:0;
-  font-size:24px;
+  font-size:25px;
 }
 
 .header p{
-  margin:6px 0 0;
+  margin:7px 0 0;
   font-size:13px;
 }
 
 .container{
-  max-width:700px;
+  max-width:900px;
   margin:auto;
   padding:12px;
 }
@@ -80,31 +74,41 @@ body{
 .card h2{
   margin:0 0 14px;
   color:#063b66;
-  font-size:19px;
+  font-size:20px;
+}
+
+.search-card{
+  margin-top:12px;
 }
 
 label{
   display:block;
+  margin-top:10px;
+  margin-bottom:5px;
   font-size:13px;
   font-weight:bold;
-  margin-top:10px;
 }
 
 input,
-select{
+select,
+textarea{
   width:100%;
   padding:12px;
-  margin-top:6px;
-  border:1px solid #d5d5d5;
-  border-radius:8px;
+  border:1px solid #ccc;
+  border-radius:9px;
   font-size:14px;
   background:#fff;
 }
 
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
 button{
   border:0;
-  border-radius:8px;
-  padding:12px;
+  border-radius:9px;
+  padding:12px 16px;
   font-size:14px;
   font-weight:bold;
   cursor:pointer;
@@ -117,29 +121,131 @@ button{
   color:#fff;
 }
 
+.clear-btn{
+  width:100%;
+  margin-top:8px;
+  background:#777;
+  color:#fff;
+}
+
 .categories{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(4,1fr);
   gap:8px;
 }
 
-.category-btn{
+.category{
   background:#eef5ff;
   color:#063b66;
-  padding:11px 6px;
+  border:1px solid #d8e7fa;
+  text-align:center;
+  padding:11px 5px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:bold;
 }
 
-.category-btn.active{
+.property{
+  border:1px solid #ddd;
+  border-radius:12px;
+  overflow:hidden;
+  margin-top:14px;
+  background:#fff;
+}
+
+.property-main{
+  padding:14px;
+}
+
+.property h3{
+  margin:0 0 7px;
+  color:#063b66;
+  font-size:18px;
+}
+
+.property p{
+  margin:6px 0;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e7f7ec;
+  color:#13843d;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.price{
+  color:#13843d;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:5px;
+  background:#eee;
+}
+
+.gallery img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+}
+
+.video{
+  width:100%;
+  max-height:350px;
+  margin-top:12px;
+  border-radius:9px;
+  background:#000;
+}
+
+.details-btn{
+  width:100%;
+  margin-top:10px;
   background:#063b66;
   color:#fff;
 }
 
-.status{
-  padding:10px;
-  border-radius:8px;
+.enquiry-btn{
+  width:100%;
+  margin-top:8px;
+  background:#159447;
+  color:#fff;
+}
+
+.close-btn{
+  width:100%;
+  margin-top:8px;
+  background:#777;
+  color:#fff;
+}
+
+.notice{
+  background:#fff4d6;
+  color:#806000;
+  padding:11px;
+  border-radius:9px;
+  margin-top:10px;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.info{
   background:#eef5ff;
   color:#063b66;
+  padding:11px;
+  border-radius:9px;
   font-size:13px;
+  line-height:1.5;
 }
 
 .success{
@@ -152,226 +258,86 @@ button{
   color:#c1121f;
 }
 
-.property{
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:14px;
-  margin-top:12px;
-  background:#fff;
-}
-
-.property h3{
-  margin:0 0 8px;
-  color:#063b66;
-  font-size:18px;
-}
-
-.property p{
-  margin:7px 0;
-  font-size:14px;
-  line-height:1.5;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 10px;
-  border-radius:20px;
-  background:#e7f7ec;
-  color:#13843d;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.details-btn{
-  width:100%;
-  margin-top:10px;
-  background:#063b66;
-  color:#fff;
-}
-
-.close-btn{
-  width:100%;
-  margin-top:8px;
-  background:#777;
-  color:#fff;
-}
-
-.whatsapp{
-  width:100%;
-  margin-top:10px;
-  background:#159447;
-  color:#fff;
-}
-
-.admin-card{
-  text-align:center;
-}
-
-.admin-card h2{
-  margin-bottom:8px;
-}
-
-.admin-text{
-  font-size:14px;
-  line-height:1.6;
-}
-
-.notice{
-  background:#fff4d6;
-  color:#806000;
-  border-radius:8px;
-  padding:11px;
-  margin-top:12px;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.preview-video{
-  width:100%;
-  max-height:340px;
-  border-radius:10px;
-  margin-top:8px;
-  display:block;
-  background:#000;
-}
-
-.gallery{
-  margin-top:10px;
-}
-
-.gallery-title{
-  font-size:15px;
-  font-weight:bold;
-  color:#063b66;
-  margin-bottom:8px;
-}
-
-.gallery-main{
-  position:relative;
-}
-
-.gallery-main img{
-  width:100%;
-  height:320px;
-  object-fit:cover;
-  border-radius:10px;
-  display:block;
-  background:#eee;
-}
-
-.gallery-count{
-  position:absolute;
-  right:10px;
-  top:10px;
-  background:rgba(0,0,0,.65);
-  color:#fff;
-  padding:6px 10px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.gallery-arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:rgba(0,0,0,.60);
-  color:#fff;
-  padding:0;
-  font-size:25px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.gallery-prev{
-  left:8px;
-}
-
-.gallery-next{
-  right:8px;
-}
-
-.gallery-thumbs{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:5px;
-  margin-top:8px;
-}
-
-.gallery-thumb{
-  width:100%;
-  height:55px;
-  object-fit:cover;
-  border-radius:6px;
-  border:2px solid transparent;
-  cursor:pointer;
-}
-
-.gallery-thumb.active{
-  border-color:#063b66;
-}
-
-.video-link{
-  display:block;
-  margin-top:8px;
-  padding:11px;
-  background:#eef5ff;
-  border-radius:8px;
-  color:#063b66;
-  font-weight:bold;
-  text-decoration:none;
-  text-align:center;
-}
-
 .empty{
   text-align:center;
+  padding:25px 10px;
   color:#777;
-  padding:18px 8px;
-}
-
-.footer{
-  text-align:center;
-  padding:24px 10px;
-  color:#777;
-  font-size:12px;
 }
 
 .loading{
   text-align:center;
-  padding:15px;
+  padding:25px;
+  color:#063b66;
+  font-weight:bold;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.enquiry-card{
+  border:2px solid #159447;
+}
+
+.enquiry-card h2{
+  color:#159447;
+}
+
+.whatsapp{
+  background:#159447;
+  color:#fff;
+  width:100%;
+  margin-top:12px;
+}
+
+.admin-card{
+  background:#eef5ff;
+}
+
+.admin-btn{
+  background:#159447;
+  color:#fff;
+  width:100%;
+  margin-top:10px;
+}
+
+.footer{
+  text-align:center;
+  padding:25px 15px;
   color:#777;
-}
-
-.error-image{
-  display:none;
-  background:#ffe9e9;
-  color:#c1121f;
-  padding:10px;
-  border-radius:8px;
-  margin-top:8px;
-  font-size:13px;
-}
-
-.small{
   font-size:12px;
-  color:#777;
-  margin-top:7px;
-  line-height:1.5;
+}
+
+.top-btn{
+  position:fixed;
+  right:15px;
+  bottom:20px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#063b66;
+  color:#fff;
+  z-index:100;
+  display:none;
+}
+
+@media(max-width:600px){
+
+  .categories{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .gallery img{
+    height:150px;
+  }
+
 }
 
 </style>
 
 </head>
 
-
 <body>
-
-
-<!-- HEADER -->
 
 <div class="header">
 
@@ -389,94 +355,57 @@ button{
 
 <!-- SEARCH -->
 
-<div class="card">
+<div class="card search-card">
 
   <h2>🔎 Property Search</h2>
 
-  <label>
-    Area, City या Location
-  </label>
+  <label>Area, City or Location</label>
 
   <input
     id="searchLocation"
     type="text"
-    placeholder="जैसे Hyderabad"
+    placeholder="जैसे Hyderabad, Kukatpally"
   >
 
-
-  <label>
-    Property Type
-  </label>
+  <label>Property Type</label>
 
   <select id="searchType">
 
-    <option value="All">
-      All Properties
-    </option>
+    <option value="All">All Properties</option>
 
-    <option value="Independent">
-      Independent
-    </option>
+    <option value="Independent">Independent</option>
 
-    <option value="Flat">
-      Flat
-    </option>
+    <option value="Flat">Flat</option>
 
-    <option value="Villa">
-      Villa
-    </option>
+    <option value="Villa">Villa</option>
 
-    <option value="Open Plot">
-      Open Plot
-    </option>
+    <option value="Open Plot">Open Plot</option>
 
-    <option value="Commercial">
-      Commercial
-    </option>
+    <option value="Commercial">Commercial</option>
 
-    <option value="Shop">
-      Shop
-    </option>
+    <option value="Shop">Shop</option>
 
-    <option value="Office">
-      Office
-    </option>
+    <option value="Office">Office</option>
 
-    <option value="PG">
-      PG
-    </option>
+    <option value="PG">PG</option>
 
   </select>
 
-
-  <label>
-    Requirement
-  </label>
+  <label>Requirement</label>
 
   <select id="searchRequirement">
 
-    <option value="All">
-      All
-    </option>
+    <option value="All">All Requirements</option>
 
-    <option value="Buy">
-      Buy
-    </option>
+    <option value="Buy">Buy</option>
 
-    <option value="Rent">
-      Rent
-    </option>
+    <option value="Rent">Rent</option>
 
-    <option value="Lease">
-      Lease
-    </option>
+    <option value="Lease">Lease</option>
 
-    <option value="Sell">
-      Sell
-    </option>
+    <option value="Sell">Sell</option>
 
   </select>
-
 
   <button
     class="search-btn"
@@ -485,116 +414,105 @@ button{
     🔎 Search Property
   </button>
 
-</div>
+  <button
+    class="clear-btn"
+    onclick="clearSearch()"
+  >
+    Clear Search
+  </button>
 
+</div>
 
 
 <!-- CATEGORIES -->
 
 <div class="card">
 
-  <h2>
-    🏘️ Categories
-  </h2>
+  <h2>🏘️ Categories</h2>
 
   <div class="categories">
 
     <button
-      class="category-btn"
-      onclick="filterCategory('Buy',this)"
+      class="category"
+      onclick="filterCategory('Buy')"
     >
       🏠 Buy
     </button>
 
-
     <button
-      class="category-btn"
-      onclick="filterCategory('Rent',this)"
+      class="category"
+      onclick="filterCategory('Rent')"
     >
-      🏢 Rent
+      🏠 Rent
     </button>
 
-
     <button
-      class="category-btn"
-      onclick="filterCategory('Lease',this)"
+      class="category"
+      onclick="filterCategory('Lease')"
     >
-      📄 Lease
+      🏢 Lease
     </button>
 
-
     <button
-      class="category-btn"
-      onclick="filterCategory('Sell',this)"
+      class="category"
+      onclick="filterCategory('Sell')"
     >
-      💰 Sell
+      🏠 Sell
     </button>
 
-
     <button
-      class="category-btn"
-      onclick="filterCategory('PG',this)"
+      class="category"
+      onclick="filterType('PG')"
     >
       🛏️ PG
     </button>
 
-
     <button
-      class="category-btn"
-      onclick="filterCategory('Commercial',this)"
+      class="category"
+      onclick="filterCategory('Commercial')"
     >
       🏢 Commercial
     </button>
 
-
     <button
-      class="category-btn"
-      onclick="filterCategory('Open Plot',this)"
+      class="category"
+      onclick="filterType('Open Plot')"
     >
-      🌳 Open Plot
+      📐 Open Plot
     </button>
 
-
     <button
-      class="category-btn"
-      onclick="filterCategory('Independent',this)"
+      class="category"
+      onclick="filterType('Independent')"
     >
-      🏠 Independent
+      🏡 Independent
     </button>
 
   </div>
 
 </div>
-
 
 
 <!-- STATUS -->
 
-<div class="card">
-
-  <div
-    id="status"
-    class="status"
-  >
-    Firebase connecting...
-  </div>
-
+<div
+  id="status"
+  class="info"
+>
+  🔄 Properties loading...
 </div>
-
 
 
 <!-- PROPERTY LIST -->
 
 <div class="card">
 
-  <h2>
-    🏘️ Available Properties
-  </h2>
+  <h2>🏘️ Available Properties</h2>
 
   <div id="propertyList">
 
     <div class="loading">
-      Properties loading...
+      🔄 Properties loading...
     </div>
 
   </div>
@@ -602,69 +520,139 @@ button{
 </div>
 
 
+<!-- DETAILS -->
 
-<!-- ADMIN WHATSAPP -->
+<div
+  id="detailsCard"
+  class="card hidden"
+>
 
-<div class="card admin-card">
+  <h2>📋 Property Details</h2>
 
-  <h2>
-    📞 Prop Set U Admin
-  </h2>
-
-  <div class="admin-text">
-
-    Property के बारे में जानकारी या enquiry के लिए
-    सीधे Prop Set U Admin से संपर्क करें।
-
-  </div>
-
-
-  <div class="notice">
-
-    🔒 Customer को Owner / Agent का personal mobile
-    number नहीं दिखाया जाएगा।
-
-    <br><br>
-
-    सभी enquiries Prop Set U Admin के माध्यम से होंगी।
-
-  </div>
-
+  <div id="detailsContent"></div>
 
   <button
-    class="whatsapp"
-    onclick="openAdminWhatsApp()"
+    class="close-btn"
+    onclick="closeDetails()"
   >
-    💬 WhatsApp Admin
+    ✖ Close Details
   </button>
 
 </div>
 
 
+<!-- ENQUIRY -->
+
+<div
+  id="enquiryCard"
+  class="card enquiry-card hidden"
+>
+
+  <h2>📩 Property Enquiry</h2>
+
+  <div
+    id="enquiryProperty"
+    class="info"
+  ></div>
+
+  <label>आपका नाम</label>
+
+  <input
+    id="customerName"
+    type="text"
+    placeholder="अपना नाम लिखें"
+  >
+
+  <label>आपका Mobile Number</label>
+
+  <input
+    id="customerPhone"
+    type="tel"
+    placeholder="10 digit mobile number"
+  >
+
+  <label>Message</label>
+
+  <textarea
+    id="customerMessage"
+    placeholder="मुझे इस Property के बारे में जानकारी चाहिए।"
+  ></textarea>
+
+  <div class="notice">
+
+    🔐 <b>Privacy Notice:</b>
+
+    Customer को Owner / Agent का mobile number
+    नहीं दिखाया जाएगा।
+
+    <br><br>
+
+    आपकी enquiry केवल
+    <b>Prop Set U Admin</b>
+    को भेजी जाएगी।
+
+  </div>
+
+  <button
+    class="whatsapp"
+    onclick="sendEnquiry()"
+  >
+    📲 WhatsApp Admin को Enquiry भेजें
+  </button>
+
 </div>
 
+
+<!-- ADMIN -->
+
+<div class="card admin-card">
+
+  <h2>📞 Prop Set U Admin</h2>
+
+  <p>
+    Property खरीदने, Rent, Lease, Sell या किसी भी
+    जानकारी के लिए Prop Set U Admin से संपर्क करें।
+  </p>
+
+  <button
+    class="admin-btn"
+    onclick="contactAdmin()"
+  >
+    📲 WhatsApp Admin
+  </button>
+
+</div>
+
+</div>
 
 
 <!-- FOOTER -->
 
 <div class="footer">
 
-  Prop Set U © 2026
+  <b>Prop Set U</b>
 
   <br>
 
-  Buy • Rent • Lease • Sell • PG • Commercial
+  Buy • Rent • Lease • Sell • PG • Commercial Properties
+
+  <br><br>
+
+  Prop Set U © 2026
 
 </div>
 
 
+<button
+  id="topButton"
+  class="top-btn"
+  onclick="window.scrollTo({top:0,behavior:'smooth'})"
+>
+  ↑
+</button>
+
 
 <script type="module">
-
-
-/* =====================================================
-   FIREBASE
-   ===================================================== */
 
 import {
   initializeApp
@@ -681,11 +669,6 @@ import {
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-
-/* =====================================================
-   FIREBASE CONFIG
-   ===================================================== */
 
 const firebaseConfig = {
 
@@ -732,41 +715,22 @@ const propertiesRef =
   );
 
 
-
-/* =====================================================
-   ADMIN WHATSAPP
-   ===================================================== */
-
 /*
-   आपका नंबर:
-   08062180745
-
-   WhatsApp international format:
-   918062180745
-
-   पहला 0 हटाकर India country code 91 लगाया गया है.
+  PROP SET U ADMIN WHATSAPP
+  आपका नंबर: 8062180745
+  India country code: 91
 */
 
 const ADMIN_WHATSAPP =
   "918062180745";
 
 
-
-/* =====================================================
-   VARIABLES
-   ===================================================== */
-
 let properties = [];
 
-let currentProperties = [];
+let filteredProperties = [];
 
-let selectedCategory = "All";
+let selectedProperty = null;
 
-
-
-/* =====================================================
-   HTML ESCAPE
-   ===================================================== */
 
 function escapeHtml(text){
 
@@ -774,79 +738,46 @@ function escapeHtml(text){
     text ?? ""
   )
 
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-
-  .replace(
-    /</g,
-    "&lt;"
-  )
-
-  .replace(
-    />/g,
-    "&gt;"
-  )
-
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-
-  .replace(
-    /'/g,
-    "&#039;"
-  );
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 
 }
 
 
-
-/* =====================================================
-   STATUS
-   ===================================================== */
-
 function setStatus(
   message,
-  type = "normal"
+  type="normal"
 ){
 
-  const status =
+  const el =
     document.getElementById(
       "status"
     );
 
-
-  if(!status){
-    return;
-  }
-
-
-  status.textContent =
+  el.textContent =
     message;
 
-
-  status.className =
-    "status";
-
+  el.className =
+    "info";
 
   if(
     type === "success"
   ){
 
-    status.classList.add(
+    el.classList.add(
       "success"
     );
 
   }
 
-
   if(
     type === "error"
   ){
 
-    status.classList.add(
+    el.classList.add(
       "error"
     );
 
@@ -855,155 +786,23 @@ function setStatus(
 }
 
 
-
-/* =====================================================
-   MULTIPLE IMAGE NORMALIZER
-   ===================================================== */
-
-/*
-  Admin Panel से images अलग-अलग field में आ
-  सकती हैं।
-
-  Supported fields:
-
-  images
-  imageUrls
-  photos
-  image
-
-  इससे नई 5-6 photos वाली properties और
-  पुरानी single-image properties दोनों चलेंगी।
-*/
-
-function getPropertyImages(property){
-
-  let images = [];
-
-
-  const possibleFields = [
-
-    property.images,
-
-    property.imageUrls,
-
-    property.photos
-
-  ];
-
-
-  for(
-    const field of possibleFields
-  ){
-
-    if(
-      Array.isArray(field)
-    ){
-
-      field.forEach(
-        item => {
-
-          if(
-            typeof item === "string" &&
-            item.trim()
-          ){
-
-            images.push(
-              item.trim()
-            );
-
-          }
-
-          else if(
-            item &&
-            typeof item === "object"
-          ){
-
-            const url =
-              item.url ||
-              item.secure_url ||
-              item.image ||
-              item.src;
-
-
-            if(
-              url &&
-              typeof url === "string"
-            ){
-
-              images.push(
-                url.trim()
-              );
-
-            }
-
-          }
-
-        }
-      );
-
-    }
-
-  }
-
-
-  /*
-    पुराना single image field
-  */
-
-  if(
-    typeof property.image === "string" &&
-    property.image.trim()
-  ){
-
-    images.push(
-      property.image.trim()
-    );
-
-  }
-
-
-  /*
-    Duplicate URLs हटाएँ
-  */
-
-  images =
-    [
-      ...new Set(
-        images.filter(Boolean)
-      )
-    ];
-
-
-  return images;
-
-}
-
-
-
-/* =====================================================
-   LOAD PROPERTIES
-   ===================================================== */
-
 async function loadProperties(){
 
   try{
 
     setStatus(
-      "Properties loading..."
+      "🔄 Firebase से Properties load हो रही हैं..."
     );
-
 
     const snapshot =
       await getDocs(
         propertiesRef
       );
 
-
     properties = [];
 
-
     snapshot.forEach(
-      item => {
+      function(item){
 
         properties.push({
 
@@ -1016,67 +815,111 @@ async function loadProperties(){
       }
     );
 
-
-    currentProperties =
-      [
-        ...properties
-      ];
-
+    filteredProperties =
+      [...properties];
 
     renderProperties(
-      currentProperties
+      filteredProperties
     );
-
 
     setStatus(
+      "✅ " +
       properties.length +
-      " Property उपलब्ध है।",
+      " Properties उपलब्ध हैं।",
       "success"
     );
-
 
   }catch(error){
 
     console.error(
-      "Firebase Error:",
       error
     );
 
-
     setStatus(
-      "❌ Properties load नहीं हुईं। Firestore Rules check करें।",
+      "❌ Properties load नहीं हुईं। Firebase Firestore Rules check करें।",
       "error"
     );
+
+    document
+      .getElementById(
+        "propertyList"
+      )
+      .innerHTML =
+      `
+      <div class="empty">
+
+        ❌ Property data load नहीं हो पाया।
+
+        <br><br>
+
+        कृपया कुछ देर बाद फिर कोशिश करें।
+
+      </div>
+      `;
 
   }
 
 }
 
 
+function getGallery(property){
 
-/* =====================================================
-   RENDER PROPERTY LIST
-   ===================================================== */
+  let gallery = [];
 
-function renderProperties(
-  list
-){
+  if(
+    Array.isArray(
+      property.images
+    )
+  ){
 
-  const propertyList =
+    gallery =
+      property.images.filter(
+        function(url){
+
+          return !!url;
+
+        }
+      );
+
+  }
+
+  if(
+    gallery.length === 0 &&
+    property.image
+  ){
+
+    gallery =
+      [property.image];
+
+  }
+
+  return gallery;
+
+}
+
+
+function renderProperties(list){
+
+  const container =
     document.getElementById(
       "propertyList"
     );
 
-
   if(
-    !list.length
+    !list ||
+    list.length === 0
   ){
 
-    propertyList.innerHTML =
+    container.innerHTML =
       `
       <div class="empty">
 
-        अभी इस search में कोई Property उपलब्ध नहीं है।
+        🔍 इस Search के अनुसार
+        कोई Property नहीं मिली।
+
+        <br><br>
+
+        दूसरा Location या Category try करें।
 
       </div>
       `;
@@ -1085,148 +928,128 @@ function renderProperties(
 
   }
 
-
-  propertyList.innerHTML =
+  container.innerHTML =
     "";
 
-
   list.forEach(
-    property => {
+    function(property){
+
+      const gallery =
+        getGallery(
+          property
+        );
+
+      const firstImage =
+        gallery.length > 0
+        ?
+        gallery[0]
+        :
+        "";
 
       const div =
         document.createElement(
           "div"
         );
 
-
       div.className =
         "property";
 
+      let imageHtml =
+        "";
+
+      if(
+        firstImage
+      ){
+
+        imageHtml =
+          `
+          <div class="gallery">
+
+            <img
+              src="${escapeHtml(firstImage)}"
+              alt="${escapeHtml(property.title)}"
+              loading="lazy"
+            >
+
+          </div>
+          `;
+
+      }
 
       div.innerHTML =
-      `
-
-      <h3>
-        ${escapeHtml(
-          property.title
-        )}
-      </h3>
-
-
-      <span class="badge">
-
-        ${escapeHtml(
-          property.requirement || ""
-        )}
-
-      </span>
-
-
-      <p>
-
-        🏠 <b>Type:</b>
-
-        ${escapeHtml(
-          property.type || ""
-        )}
-
-      </p>
-
-
-      <p>
-
-        📍 <b>Location:</b>
-
-        ${escapeHtml(
-          property.location || ""
-        )}
-
-      </p>
-
-
-      <p>
-
-        💰 <b>Price:</b>
-
-        ${escapeHtml(
-          property.price || ""
-        )}
-
-      </p>
-
-
-      ${
-        property.bedrooms
-
-        ?
-
         `
 
-        <p>
+        ${imageHtml}
 
-          🛏️ <b>Bedrooms:</b>
+        <div class="property-main">
 
-          ${escapeHtml(
+          <h3>
+            ${escapeHtml(property.title)}
+          </h3>
+
+          <span class="badge">
+            ${escapeHtml(property.requirement || "")}
+          </span>
+
+          <p>
+            🏠 <b>Type:</b>
+            ${escapeHtml(property.type || "")}
+          </p>
+
+          <p>
+            📍 <b>Location:</b>
+            ${escapeHtml(property.location || "")}
+          </p>
+
+          <p class="price">
+            💰 ${escapeHtml(property.price || "")}
+          </p>
+
+          ${
             property.bedrooms
-          )}
+            ?
+            `
+            <p>
+              🛏️ <b>Bedrooms:</b>
+              ${escapeHtml(property.bedrooms)}
+            </p>
+            `
+            :
+            ""
+          }
 
-        </p>
-
-        `
-
-        :
-
-        ""
-      }
-
-
-      ${
-        property.area
-
-        ?
-
-        `
-
-        <p>
-
-          📐 <b>Area:</b>
-
-          ${escapeHtml(
+          ${
             property.area
-          )}
+            ?
+            `
+            <p>
+              📐 <b>Area:</b>
+              ${escapeHtml(property.area)}
+            </p>
+            `
+            :
+            ""
+          }
 
-        </p>
+          <button
+            class="details-btn"
+            onclick="showDetails('${escapeHtml(property.id)}')"
+          >
+            📋 View Property Details
+          </button>
 
-        `
+          <button
+            class="enquiry-btn"
+            onclick="openEnquiry('${escapeHtml(property.id)}')"
+          >
+            📩 Send Enquiry
+          </button>
 
-        :
+        </div>
 
-        ""
-      }
+        `;
 
-
-      <button
-
-        class="details-btn"
-
-        onclick="showDetails('${
-
-          escapeHtml(
-            property.id
-          )
-
-        }')"
-
-      >
-
-        👁️ View Property Details
-
-      </button>
-
-      `;
-
-
-      propertyList.appendChild(
+      container.appendChild(
         div
       );
 
@@ -1236,20 +1059,17 @@ function renderProperties(
 }
 
 
-
-/* =====================================================
-   SHOW DETAILS
-   ===================================================== */
-
 window.showDetails =
 function(id){
 
   const property =
     properties.find(
-      item =>
-        item.id === id
-    );
+      function(item){
 
+        return item.id === id;
+
+      }
+    );
 
   if(!property){
 
@@ -1261,688 +1081,208 @@ function(id){
 
   }
 
+  selectedProperty =
+    property;
 
-  const existing =
+  const detailsCard =
     document.getElementById(
-      "details-" + id
+      "detailsCard"
     );
 
-
-  if(existing){
-
-    existing.remove();
-
-    return;
-
-  }
-
-
-  const cards =
-    document.querySelectorAll(
-      ".property"
+  const detailsContent =
+    document.getElementById(
+      "detailsContent"
     );
 
-
-  let target =
-    null;
-
-
-  cards.forEach(
-    card => {
-
-      const button =
-        card.querySelector(
-          ".details-btn"
-        );
-
-
-      if(
-        button &&
-        button.getAttribute(
-          "onclick"
-        ) ===
-        `showDetails('${id}')`
-      ){
-
-        target =
-          card;
-
-      }
-
-    }
-  );
-
-
-  if(!target){
-
-    return;
-
-  }
-
-
-  const details =
-    document.createElement(
-      "div"
-    );
-
-
-  details.id =
-    "details-" + id;
-
-
-  details.style.marginTop =
-    "12px";
-
-
-  details.style.borderTop =
-    "1px solid #ddd";
-
-
-  details.style.paddingTop =
-    "12px";
-
-
-  const images =
-    getPropertyImages(
+  const gallery =
+    getGallery(
       property
     );
 
+  let galleryHtml =
+    "";
 
-  details.innerHTML =
-  `
+  if(
+    gallery.length > 0
+  ){
 
-  ${
-    property.description
+    galleryHtml =
+      `
+      <div class="gallery">
+      `;
 
-    ?
+    gallery.forEach(
+      function(url){
 
-    `
-
-    <p>
-
-      📝 <b>Description:</b>
-
-      <br>
-
-      ${escapeHtml(
-        property.description
-      )}
-
-    </p>
-
-    `
-
-    :
-
-    ""
-  }
-
-
-  ${
-    images.length
-
-    ?
-
-    `
-
-    <div class="gallery">
-
-      <div class="gallery-title">
-
-        🖼️ Property Photos
-        (${images.length})
-
-      </div>
-
-
-      <div
-        class="gallery-main"
-        id="gallery-main-${escapeHtml(id)}"
-      >
-
-        <img
-          id="gallery-image-${escapeHtml(id)}"
-          src="${escapeHtml(images[0])}"
-          alt="Property Photo"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
-        >
-
-
-        <div class="error-image">
-
-          ❌ यह Property Photo अभी open नहीं हो रही।
-
-        </div>
-
-
-        ${
-          images.length > 1
-
-          ?
-
+        galleryHtml +=
           `
-
-          <div
-            class="gallery-count"
-            id="gallery-count-${escapeHtml(id)}"
+          <img
+            src="${escapeHtml(url)}"
+            alt="Property Photo"
+            loading="lazy"
           >
-
-            1 / ${images.length}
-
-          </div>
-
-
-          <button
-            class="gallery-arrow gallery-prev"
-            onclick="previousPhoto('${escapeHtml(id)}')"
-          >
-
-            ‹
-
-          </button>
-
-
-          <button
-            class="gallery-arrow gallery-next"
-            onclick="nextPhoto('${escapeHtml(id)}')"
-          >
-
-            ›
-
-          </button>
-
-          `
-
-          :
-
-          ""
-        }
-
-      </div>
-
-
-      ${
-        images.length > 1
-
-        ?
-
-        `
-
-        <div
-          class="gallery-thumbs"
-          id="gallery-thumbs-${escapeHtml(id)}"
-        >
-
-          ${
-
-            images.map(
-              (url,index) =>
-
-              `
-
-              <img
-                class="gallery-thumb ${
-                  index === 0
-                  ? "active"
-                  : ""
-                }"
-                src="${escapeHtml(url)}"
-                alt="Photo ${index + 1}"
-                onclick="selectPhoto('${escapeHtml(id)}',${index})"
-                onerror="this.style.display='none'"
-              >
-
-              `
-
-            ).join("")
-
-          }
-
-        </div>
-
-        `
-
-        :
-
-        ""
+          `;
 
       }
+    );
 
-    </div>
+    galleryHtml +=
+      "</div>";
 
+  }
+
+  let videoHtml =
+    "";
+
+  if(
+    property.video
+  ){
+
+    videoHtml =
+      `
+      <video
+        class="video"
+        src="${escapeHtml(property.video)}"
+        controls
+        playsinline
+        preload="metadata"
+      ></video>
+      `;
+
+  }
+
+  detailsContent.innerHTML =
     `
 
-    :
+    ${galleryHtml}
 
-    `
+    <br>
+
+    <h3>
+      ${escapeHtml(property.title)}
+    </h3>
+
+    <span class="badge">
+      ${escapeHtml(property.requirement || "")}
+    </span>
+
+    <p>
+      🏠 <b>Property Type:</b>
+      ${escapeHtml(property.type || "")}
+    </p>
+
+    <p>
+      📍 <b>Location:</b>
+      ${escapeHtml(property.location || "")}
+    </p>
+
+    <p class="price">
+      💰 ${escapeHtml(property.price || "")}
+    </p>
+
+    ${
+      property.bedrooms
+      ?
+      `
+      <p>
+        🛏️ <b>Bedrooms:</b>
+        ${escapeHtml(property.bedrooms)}
+      </p>
+      `
+      :
+      ""
+    }
+
+    ${
+      property.area
+      ?
+      `
+      <p>
+        📐 <b>Area:</b>
+        ${escapeHtml(property.area)}
+      </p>
+      `
+      :
+      ""
+    }
+
+    ${
+      property.description
+      ?
+      `
+      <p>
+        📝 <b>Description:</b>
+        ${escapeHtml(property.description)}
+      </p>
+      `
+      :
+      ""
+    }
+
+    ${videoHtml}
 
     <div class="notice">
 
-      📷 इस Property की कोई Photo उपलब्ध नहीं है।
+      🔐 Owner / Agent का
+      mobile number Customer को नहीं दिखाया जाता।
+
+      <br><br>
+
+      जानकारी के लिए
+      <b>Prop Set U Admin</b>
+      से संपर्क करें।
 
     </div>
 
-    `
-
-  }
-
-
-  ${
-    property.video
-
-    ?
-
-    `
-
-    <p>
-
-      🎥 <b>Property Video:</b>
-
-    </p>
-
-
-    <video
-
-      class="preview-video"
-
-      src="${escapeHtml(
-        property.video
-      )}"
-
-      controls
-
-      playsinline
-
-    ></video>
-
-
-    <a
-
-      class="video-link"
-
-      href="${escapeHtml(
-        property.video
-      )}"
-
-      target="_blank"
-
-      rel="noopener noreferrer"
-
+    <button
+      class="enquiry-btn"
+      onclick="openEnquiry('${escapeHtml(property.id)}')"
     >
+      📩 इस Property की Enquiry करें
+    </button>
 
-      ▶️ Open Property Video
+    `;
 
-    </a>
-
-    `
-
-    :
-
-    ""
-  }
-
-
-  <div class="notice">
-
-    🔒 Owner / Agent का mobile number
-    Customer को नहीं दिखाया जाता।
-
-    <br><br>
-
-    📞 Property enquiry के लिए
-    Prop Set U Admin से WhatsApp करें।
-
-  </div>
-
-
-  <button
-
-    class="whatsapp"
-
-    onclick="propertyEnquiry('${escapeHtml(property.id)}')"
-
-  >
-
-    💬 WhatsApp Admin — Property Enquiry
-
-  </button>
-
-
-  <button
-
-    class="close-btn"
-
-    onclick="closeDetails('${escapeHtml(property.id)}')"
-
-  >
-
-    ❌ Close Details
-
-  </button>
-
-  `;
-
-
-  target.appendChild(
-    details
-  );
-
-
-  details.dataset.photoIndex =
-    "0";
-
-
-  details.dataset.photoUrls =
-    JSON.stringify(
-      images
+  detailsCard
+    .classList
+    .remove(
+      "hidden"
     );
 
-
-  details.scrollIntoView({
-
+  detailsCard.scrollIntoView({
     behavior:"smooth",
-
-    block:"nearest"
-
+    block:"start"
   });
 
 };
 
 
-
-/* =====================================================
-   SELECT PHOTO
-   ===================================================== */
-
-window.selectPhoto =
-function(
-  id,
-  index
-){
-
-  const details =
-    document.getElementById(
-      "details-" + id
-    );
-
-
-  if(!details){
-
-    return;
-
-  }
-
-
-  let images = [];
-
-
-  try{
-
-    images =
-      JSON.parse(
-        details.dataset.photoUrls ||
-        "[]"
-      );
-
-  }catch(error){
-
-    images = [];
-
-  }
-
-
-  if(
-    !images[index]
-  ){
-
-    return;
-
-  }
-
-
-  details.dataset.photoIndex =
-    String(index);
-
-
-  const mainImage =
-    document.getElementById(
-      "gallery-image-" + id
-    );
-
-
-  if(mainImage){
-
-    mainImage.src =
-      images[index];
-
-    mainImage.style.display =
-      "block";
-
-  }
-
-
-  const count =
-    document.getElementById(
-      "gallery-count-" + id
-    );
-
-
-  if(count){
-
-    count.textContent =
-      (index + 1) +
-      " / " +
-      images.length;
-
-  }
-
-
-  const thumbs =
-    details.querySelectorAll(
-      ".gallery-thumb"
-    );
-
-
-  thumbs.forEach(
-    (thumb,i) => {
-
-      thumb.classList.toggle(
-        "active",
-        i === index
-      );
-
-    }
-  );
-
-};
-
-
-
-/* =====================================================
-   NEXT PHOTO
-   ===================================================== */
-
-window.nextPhoto =
-function(id){
-
-  const details =
-    document.getElementById(
-      "details-" + id
-    );
-
-
-  if(!details){
-
-    return;
-
-  }
-
-
-  let images = [];
-
-
-  try{
-
-    images =
-      JSON.parse(
-        details.dataset.photoUrls ||
-        "[]"
-      );
-
-  }catch(error){
-
-    return;
-
-  }
-
-
-  if(
-    images.length <= 1
-  ){
-
-    return;
-
-  }
-
-
-  let index =
-    Number(
-      details.dataset.photoIndex || 0
-    );
-
-
-  index++;
-
-
-  if(
-    index >= images.length
-  ){
-
-    index = 0;
-
-  }
-
-
-  selectPhoto(
-    id,
-    index
-  );
-
-};
-
-
-
-/* =====================================================
-   PREVIOUS PHOTO
-   ===================================================== */
-
-window.previousPhoto =
-function(id){
-
-  const details =
-    document.getElementById(
-      "details-" + id
-    );
-
-
-  if(!details){
-
-    return;
-
-  }
-
-
-  let images = [];
-
-
-  try{
-
-    images =
-      JSON.parse(
-        details.dataset.photoUrls ||
-        "[]"
-      );
-
-  }catch(error){
-
-    return;
-
-  }
-
-
-  if(
-    images.length <= 1
-  ){
-
-    return;
-
-  }
-
-
-  let index =
-    Number(
-      details.dataset.photoIndex || 0
-    );
-
-
-  index--;
-
-
-  if(
-    index < 0
-  ){
-
-    index =
-      images.length - 1;
-
-  }
-
-
-  selectPhoto(
-    id,
-    index
-  );
-
-};
-
-
-
-/* =====================================================
-   CLOSE DETAILS
-   ===================================================== */
-
 window.closeDetails =
-function(id){
+function(){
 
-  const details =
-    document.getElementById(
-      "details-" + id
+  document
+    .getElementById(
+      "detailsCard"
+    )
+    .classList
+    .add(
+      "hidden"
     );
-
-
-  if(details){
-
-    details.remove();
-
-  }
 
 };
 
 
-
-/* =====================================================
-   PROPERTY ENQUIRY
-   ===================================================== */
-
-window.propertyEnquiry =
+window.openEnquiry =
 function(id){
 
   const property =
     properties.find(
-      item =>
-        item.id === id
-    );
+      function(item){
 
+        return item.id === id;
+
+      }
+    );
 
   if(!property){
 
@@ -1954,373 +1294,423 @@ function(id){
 
   }
 
-
-  const message =
-
-`नमस्ते Prop Set U Admin,
-
-मुझे इस Property के बारे में जानकारी चाहिए।
-
-Property:
-${property.title || ""}
-
-Requirement:
-${property.requirement || ""}
-
-Type:
-${property.type || ""}
-
-Location:
-${property.location || ""}
-
-Price:
-${property.price || ""}
-
-Bedrooms:
-${property.bedrooms || "N/A"}
-
-Area:
-${property.area || "N/A"}
-
-कृपया इस Property के बारे में जानकारी दें।`;
-
-
-  openAdminWhatsApp(
-    message
-  );
-
-};
-
-
-
-/* =====================================================
-   WHATSAPP
-   ===================================================== */
-
-window.openAdminWhatsApp =
-function(message){
-
-  const finalMessage =
-
-    message ||
-
-`नमस्ते Prop Set U Admin,
-
-मुझे Property के बारे में जानकारी चाहिए।`;
-
-
-  const url =
-
-    "https://wa.me/" +
-
-    ADMIN_WHATSAPP +
-
-    "?text=" +
-
-    encodeURIComponent(
-      finalMessage
-    );
-
-
-  window.location.href =
-    url;
-
-};
-
-
-
-/* =====================================================
-   SEARCH
-   ===================================================== */
-
-window.searchProperties =
-function(){
-
-  const location =
-
-    document
-
-      .getElementById(
-        "searchLocation"
-      )
-
-      .value
-
-      .trim()
-
-      .toLowerCase();
-
-
-  const type =
-
-    document
-
-      .getElementById(
-        "searchType"
-      )
-
-      .value;
-
-
-  const requirement =
-
-    document
-
-      .getElementById(
-        "searchRequirement"
-      )
-
-      .value;
-
-
-  const result =
-
-    properties.filter(
-      property => {
-
-        const locationMatch =
-
-          !location ||
-
-          String(
-            property.location || ""
-          )
-
-          .toLowerCase()
-
-          .includes(
-            location
-          );
-
-
-        const typeMatch =
-
-          type === "All" ||
-
-          property.type === type;
-
-
-        const requirementMatch =
-
-          requirement === "All" ||
-
-          property.requirement ===
-          requirement;
-
-
-        return
-
-          locationMatch &&
-
-          typeMatch &&
-
-          requirementMatch;
-
-      }
-    );
-
-
-  selectedCategory =
-    "All";
-
+  selectedProperty =
+    property;
 
   document
-
-    .querySelectorAll(
-      ".category-btn"
+    .getElementById(
+      "enquiryProperty"
     )
+    .innerHTML =
+    `
+    📋 <b>Property:</b>
+    ${escapeHtml(property.title)}
 
-    .forEach(
-      button =>
-        button.classList.remove(
-          "active"
-        )
-    );
+    <br>
 
+    📍 <b>Location:</b>
+    ${escapeHtml(property.location || "")}
 
-  currentProperties =
-    result;
+    <br>
 
-
-  renderProperties(
-    result
-  );
-
-
-  setStatus(
-
-    result.length +
-
-    " Property मिली।",
-
-    "success"
-
-  );
-
+    💰 <b>Price:</b>
+    ${escapeHtml(property.price || "")}
+    `;
 
   document
-
-    .querySelector(
-      ".property"
+    .getElementById(
+      "customerMessage"
     )
+    .value =
+    "मुझे इस Property के बारे में जानकारी चाहिए: " +
+    property.title +
+    " - " +
+    (property.location || "");
 
-    ?.scrollIntoView({
+  document
+    .getElementById(
+      "enquiryCard"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
 
+  document
+    .getElementById(
+      "enquiryCard"
+    )
+    .scrollIntoView({
       behavior:"smooth",
-
       block:"start"
-
     });
 
 };
 
 
-
-/* =====================================================
-   CATEGORY FILTER
-   ===================================================== */
-
-window.filterCategory =
-function(
-  category,
-  button
-){
-
-  selectedCategory =
-    category;
-
-
-  document
-
-    .querySelectorAll(
-      ".category-btn"
-    )
-
-    .forEach(
-      item =>
-        item.classList.remove(
-          "active"
-        )
-    );
-
-
-  if(button){
-
-    button.classList.add(
-      "active"
-    );
-
-  }
-
-
-  let result;
-
+window.sendEnquiry =
+function(){
 
   if(
-
-    category === "Buy" ||
-
-    category === "Rent" ||
-
-    category === "Lease" ||
-
-    category === "Sell"
-
+    !selectedProperty
   ){
 
-    result =
+    alert(
+      "पहले Property select करें।"
+    );
 
-      properties.filter(
-
-        property =>
-
-          property.requirement ===
-          category
-
-      );
+    return;
 
   }
 
+  const name =
+    document
+      .getElementById(
+        "customerName"
+      )
+      .value
+      .trim();
 
-  else if(
+  const phone =
+    document
+      .getElementById(
+        "customerPhone"
+      )
+      .value
+      .trim();
 
-    category === "PG" ||
+  const message =
+    document
+      .getElementById(
+        "customerMessage"
+      )
+      .value
+      .trim();
 
-    category === "Commercial" ||
+  if(!name){
 
-    category === "Open Plot" ||
+    alert(
+      "कृपया अपना नाम भरें।"
+    );
 
-    category === "Independent"
+    return;
 
+  }
+
+  if(
+    phone &&
+    !/^[0-9]{10}$/.test(phone)
   ){
 
-    result =
+    alert(
+      "कृपया सही 10 digit mobile number डालें।"
+    );
 
-      properties.filter(
-
-        property =>
-
-          property.type ===
-          category ||
-
-          property.requirement ===
-          category ||
-
-          property.category ===
-          category
-
-      );
+    return;
 
   }
 
+  const whatsappMessage =
+    "🏠 *Prop Set U Property Enquiry*" +
+    "\n\n" +
 
-  else{
+    "Property: " +
+    selectedProperty.title +
 
-    result =
-      [
-        ...properties
-      ];
+    "\nLocation: " +
+    (
+      selectedProperty.location ||
+      ""
+    ) +
 
-  }
+    "\nRequirement: " +
+    (
+      selectedProperty.requirement ||
+      ""
+    ) +
 
+    "\nPrice: " +
+    (
+      selectedProperty.price ||
+      ""
+    ) +
 
-  currentProperties =
-    result;
+    "\n\nCustomer Name: " +
+    name +
 
+    "\nCustomer Mobile: " +
+    (
+      phone ||
+      "Not provided"
+    ) +
 
-  renderProperties(
-    result
-  );
+    "\n\nMessage: " +
+    (
+      message ||
+      "Property की जानकारी चाहिए।"
+    );
 
+  const url =
+    "https://wa.me/" +
+    ADMIN_WHATSAPP +
+    "?text=" +
+    encodeURIComponent(
+      whatsappMessage
+    );
 
-  setStatus(
-
-    result.length +
-
-    " Property उपलब्ध है।",
-
-    "success"
-
+  window.open(
+    url,
+    "_blank"
   );
 
 };
 
 
+window.searchProperties =
+function(){
 
-/* =====================================================
-   START
-   ===================================================== */
+  const location =
+    document
+      .getElementById(
+        "searchLocation"
+      )
+      .value
+      .trim()
+      .toLowerCase();
+
+  const type =
+    document
+      .getElementById(
+        "searchType"
+      )
+      .value;
+
+  const requirement =
+    document
+      .getElementById(
+        "searchRequirement"
+      )
+      .value;
+
+  filteredProperties =
+    properties.filter(
+      function(property){
+
+        const propertyLocation =
+          (
+            property.location ||
+            ""
+          )
+          .toLowerCase();
+
+        const locationMatch =
+          !location ||
+          propertyLocation.includes(
+            location
+          );
+
+        const typeMatch =
+          type === "All" ||
+          property.type === type;
+
+        const requirementMatch =
+          requirement === "All" ||
+          property.requirement === requirement;
+
+        return (
+          locationMatch &&
+          typeMatch &&
+          requirementMatch
+        );
+
+      }
+    );
+
+  renderProperties(
+    filteredProperties
+  );
+
+  setStatus(
+    "🔎 " +
+    filteredProperties.length +
+    " Properties मिलीं।",
+    "success"
+  );
+
+  document
+    .getElementById(
+      "propertyList"
+    )
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+};
+
+
+window.clearSearch =
+function(){
+
+  document
+    .getElementById(
+      "searchLocation"
+    )
+    .value =
+    "";
+
+  document
+    .getElementById(
+      "searchType"
+    )
+    .value =
+    "All";
+
+  document
+    .getElementById(
+      "searchRequirement"
+    )
+    .value =
+    "All";
+
+  filteredProperties =
+    [...properties];
+
+  renderProperties(
+    filteredProperties
+  );
+
+  setStatus(
+    "✅ सभी Properties दिखाई जा रही हैं।",
+    "success"
+  );
+
+};
+
+
+window.filterCategory =
+function(requirement){
+
+  document
+    .getElementById(
+      "searchRequirement"
+    )
+    .value =
+    requirement;
+
+  document
+    .getElementById(
+      "searchType"
+    )
+    .value =
+    "All";
+
+  document
+    .getElementById(
+      "searchLocation"
+    )
+    .value =
+    "";
+
+  searchProperties();
+
+};
+
+
+window.filterType =
+function(type){
+
+  document
+    .getElementById(
+      "searchType"
+    )
+    .value =
+    type;
+
+  document
+    .getElementById(
+      "searchRequirement"
+    )
+    .value =
+    "All";
+
+  document
+    .getElementById(
+      "searchLocation"
+    )
+    .value =
+    "";
+
+  searchProperties();
+
+};
+
+
+window.contactAdmin =
+function(){
+
+  const message =
+    "नमस्ते Prop Set U Admin, मुझे Property के बारे में जानकारी चाहिए।";
+
+  const url =
+    "https://wa.me/" +
+    ADMIN_WHATSAPP +
+    "?text=" +
+    encodeURIComponent(
+      message
+    );
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+};
+
+
+window.addEventListener(
+  "scroll",
+  function(){
+
+    const button =
+      document.getElementById(
+        "topButton"
+      );
+
+    if(
+      window.scrollY > 400
+    ){
+
+      button.style.display =
+        "block";
+
+    }else{
+
+      button.style.display =
+        "none";
+
+    }
+
+  }
+);
+
 
 loadProperties();
 
 
+console.log(
+  "Prop Set U Customer Panel Loaded"
+);
+
+console.log(
+  "Admin WhatsApp:",
+  ADMIN_WHATSAPP
+);
+
 </script>
 
 
-<!-- ===================================================
-     SERVICE WORKER
-     APP / PWA SUPPORT
-     =================================================== -->
+<!-- SERVICE WORKER -->
 
 <script>
 
@@ -2366,7 +1756,5 @@ if(
 
 </script>
 
-
 </body>
-
 </html>
