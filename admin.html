@@ -30,11 +30,6 @@
   content="yes"
 >
 
-<meta
-  name="apple-mobile-web-app-status-bar-style"
-  content="default"
->
-
 <title>Prop Set U - Admin Panel</title>
 
 
@@ -326,20 +321,6 @@ button:disabled{
   border-radius:15px;
   font-size:11px;
   font-weight:bold;
-}
-
-.url-box{
-  background:#f1f5f9;
-  border-radius:8px;
-  padding:10px;
-  margin-top:10px;
-  font-size:11px;
-  line-height:1.5;
-  word-break:break-all;
-}
-
-.url-box b{
-  color:#063b66;
 }
 
 .preview-label{
@@ -645,7 +626,7 @@ button:disabled{
 
     <div class="cloudinary-box">
 
-      ☁️ <b>Cloudinary Property Media Upload</b>
+      ☁️ <b>Cloudinary Property Media</b>
 
       <br><br>
 
@@ -661,7 +642,7 @@ button:disabled{
 
 
     <label>
-      🖼️ Property Photos — अधिकतम 6 Photos
+      🖼️ Property Photos — अधिकतम 6
     </label>
 
     <input
@@ -707,11 +688,14 @@ button:disabled{
       कोई नया Video select नहीं किया गया।
     </div>
 
+
     <video
       id="videoPreview"
       class="preview-video hidden"
       controls
+      playsinline
     ></video>
+
 
     <div
       id="oldVideoBox"
@@ -765,9 +749,7 @@ button:disabled{
       🏘️ Property List
     </h2>
 
-    <div
-      id="propertyList"
-    >
+    <div id="propertyList">
 
       <div class="empty">
         Properties loading...
@@ -797,7 +779,7 @@ button:disabled{
 
 
 /* =====================================================
-   FIREBASE IMPORTS
+   FIREBASE
 ===================================================== */
 
 import {
@@ -862,25 +844,23 @@ const firebaseConfig = {
 };
 
 
-
-/* =====================================================
-   FIREBASE START
-===================================================== */
-
 const app =
   initializeApp(
     firebaseConfig
   );
+
 
 const db =
   getFirestore(
     app
   );
 
+
 const auth =
   getAuth(
     app
   );
+
 
 const propertiesRef =
   collection(
@@ -897,8 +877,10 @@ const propertiesRef =
 const CLOUDINARY_CLOUD_NAME =
   "gga5auev";
 
+
 const CLOUDINARY_UPLOAD_PRESET =
   "propsetu_upload 2";
+
 
 const CLOUDINARY_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/" +
@@ -985,15 +967,19 @@ function setStatus(
       "status"
     );
 
+
   if(!el){
     return;
   }
 
+
   el.textContent =
     message;
 
+
   el.className =
     "status";
+
 
   if(
     type === "success"
@@ -1004,6 +990,7 @@ function setStatus(
     );
 
   }
+
 
   if(
     type === "error"
@@ -1033,15 +1020,19 @@ function setLoginStatus(
       "loginStatus"
     );
 
+
   if(!el){
     return;
   }
 
+
   el.textContent =
     message;
 
+
   el.className =
     "status";
+
 
   if(
     type === "success"
@@ -1052,6 +1043,7 @@ function setLoginStatus(
     );
 
   }
+
 
   if(
     type === "error"
@@ -1081,6 +1073,7 @@ async function(){
       )
       .value
       .trim();
+
 
   const password =
     document
@@ -1127,17 +1120,20 @@ async function(){
       "Login हो रहा है..."
     );
 
+
     await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
 
+
   }catch(error){
 
     console.error(
       error
     );
+
 
     setLoginStatus(
       "❌ Login failed. Email या Password गलत है।",
@@ -1163,12 +1159,15 @@ async function(){
       auth
     );
 
+
     clearForm();
+
 
     setLoginStatus(
       "आप Logout हो गए हैं।",
       "success"
     );
+
 
   }catch(error){
 
@@ -1183,7 +1182,7 @@ async function(){
 
 
 /* =====================================================
-   AUTH
+   AUTH STATE
 ===================================================== */
 
 onAuthStateChanged(
@@ -1194,6 +1193,7 @@ onAuthStateChanged(
       document.getElementById(
         "loginSection"
       );
+
 
     const adminSection =
       document.getElementById(
@@ -1220,10 +1220,12 @@ onAuthStateChanged(
           auth
         );
 
+
         setLoginStatus(
           "❌ इस account को Admin access नहीं है।",
           "error"
         );
+
 
         return;
 
@@ -1235,6 +1237,7 @@ onAuthStateChanged(
         .add(
           "hidden"
         );
+
 
       adminSection
         .classList
@@ -1253,6 +1256,7 @@ onAuthStateChanged(
 
       await loadProperties();
 
+
     }else{
 
       loginSection
@@ -1260,6 +1264,7 @@ onAuthStateChanged(
         .remove(
           "hidden"
         );
+
 
       adminSection
         .classList
@@ -1275,7 +1280,7 @@ onAuthStateChanged(
 
 
 /* =====================================================
-   MULTIPLE IMAGE PREVIEW
+   IMAGE PREVIEW
 ===================================================== */
 
 document
@@ -1291,10 +1296,12 @@ document
           event.target.files
         );
 
+
       const info =
         document.getElementById(
           "imageInfo"
         );
+
 
       const previewBox =
         document.getElementById(
@@ -1334,6 +1341,7 @@ document
         info.textContent =
           "अधिकतम 6 Photos चुनें।";
 
+
         return;
 
       }
@@ -1351,6 +1359,7 @@ document
             document.createElement(
               "div"
             );
+
 
           item.className =
             "gallery-item";
@@ -1425,10 +1434,12 @@ document
       const file =
         event.target.files[0];
 
+
       const preview =
         document.getElementById(
           "videoPreview"
         );
+
 
       const info =
         document.getElementById(
@@ -1444,8 +1455,10 @@ document
             "hidden"
           );
 
+
         info.textContent =
           "कोई नया Video select नहीं किया गया।";
+
 
         return;
 
@@ -1628,6 +1641,7 @@ async function uploadToCloudinary(
 
               }
 
+
             }catch(error){
 
               reject(
@@ -1637,6 +1651,7 @@ async function uploadToCloudinary(
               );
 
             }
+
 
           }else{
 
@@ -1662,9 +1677,7 @@ async function uploadToCloudinary(
 
               }
 
-            }catch(error){
-
-            }
+            }catch(error){}
 
 
             reject(
@@ -1820,7 +1833,6 @@ async function(){
   }
 
 
-
   const title =
     document
       .getElementById(
@@ -1955,7 +1967,6 @@ async function(){
   }
 
 
-
   try{
 
     const saveButton =
@@ -2001,8 +2012,8 @@ async function(){
       "⏳ Property save होने की तैयारी...";
 
 
-
-    let imageUrls = [];
+    let imageUrls =
+      [];
 
 
     if(
@@ -2028,7 +2039,6 @@ async function(){
     }
 
 
-
     if(
       imageFiles.length > 0
     ){
@@ -2041,14 +2051,6 @@ async function(){
         i < imageFiles.length;
         i++
       ){
-
-        uploadStatus.textContent =
-          "🖼️ Photo " +
-          (i + 1) +
-          "/" +
-          imageFiles.length +
-          " Cloudinary पर upload हो रही है...";
-
 
         const url =
           await uploadToCloudinary(
@@ -2068,7 +2070,6 @@ async function(){
     }
 
 
-
     let videoUrl =
       oldVideoUrl ||
       "";
@@ -2082,10 +2083,6 @@ async function(){
         "🎥 Video Cloudinary पर upload हो रहा है...";
 
 
-      progressBar.style.width =
-        "5%";
-
-
       videoUrl =
         await uploadToCloudinary(
           videoFile,
@@ -2094,12 +2091,7 @@ async function(){
           1
         );
 
-
-      progressBar.style.width =
-        "100%";
-
     }
-
 
 
     uploadStatus.textContent =
@@ -2160,7 +2152,6 @@ async function(){
     };
 
 
-
     if(
       type === "PG"
     ){
@@ -2207,7 +2198,6 @@ async function(){
     }
 
 
-
     if(
       editId === null
     ){
@@ -2229,12 +2219,11 @@ async function(){
       alert(
         "✅ Property successfully saved.\n\n" +
         imageUrls.length +
-        " Photo Firebase में save हुई हैं।"
+        " Photo save हुई हैं।"
       );
 
-    }
 
-    else{
+    }else{
 
       await updateDoc(
 
@@ -2258,15 +2247,17 @@ async function(){
     }
 
 
-
     editId =
       null;
+
 
     oldImageUrl =
       "";
 
+
     oldImageUrls =
       [];
+
 
     oldVideoUrl =
       "";
@@ -2407,7 +2398,6 @@ function showProperties(){
       ){
 
         galleryHtml =
-
           `
           <div class="preview-label">
             🖼️ Property Gallery
@@ -2422,14 +2412,11 @@ function showProperties(){
           function(url,index){
 
             galleryHtml +=
-
               `
               <div class="gallery-item">
 
                 <img
-                  src="${escapeHtml(
-                    url
-                  )}"
+                  src="${escapeHtml(url)}"
                   alt="Property Photo ${index + 1}"
                   onerror="this.style.display='none'"
                 >
@@ -2448,12 +2435,9 @@ function showProperties(){
         galleryHtml +=
           "</div>";
 
-      }
-
-      else{
+      }else{
 
         galleryHtml =
-
           `
           <div class="warning">
             🖼️ इस Property की कोई Photo उपलब्ध नहीं है।
@@ -2461,7 +2445,6 @@ function showProperties(){
           `;
 
       }
-
 
 
       let videoHtml =
@@ -2473,7 +2456,6 @@ function showProperties(){
       ){
 
         videoHtml =
-
           `
           <div class="preview-label">
             🎥 Property Video
@@ -2481,70 +2463,39 @@ function showProperties(){
 
           <video
             class="preview-video"
-            src="${escapeHtml(
-              p.video
-            )}"
+            src="${escapeHtml(p.video)}"
             controls
             preload="metadata"
           ></video>
-
-          <div class="url-box">
-
-            <b>Video URL:</b>
-
-            <br>
-
-            ${escapeHtml(
-              p.video
-            )}
-
-          </div>
           `;
 
       }
 
 
-
       div.innerHTML =
-
         `
         <h3>
-          ${escapeHtml(
-            p.title
-          )}
+          ${escapeHtml(p.title)}
         </h3>
 
-
         <span class="badge">
-          ${escapeHtml(
-            p.requirement
-          )}
+          ${escapeHtml(p.requirement)}
         </span>
-
 
         <p>
           🏠 <b>Type:</b>
-          ${escapeHtml(
-            p.type
-          )}
+          ${escapeHtml(p.type)}
         </p>
-
 
         <p>
           📍 <b>Location:</b>
-          ${escapeHtml(
-            p.location
-          )}
+          ${escapeHtml(p.location)}
         </p>
-
 
         <p>
           💰 <b>Price:</b>
-          ${escapeHtml(
-            p.price
-          )}
+          ${escapeHtml(p.price)}
         </p>
-
 
         ${
           p.bedrooms
@@ -2552,15 +2503,12 @@ function showProperties(){
           `
           <p>
             🛏️ <b>Bedrooms:</b>
-            ${escapeHtml(
-              p.bedrooms
-            )}
+            ${escapeHtml(p.bedrooms)}
           </p>
           `
           :
           ""
         }
-
 
         ${
           p.area
@@ -2568,15 +2516,12 @@ function showProperties(){
           `
           <p>
             📐 <b>Area:</b>
-            ${escapeHtml(
-              p.area
-            )}
+            ${escapeHtml(p.area)}
           </p>
           `
           :
           ""
         }
-
 
         ${
           p.owner
@@ -2584,15 +2529,12 @@ function showProperties(){
           `
           <p>
             👤 <b>Owner/Agent:</b>
-            ${escapeHtml(
-              p.owner
-            )}
+            ${escapeHtml(p.owner)}
           </p>
           `
           :
           ""
         }
-
 
         ${
           p.phone
@@ -2600,15 +2542,12 @@ function showProperties(){
           `
           <p>
             📞 <b>Mobile:</b>
-            ${escapeHtml(
-              p.phone
-            )}
+            ${escapeHtml(p.phone)}
           </p>
           `
           :
           ""
         }
-
 
         ${
           p.description
@@ -2616,55 +2555,30 @@ function showProperties(){
           `
           <p>
             📝 <b>Description:</b>
-            ${escapeHtml(
-              p.description
-            )}
+            ${escapeHtml(p.description)}
           </p>
           `
           :
           ""
         }
 
-
         ${galleryHtml}
-
 
         ${videoHtml}
 
-
-        <p
-          style="
-            font-size:11px;
-            color:#777;
-            word-break:break-all;
-          "
-        >
-          ID:
-          ${escapeHtml(
-            p.id
-          )}
-        </p>
-
-
         <button
           class="edit"
-          onclick="editProperty('${escapeHtml(
-            p.id
-          )}')"
+          onclick="editProperty('${escapeHtml(p.id)}')"
         >
           ✏️ Edit
         </button>
 
-
         <button
           class="delete"
-          onclick="deleteProperty('${escapeHtml(
-            p.id
-          )}')"
+          onclick="deleteProperty('${escapeHtml(p.id)}')"
         >
           🗑️ Delete
         </button>
-
         `;
 
 
@@ -2792,9 +2706,7 @@ function(id){
 
 
   oldImageUrls =
-    Array.isArray(
-      p.images
-    )
+    Array.isArray(p.images)
     ?
     [...p.images]
     :
@@ -2837,13 +2749,12 @@ function(id){
   ){
 
     let html =
-
       `
       <div class="old-file">
 
         🖼️ <b>Current Property Gallery</b>
 
-        <br>
+        <br><br>
 
         ${oldImageUrls.length}
         Photo उपलब्ध हैं।
@@ -2856,14 +2767,11 @@ function(id){
       function(url,index){
 
         html +=
-
           `
           <div class="gallery-item">
 
             <img
-              src="${escapeHtml(
-                url
-              )}"
+              src="${escapeHtml(url)}"
               alt="Current Photo ${index + 1}"
               onerror="this.style.display='none'"
             >
@@ -2880,7 +2788,6 @@ function(id){
 
 
     html +=
-
       `
         </div>
 
@@ -2892,7 +2799,6 @@ function(id){
       html;
 
   }
-
 
 
   const oldVideoBox =
@@ -2910,7 +2816,6 @@ function(id){
   ){
 
     oldVideoBox.innerHTML =
-
       `
       <div class="old-file">
 
@@ -2919,9 +2824,7 @@ function(id){
         <br><br>
 
         <a
-          href="${escapeHtml(
-            oldVideoUrl
-          )}"
+          href="${escapeHtml(oldVideoUrl)}"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -2932,7 +2835,6 @@ function(id){
       `;
 
   }
-
 
 
   document
@@ -2975,25 +2877,6 @@ async function(id){
 
     alert(
       "पहले Admin Login करें।"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    (
-      user.email ||
-      ""
-    )
-    .toLowerCase()
-    !==
-    ADMIN_EMAIL.toLowerCase()
-  ){
-
-    alert(
-      "आपको Admin permission नहीं है।"
     );
 
     return;
@@ -3062,7 +2945,7 @@ async function(id){
 
 
 /* =====================================================
-   CLEAR
+   CLEAR FORM
 ===================================================== */
 
 window.clearForm =
@@ -3269,17 +3152,17 @@ function(){
 
 
 console.log(
-  "Prop Set U Admin Panel Loaded"
+  "Prop Set U Admin PWA Loaded"
 );
 
 console.log(
-  "Maximum Photos:",
-  6
+  "Admin Manifest:",
+  "./admin-manifest.json"
 );
 
 console.log(
-  "Cloudinary:",
-  CLOUDINARY_CLOUD_NAME
+  "Service Worker:",
+  "./sw.js"
 );
 
 </script>
@@ -3304,6 +3187,7 @@ if(
         .register(
           "./sw.js"
         )
+
         .then(
           function(registration){
 
@@ -3314,6 +3198,7 @@ if(
 
           }
         )
+
         .catch(
           function(error){
 
