@@ -219,16 +219,6 @@ button:disabled{
   line-height:1.5;
 }
 
-.preview-image{
-  width:100%;
-  max-height:330px;
-  object-fit:cover;
-  border-radius:10px;
-  margin-top:8px;
-  display:block;
-  background:#eee;
-}
-
 .preview-video{
   width:100%;
   max-height:340px;
@@ -361,13 +351,6 @@ button:disabled{
   border-radius:8px;
   margin-top:8px;
   font-size:13px;
-}
-
-.enquiry-box{
-  background:#eef5ff;
-  border-radius:10px;
-  padding:12px;
-  margin-top:12px;
 }
 
 .small{
@@ -740,8 +723,18 @@ const propertiesRef =
    ADMIN WHATSAPP
    ===================================================== */
 
+/*
+   आपका Normal WhatsApp नंबर:
+   08062180745
+
+   India format:
+   918062180745
+
+   WhatsApp link में पहला 0 नहीं लगाया जाता।
+*/
+
 const ADMIN_WHATSAPP =
-  "91806180745";
+  "918062180745";
 
 
 
@@ -854,16 +847,19 @@ function setStatus(
    ===================================================== */
 
 /*
-  Admin Panel में photos अलग-अलग नाम से save
-  हो सकती हैं। Customer Panel इन सभी को support करेगा:
+   Admin Panel से photos अलग-अलग field names
+   में save हो सकती हैं।
 
-  images
-  imageUrls
-  photos
-  image
+   Customer Panel इन सभी को support करता है:
 
-  यानी नई 5-6 photos भी आएंगी और पुरानी
-  single image वाली property भी काम करेगी।
+   images
+   imageUrls
+   photos
+   image
+
+   इसलिए पुरानी single-photo property भी
+   काम करेगी और नई 5-6 photos वाली property
+   भी काम करेगी।
 */
 
 function getPropertyImages(property){
@@ -2311,4 +2307,5 @@ loadProperties();
 </script>
 
 </body>
+
 </html>
