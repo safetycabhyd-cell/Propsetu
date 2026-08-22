@@ -76,6 +76,10 @@ select{
   background:#fff;
 }
 
+input[type="file"]{
+  padding:10px;
+}
+
 button{
   border:0;
   border-radius:8px;
@@ -83,6 +87,11 @@ button{
   font-size:14px;
   font-weight:bold;
   cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .search-btn{
@@ -210,6 +219,15 @@ button{
   display:block;
 }
 
+.preview-video{
+  width:100%;
+  max-height:320px;
+  border-radius:10px;
+  margin-top:8px;
+  display:block;
+  background:#000;
+}
+
 .video-link{
   display:block;
   margin-top:8px;
@@ -254,199 +272,386 @@ button{
   margin-top:8px;
   font-size:13px;
 }
+
+.upload-btn{
+  width:100%;
+  margin-top:12px;
+  background:#159447;
+  color:#fff;
+}
+
+.copy-btn{
+  width:100%;
+  margin-top:8px;
+  background:#063b66;
+  color:#fff;
+}
+
+.upload-result{
+  margin-top:12px;
+  padding:12px;
+  border-radius:8px;
+  background:#f3f6f9;
+  word-break:break-all;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.progress-wrap{
+  margin-top:12px;
+  height:10px;
+  background:#e2e7ec;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:#159447;
+  transition:width .2s ease;
+}
+
+.small{
+  font-size:12px;
+  color:#777;
+  margin-top:7px;
+  line-height:1.5;
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
+
   <h1>🏠 Prop Set U</h1>
+
   <p>
     Buy • Rent • Lease • Sell • PG • Commercial Properties
   </p>
+
 </div>
 
 <div class="container">
 
-  <!-- SEARCH -->
-  <div class="card">
+<!-- SEARCH -->
 
-    <h2>🔎 Property Search</h2>
+<div class="card">
 
-    <label>Area, City या Location</label>
+  <h2>🔎 Property Search</h2>
 
-    <input
-      id="searchLocation"
-      type="text"
-      placeholder="जैसे Hyderabad"
-    >
+  <label>
+    Area, City या Location
+  </label>
 
-    <label>Property Type</label>
+  <input
+    id="searchLocation"
+    type="text"
+    placeholder="जैसे Hyderabad"
+  >
 
-    <select id="searchType">
+  <label>
+    Property Type
+  </label>
 
-      <option value="All">All Properties</option>
-      <option value="Independent">Independent</option>
-      <option value="Flat">Flat</option>
-      <option value="Villa">Villa</option>
-      <option value="Open Plot">Open Plot</option>
-      <option value="Commercial">Commercial</option>
-      <option value="Shop">Shop</option>
-      <option value="Office">Office</option>
-      <option value="PG">PG</option>
+  <select id="searchType">
 
-    </select>
+    <option value="All">
+      All Properties
+    </option>
 
-    <label>Requirement</label>
+    <option value="Independent">
+      Independent
+    </option>
 
-    <select id="searchRequirement">
+    <option value="Flat">
+      Flat
+    </option>
 
-      <option value="All">All</option>
-      <option value="Buy">Buy</option>
-      <option value="Rent">Rent</option>
-      <option value="Lease">Lease</option>
-      <option value="Sell">Sell</option>
+    <option value="Villa">
+      Villa
+    </option>
 
-    </select>
+    <option value="Open Plot">
+      Open Plot
+    </option>
+
+    <option value="Commercial">
+      Commercial
+    </option>
+
+    <option value="Shop">
+      Shop
+    </option>
+
+    <option value="Office">
+      Office
+    </option>
+
+    <option value="PG">
+      PG
+    </option>
+
+  </select>
+
+  <label>
+    Requirement
+  </label>
+
+  <select id="searchRequirement">
+
+    <option value="All">
+      All
+    </option>
+
+    <option value="Buy">
+      Buy
+    </option>
+
+    <option value="Rent">
+      Rent
+    </option>
+
+    <option value="Lease">
+      Lease
+    </option>
+
+    <option value="Sell">
+      Sell
+    </option>
+
+  </select>
+
+  <button
+    class="search-btn"
+    onclick="searchProperties()"
+  >
+    🔎 Search Property
+  </button>
+
+</div>
+
+
+<!-- CATEGORIES -->
+
+<div class="card">
+
+  <h2>
+    🏘️ Categories
+  </h2>
+
+  <div class="categories">
 
     <button
-      class="search-btn"
-      onclick="searchProperties()"
+      class="category-btn"
+      onclick="filterCategory('Buy',this)"
     >
-      🔎 Search Property
+      🏠 Buy
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterCategory('Rent',this)"
+    >
+      🏢 Rent
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterCategory('Lease',this)"
+    >
+      📄 Lease
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterCategory('Sell',this)"
+    >
+      💰 Sell
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterCategory('PG',this)"
+    >
+      🛏️ PG
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterCategory('Commercial',this)"
+    >
+      🏢 Commercial
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterCategory('Open Plot',this)"
+    >
+      🌳 Open Plot
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterCategory('Independent',this)"
+    >
+      🏠 Independent
     </button>
 
   </div>
 
+</div>
 
-  <!-- CATEGORIES -->
-  <div class="card">
 
-    <h2>🏘️ Categories</h2>
+<!-- STATUS -->
 
-    <div class="categories">
+<div class="card">
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('Buy',this)"
-      >
-        🏠 Buy
-      </button>
+  <div
+    id="status"
+    class="status"
+  >
+    Firebase connecting...
+  </div>
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('Rent',this)"
-      >
-        🏢 Rent
-      </button>
+</div>
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('Lease',this)"
-      >
-        📄 Lease
-      </button>
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('Sell',this)"
-      >
-        💰 Sell
-      </button>
+<!-- CLOUDINARY UPLOAD -->
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('PG',this)"
-      >
-        🛏️ PG
-      </button>
+<div class="card">
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('Commercial',this)"
-      >
-        🏢 Commercial
-      </button>
+  <h2>
+    📤 Property Photo / Video Upload
+  </h2>
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('Open Plot',this)"
-      >
-        🌳 Open Plot
-      </button>
+  <div class="notice">
 
-      <button
-        class="category-btn"
-        onclick="filterCategory('Independent',this)"
-      >
-        🏠 Independent
-      </button>
+    📸 यहाँ Property की Photo या Video
+    Cloudinary पर upload होगी।
 
-    </div>
+    <br><br>
+
+    🔐 API Secret इस वेबसाइट में नहीं रखा गया है।
+    Upload के लिए Unsigned Upload Preset इस्तेमाल हो रहा है।
 
   </div>
 
+  <label>
+    Property Photo / Video चुनें
+  </label>
 
-  <!-- STATUS -->
-  <div class="card">
+  <input
+    id="mediaFile"
+    type="file"
+    accept="image/*,video/*"
+  >
+
+  <div class="small">
+
+    एक बार में एक Photo या Video चुनें।
+
+  </div>
+
+  <button
+    id="uploadMediaBtn"
+    class="upload-btn"
+    onclick="uploadPropertyMedia()"
+  >
+    ☁️ Cloudinary पर Upload करें
+  </button>
+
+  <div
+    id="uploadProgressWrap"
+    class="progress-wrap hidden"
+  >
 
     <div
-      id="status"
-      class="status"
-    >
-      Firebase connecting...
+      id="uploadProgressBar"
+      class="progress-bar"
+    ></div>
+
+  </div>
+
+  <div
+    id="uploadStatus"
+    class="status hidden"
+  ></div>
+
+  <div
+    id="uploadPreview"
+  ></div>
+
+  <div
+    id="uploadResult"
+    class="upload-result hidden"
+  ></div>
+
+  <button
+    id="copyUrlBtn"
+    class="copy-btn hidden"
+    onclick="copyUploadedUrl()"
+  >
+    📋 Uploaded URL Copy करें
+  </button>
+
+</div>
+
+
+<!-- PROPERTY LIST -->
+
+<div class="card">
+
+  <h2>
+    🏘️ Available Properties
+  </h2>
+
+  <div id="propertyList">
+
+    <div class="loading">
+      Properties loading...
     </div>
 
   </div>
 
+</div>
 
-  <!-- PROPERTY LIST -->
-  <div class="card">
 
-    <h2>🏘️ Available Properties</h2>
+<!-- ADMIN WHATSAPP -->
 
-    <div id="propertyList">
+<div class="card admin-card">
 
-      <div class="loading">
-        Properties loading...
-      </div>
+  <h2>
+    📞 Prop Set U Admin
+  </h2>
 
-    </div>
+  <div class="admin-text">
+
+    Property के बारे में जानकारी या enquiry के लिए
+    सीधे Prop Set U Admin से संपर्क करें।
+
+  </div>
+
+  <div class="notice">
+
+    🔒 Customer को Owner / Agent का personal mobile
+    number नहीं दिखाया जाएगा।
+
+    <br><br>
+
+    सभी enquiries Prop Set U Admin के माध्यम से होंगी।
 
   </div>
 
+  <button
+    class="whatsapp"
+    onclick="openAdminWhatsApp()"
+  >
+    💬 WhatsApp Admin
+  </button>
 
-  <!-- ADMIN WHATSAPP -->
-  <div class="card admin-card">
-
-    <h2>📞 Prop Set U Admin</h2>
-
-    <div class="admin-text">
-
-      Property के बारे में जानकारी या enquiry के लिए
-      सीधे Prop Set U Admin से संपर्क करें।
-
-    </div>
-
-    <div class="notice">
-
-      🔒 Customer को Owner / Agent का personal mobile
-      number नहीं दिखाया जाएगा।
-
-      <br><br>
-
-      सभी enquiries Prop Set U Admin के माध्यम से होंगी।
-
-    </div>
-
-    <button
-      class="whatsapp"
-      onclick="openAdminWhatsApp()"
-    >
-      💬 WhatsApp Admin
-    </button>
-
-  </div>
+</div>
 
 </div>
 
@@ -464,11 +669,16 @@ button{
 
 <script type="module">
 
+/* =====================================================
+   FIREBASE
+   ===================================================== */
+
 import {
   initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
   getFirestore,
@@ -510,10 +720,16 @@ const firebaseConfig = {
 
 
 const app =
-  initializeApp(firebaseConfig);
+  initializeApp(
+    firebaseConfig
+  );
+
 
 const db =
-  getFirestore(app);
+  getFirestore(
+    app
+  );
+
 
 const propertiesRef =
   collection(
@@ -523,20 +739,42 @@ const propertiesRef =
 
 
 /* =====================================================
+   CLOUDINARY CONFIG
+   ===================================================== */
+
+const CLOUDINARY_CLOUD_NAME =
+  "gga5auev";
+
+
+const CLOUDINARY_UPLOAD_PRESET =
+  "propsetu_upload 2";
+
+
+const CLOUDINARY_UPLOAD_URL =
+  "https://api.cloudinary.com/v1_1/" +
+  CLOUDINARY_CLOUD_NAME +
+  "/auto/upload";
+
+
+/* =====================================================
    ADMIN WHATSAPP
-   0806180745
-   India country code = 91
    ===================================================== */
 
 const ADMIN_WHATSAPP =
   "91806180745";
 
 
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
 let properties = [];
 
 let currentProperties = [];
 
 let selectedCategory = "All";
+
+let lastUploadedUrl = "";
 
 
 /* =====================================================
@@ -545,17 +783,34 @@ let selectedCategory = "All";
 
 function escapeHtml(text){
 
-  return String(text ?? "")
+  return String(
+    text ?? ""
+  )
 
-    .replace(/&/g,"&amp;")
+  .replace(
+    /&/g,
+    "&amp;"
+  )
 
-    .replace(/</g,"&lt;")
+  .replace(
+    /</g,
+    "&lt;"
+  )
 
-    .replace(/>/g,"&gt;")
+  .replace(
+    />/g,
+    "&gt;"
+  )
 
-    .replace(/"/g,"&quot;")
+  .replace(
+    /"/g,
+    "&quot;"
+  )
 
-    .replace(/'/g,"&#039;");
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 
 }
 
@@ -574,15 +829,25 @@ function setStatus(
       "status"
     );
 
-  if(!status) return;
+
+  if(!status){
+
+    return;
+
+  }
+
 
   status.textContent =
     message;
 
+
   status.className =
     "status";
 
-  if(type === "success"){
+
+  if(
+    type === "success"
+  ){
 
     status.classList.add(
       "success"
@@ -590,7 +855,10 @@ function setStatus(
 
   }
 
-  if(type === "error"){
+
+  if(
+    type === "error"
+  ){
 
     status.classList.add(
       "error"
@@ -602,7 +870,496 @@ function setStatus(
 
 
 /* =====================================================
-   LOAD FIREBASE PROPERTIES
+   UPLOAD STATUS
+   ===================================================== */
+
+function setUploadStatus(
+  message,
+  type = "normal"
+){
+
+  const box =
+    document.getElementById(
+      "uploadStatus"
+    );
+
+
+  if(!box){
+
+    return;
+
+  }
+
+
+  box.textContent =
+    message;
+
+
+  box.className =
+    "status";
+
+
+  if(
+    type === "success"
+  ){
+
+    box.classList.add(
+      "success"
+    );
+
+  }
+
+
+  if(
+    type === "error"
+  ){
+
+    box.classList.add(
+      "error"
+    );
+
+  }
+
+
+  box.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =====================================================
+   CLOUDINARY UPLOAD
+   ===================================================== */
+
+window.uploadPropertyMedia =
+async function(){
+
+  const fileInput =
+    document.getElementById(
+      "mediaFile"
+    );
+
+
+  const button =
+    document.getElementById(
+      "uploadMediaBtn"
+    );
+
+
+  const progressWrap =
+    document.getElementById(
+      "uploadProgressWrap"
+    );
+
+
+  const progressBar =
+    document.getElementById(
+      "uploadProgressBar"
+    );
+
+
+  const preview =
+    document.getElementById(
+      "uploadPreview"
+    );
+
+
+  const result =
+    document.getElementById(
+      "uploadResult"
+    );
+
+
+  const copyBtn =
+    document.getElementById(
+      "copyUrlBtn"
+    );
+
+
+  if(
+    !fileInput ||
+    !fileInput.files ||
+    !fileInput.files[0]
+  ){
+
+    setUploadStatus(
+      "❌ पहले Photo या Video चुनिए।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const file =
+    fileInput.files[0];
+
+
+  if(
+    file.size >
+    100 * 1024 * 1024
+  ){
+
+    setUploadStatus(
+      "❌ File 100 MB से बड़ी है। छोटी Photo/Video चुनिए।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "⏳ Upload हो रहा है...";
+
+
+  progressWrap.classList.remove(
+    "hidden"
+  );
+
+
+  progressBar.style.width =
+    "0%";
+
+
+  result.classList.add(
+    "hidden"
+  );
+
+
+  copyBtn.classList.add(
+    "hidden"
+  );
+
+
+  preview.innerHTML =
+    "";
+
+
+  setUploadStatus(
+    "Cloudinary पर upload शुरू हो रहा है..."
+  );
+
+
+  try{
+
+    const formData =
+      new FormData();
+
+
+    formData.append(
+      "file",
+      file
+    );
+
+
+    formData.append(
+      "upload_preset",
+      CLOUDINARY_UPLOAD_PRESET
+    );
+
+
+    const uploaded =
+      await new Promise(
+        (
+          resolve,
+          reject
+        ) => {
+
+          const xhr =
+            new XMLHttpRequest();
+
+
+          xhr.open(
+            "POST",
+            CLOUDINARY_UPLOAD_URL
+          );
+
+
+          xhr.upload.addEventListener(
+            "progress",
+            event => {
+
+              if(
+                event.lengthComputable
+              ){
+
+                const percent =
+                  Math.round(
+                    (
+                      event.loaded /
+                      event.total
+                    ) * 100
+                  );
+
+
+                progressBar.style.width =
+                  percent + "%";
+
+
+                setUploadStatus(
+                  "☁️ Upload हो रहा है: " +
+                  percent +
+                  "%"
+                );
+
+              }
+
+            }
+          );
+
+
+          xhr.onload =
+          () => {
+
+            let data =
+              null;
+
+
+            try{
+
+              data =
+                JSON.parse(
+                  xhr.responseText
+                );
+
+            }catch(e){}
+
+
+            if(
+              xhr.status >= 200 &&
+              xhr.status < 300
+            ){
+
+              resolve(
+                data
+              );
+
+            }else{
+
+              reject(
+                new Error(
+                  data?.error?.message ||
+                  "Cloudinary upload failed"
+                )
+              );
+
+            }
+
+          };
+
+
+          xhr.onerror =
+          () => {
+
+            reject(
+              new Error(
+                "Network error. Internet connection check करें।"
+              )
+            );
+
+          };
+
+
+          xhr.send(
+            formData
+          );
+
+        }
+      );
+
+
+    if(
+      !uploaded ||
+      !uploaded.secure_url
+    ){
+
+      throw new Error(
+        "Cloudinary ने upload URL नहीं दिया।"
+      );
+
+    }
+
+
+    lastUploadedUrl =
+      uploaded.secure_url;
+
+
+    progressBar.style.width =
+      "100%";
+
+
+    setUploadStatus(
+      "✅ Upload सफल हो गया।",
+      "success"
+    );
+
+
+    result.classList.remove(
+      "hidden"
+    );
+
+
+    result.innerHTML =
+      "<b>Uploaded URL:</b><br>" +
+      escapeHtml(
+        lastUploadedUrl
+      );
+
+
+    copyBtn.classList.remove(
+      "hidden"
+    );
+
+
+    if(
+      String(
+        file.type
+      ).startsWith(
+        "image/"
+      )
+    ){
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.className =
+        "preview-image";
+
+
+      img.src =
+        lastUploadedUrl;
+
+
+      img.alt =
+        "Uploaded Property";
+
+
+      preview.appendChild(
+        img
+      );
+
+    }
+
+
+    else if(
+      String(
+        file.type
+      ).startsWith(
+        "video/"
+      )
+    ){
+
+      const video =
+        document.createElement(
+          "video"
+        );
+
+
+      video.className =
+        "preview-video";
+
+
+      video.controls =
+        true;
+
+
+      video.src =
+        lastUploadedUrl;
+
+
+      preview.appendChild(
+        video
+      );
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Cloudinary upload error:",
+      error
+    );
+
+
+    setUploadStatus(
+      "❌ Upload नहीं हुआ: " +
+      error.message,
+      "error"
+    );
+
+  }finally{
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      "☁️ Cloudinary पर Upload करें";
+
+  }
+
+};
+
+
+/* =====================================================
+   COPY URL
+   ===================================================== */
+
+window.copyUploadedUrl =
+async function(){
+
+  if(
+    !lastUploadedUrl
+  ){
+
+    setUploadStatus(
+      "❌ Copy करने के लिए कोई uploaded URL नहीं है।",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      lastUploadedUrl
+    );
+
+
+    setUploadStatus(
+      "✅ Uploaded URL copy हो गया।",
+      "success"
+    );
+
+  }catch(error){
+
+    window.prompt(
+      "URL copy करें:",
+      lastUploadedUrl
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   LOAD PROPERTIES
    ===================================================== */
 
 async function loadProperties(){
@@ -620,7 +1377,8 @@ async function loadProperties(){
       );
 
 
-    properties = [];
+    properties =
+      [];
 
 
     snapshot.forEach(
@@ -639,7 +1397,9 @@ async function loadProperties(){
 
 
     currentProperties =
-      [...properties];
+      [
+        ...properties
+      ];
 
 
     renderProperties(
@@ -648,13 +1408,9 @@ async function loadProperties(){
 
 
     setStatus(
-
       properties.length +
-
       " Property उपलब्ध है।",
-
       "success"
-
     );
 
 
@@ -667,11 +1423,8 @@ async function loadProperties(){
 
 
     setStatus(
-
       "❌ Properties load नहीं हुईं। Firestore Rules check करें।",
-
       "error"
-
     );
 
   }
@@ -680,10 +1433,12 @@ async function loadProperties(){
 
 
 /* =====================================================
-   RENDER PROPERTY LIST
+   RENDER PROPERTIES
    ===================================================== */
 
-function renderProperties(list){
+function renderProperties(
+  list
+){
 
   const propertyList =
     document.getElementById(
@@ -691,10 +1446,11 @@ function renderProperties(list){
     );
 
 
-  if(!list.length){
+  if(
+    !list.length
+  ){
 
     propertyList.innerHTML =
-
       `
       <div class="empty">
 
@@ -703,12 +1459,14 @@ function renderProperties(list){
       </div>
       `;
 
+
     return;
 
   }
 
 
-  propertyList.innerHTML = "";
+  propertyList.innerHTML =
+    "";
 
 
   list.forEach(
@@ -725,34 +1483,54 @@ function renderProperties(list){
 
 
       div.innerHTML =
-
       `
 
       <h3>
-        ${escapeHtml(property.title)}
+        ${escapeHtml(
+          property.title
+        )}
       </h3>
 
 
       <span class="badge">
-        ${escapeHtml(property.requirement || "")}
+
+        ${escapeHtml(
+          property.requirement || ""
+        )}
+
       </span>
 
 
       <p>
+
         🏠 <b>Type:</b>
-        ${escapeHtml(property.type || "")}
+
+        ${escapeHtml(
+          property.type || ""
+        )}
+
       </p>
 
 
       <p>
+
         📍 <b>Location:</b>
-        ${escapeHtml(property.location || "")}
+
+        ${escapeHtml(
+          property.location || ""
+        )}
+
       </p>
 
 
       <p>
+
         💰 <b>Price:</b>
-        ${escapeHtml(property.price || "")}
+
+        ${escapeHtml(
+          property.price || ""
+        )}
+
       </p>
 
 
@@ -762,10 +1540,17 @@ function renderProperties(list){
         ?
 
         `
+
         <p>
+
           🛏️ <b>Bedrooms:</b>
-          ${escapeHtml(property.bedrooms)}
+
+          ${escapeHtml(
+            property.bedrooms
+          )}
+
         </p>
+
         `
 
         :
@@ -780,10 +1565,17 @@ function renderProperties(list){
         ?
 
         `
+
         <p>
+
           📐 <b>Area:</b>
-          ${escapeHtml(property.area)}
+
+          ${escapeHtml(
+            property.area
+          )}
+
         </p>
+
         `
 
         :
@@ -793,10 +1585,21 @@ function renderProperties(list){
 
 
       <button
+
         class="details-btn"
-        onclick="showDetails('${escapeHtml(property.id)}')"
+
+        onclick="showDetails('${
+
+          escapeHtml(
+            property.id
+          )
+
+        }')"
+
       >
+
         👁️ View Property Details
+
       </button>
 
       `;
@@ -858,7 +1661,8 @@ function(id){
     );
 
 
-  let target = null;
+  let target =
+    null;
 
 
   cards.forEach(
@@ -878,7 +1682,8 @@ function(id){
         `showDetails('${id}')`
       ){
 
-        target = card;
+        target =
+          card;
 
       }
 
@@ -886,7 +1691,11 @@ function(id){
   );
 
 
-  if(!target) return;
+  if(!target){
+
+    return;
+
+  }
 
 
   const details =
@@ -902,15 +1711,16 @@ function(id){
   details.style.marginTop =
     "12px";
 
+
   details.style.borderTop =
     "1px solid #ddd";
+
 
   details.style.paddingTop =
     "12px";
 
 
   details.innerHTML =
-
   `
 
   ${
@@ -919,7 +1729,9 @@ function(id){
     ?
 
     `
+
     <p>
+
       📝 <b>Description:</b>
 
       <br>
@@ -927,7 +1739,9 @@ function(id){
       ${escapeHtml(
         property.description
       )}
+
     </p>
+
     `
 
     :
@@ -942,20 +1756,35 @@ function(id){
     ?
 
     `
+
     <p>
+
       🖼️ <b>Property Image:</b>
+
     </p>
 
+
     <img
+
       class="preview-image"
-      src="${escapeHtml(property.image)}"
+
+      src="${escapeHtml(
+        property.image
+      )}"
+
       alt="Property Image"
+
       onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
+
     >
 
+
     <div class="error-image">
+
       ❌ Property image अभी open नहीं हो रही।
+
     </div>
+
     `
 
     :
@@ -970,18 +1799,32 @@ function(id){
     ?
 
     `
+
     <p>
+
       🎥 <b>Property Video:</b>
+
     </p>
 
+
     <a
+
       class="video-link"
-      href="${escapeHtml(property.video)}"
+
+      href="${escapeHtml(
+        property.video
+      )}"
+
       target="_blank"
+
       rel="noopener noreferrer"
+
     >
+
       ▶️ Open Property Video
+
     </a>
+
     `
 
     :
@@ -1004,18 +1847,28 @@ function(id){
 
 
   <button
+
     class="whatsapp"
+
     onclick="propertyEnquiry('${escapeHtml(property.id)}')"
+
   >
+
     💬 WhatsApp Admin — Property Enquiry
+
   </button>
 
 
   <button
+
     class="close-btn"
+
     onclick="closeDetails('${escapeHtml(property.id)}')"
+
   >
+
     ❌ Close Details
+
   </button>
 
   `;
@@ -1122,7 +1975,7 @@ ${property.area || "N/A"}
 
 
 /* =====================================================
-   WHATSAPP ADMIN
+   WHATSAPP
    ===================================================== */
 
 window.openAdminWhatsApp =
@@ -1346,31 +2199,47 @@ function(
 
 
   if(
+
     category === "Buy" ||
+
     category === "Rent" ||
+
     category === "Lease" ||
+
     category === "Sell"
+
   ){
 
     result =
+
       properties.filter(
+
         property =>
+
           property.requirement ===
           category
+
       );
 
   }
 
 
   else if(
+
     category === "PG" ||
+
     category === "Commercial" ||
+
     category === "Open Plot" ||
+
     category === "Independent"
+
   ){
 
     result =
+
       properties.filter(
+
         property =>
 
           property.type ===
@@ -1381,6 +2250,7 @@ function(
 
           property.category ===
           category
+
       );
 
   }
@@ -1389,7 +2259,9 @@ function(
   else{
 
     result =
-      [...properties];
+      [
+        ...properties
+      ];
 
   }
 
